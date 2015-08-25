@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node -harmony index"
+    "start": "node -harmony app",
+    "lint": "eslint lib"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,8 @@
     "colors": "1.1.2",
     "dateformat": "1.0.11",
     "bluebird": "2.9.34",
-    "co": "4.6.0"
+    "co": "4.6.0",
+    "uuid": "2.0.1"
   },
   "devDependencies": {
 
