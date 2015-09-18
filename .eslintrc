@@ -11,7 +11,7 @@
   },
 
   "plugins": [
-    // "react"
+    "react"
   ],
 
   // Thanks to https://github.com/feross/eslint-config-standard

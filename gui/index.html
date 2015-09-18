@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MeowProxy</title>
+    <link rel="stylesheet" type="text/css" href="./dist/index.css">
+    <style type="text/css">
+      .right-top-corner {
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 10;
+        opacity: 0;
+      }
+
+      .right-top-corner:hover {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="" class="right-top-corner">reload</a>
+    <div id="target">
+      loading...
+    </div>
+    <script type="text/javascript" src="./dist/index.js"></script>
+  </body>
+</html>
