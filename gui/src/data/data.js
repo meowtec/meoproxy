@@ -8,7 +8,9 @@ timeline.get = function(id) {
     return item.id === id
   })
 }
-var __count = 0
+
+let __count = 0
+
 ipc.on('http-data', data => {
   console.log(`ipc.on('http-data', data => {\n`, data)
 
@@ -62,3 +64,6 @@ ipc.on('http-data', data => {
 // }, 2000)
 
 exports.getTimeline = () => timeline
+exports.getItem = (id) => {
+  return timeline.get(id)
+}

@@ -19,14 +19,20 @@ class Main extends React.Component {
       timeline: data.getTimeline()
     }
 
-    this.listenTimeline()
+    this.listenEvents()
   }
 
-  listenTimeline() {
+  listenEvents() {
     event.on('timeline-update', () => {
       let timeline = data.getTimeline()
       this.setState({
         timeline
+      })
+    })
+
+    event.on('timeline-item-click', item => {
+      this.setState({
+        detailId: item.id
       })
     })
   }
@@ -38,7 +44,7 @@ class Main extends React.Component {
           <Timeline data={this.state.timeline}/>
         </aside>
         <div className="main">
-          <HttpDetail id="xxx" />
+          <HttpDetail id={this.state.detailId} />
         </div>
       </div>
     )

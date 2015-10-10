@@ -49,12 +49,12 @@
 	let React = __webpack_require__(1);
 	let Timeline = __webpack_require__(2);
 	let HttpDetail = __webpack_require__(8);
-	let data = __webpack_require__(15);
+	let data = __webpack_require__(16);
 	let event = __webpack_require__(5);
 	
 	// let TimelineMockData = require('./data/timeline-mock')
 	
-	__webpack_require__(16);
+	__webpack_require__(18);
 	
 	class Main extends React.Component {
 	
@@ -65,16 +65,22 @@
 	      timeline: data.getTimeline()
 	    };
 	
-	    this.listenTimeline();
+	    this.listenEvents();
 	  }
 	
-	  listenTimeline() {
+	  listenEvents() {
 	    var _this = this;
 	
 	    event.on('timeline-update', function () {
 	      let timeline = data.getTimeline();
 	      _this.setState({
 	        timeline: timeline
+	      });
+	    });
+	
+	    event.on('timeline-item-click', function (item) {
+	      _this.setState({
+	        detailId: item.id
 	      });
 	    });
 	  }
@@ -91,7 +97,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'main' },
-	        React.createElement(HttpDetail, { id: 'xxx' })
+	        React.createElement(HttpDetail, { id: this.state.detailId })
 	      )
 	    );
 	  }
@@ -291,8 +297,10 @@
 	let Pages = __webpack_require__(11);
 	let Page = Pages.Item;
 	let Panel = __webpack_require__(12);
-	// let event = require('../utils/event')
-	let ipc = __webpack_require__(14);
+	let No = __webpack_require__(14);
+	let ipc = __webpack_require__(15);
+	let data = __webpack_require__(16);
+	let _ = __webpack_require__(17);
 	
 	class HttpDetail extends React.Component {
 	
@@ -300,7 +308,8 @@
 	    super(props);
 	
 	    this.state = {
-	      selectedId: 'headers'
+	      selectedId: 'headers',
+	      data: null
 	    };
 	
 	    ipc.on('response-body-data', this.setState.bind(this));
@@ -315,81 +324,154 @@
 	    ipc.send('get-body-data', this.props.id);
 	  }
 	
+	  componentWillReceiveProps(props) {
+	    let item;
+	    console.log('componentWillReceiveProps', props.id);
+	
+	    if (props.id) {
+	      item = Object.assign({
+	        response: {},
+	        request: {}
+	      }, data.getItem(props.id));
+	    }
+	
+	    this.setState({
+	      data: item
+	    });
+	  }
+	
 	  render() {
 	    let code = `function() {\n  a()\n}`;
+	    let data = this.state.data;
 	
-	    return React.createElement(
-	      'div',
-	      { style: { marginLeft: '15px' } },
-	      React.createElement(
-	        Tabs,
-	        { defaultValue: this.state.selectedId, onChange: this.handleTabChange.bind(this) },
+	    if (data) {
+	      let requestHeaders = data.request.headers || {};
+	      let responseHeaders = data.response.headers || {};
+	
+	      return React.createElement(
+	        'div',
+	        { style: { marginLeft: '15px' } },
 	        React.createElement(
-	          Tab,
-	          { value: 'headers' },
-	          'Headers'
-	        ),
-	        React.createElement(
-	          Tab,
-	          { value: 'request' },
-	          'Request'
-	        ),
-	        React.createElement(
-	          Tab,
-	          { value: 'response' },
-	          'Response'
-	        )
-	      ),
-	      React.createElement(
-	        Pages,
-	        { value: this.state.selectedId },
-	        React.createElement(
-	          Page,
-	          { value: 'headers' },
+	          Tabs,
+	          { defaultValue: this.state.selectedId, onChange: this.handleTabChange.bind(this) },
 	          React.createElement(
-	            Panel,
-	            null,
-	            'General'
+	            Tab,
+	            { value: 'headers' },
+	            'Headers'
 	          ),
 	          React.createElement(
-	            Panel,
-	            null,
-	            'Request Headers'
+	            Tab,
+	            { value: 'request' },
+	            'Request'
 	          ),
 	          React.createElement(
-	            Panel,
-	            null,
-	            'Response Headers'
+	            Tab,
+	            { value: 'response' },
+	            'Response'
 	          )
 	        ),
 	        React.createElement(
-	          Page,
-	          { value: 'request' },
+	          Pages,
+	          { value: this.state.selectedId },
 	          React.createElement(
-	            'code',
-	            null,
+	            Page,
+	            { value: 'headers' },
 	            React.createElement(
-	              'pre',
-	              null,
-	              'empty'
+	              Panel,
+	              { name: 'General' },
+	              React.createElement(
+	                'dt',
+	                null,
+	                'Method'
+	              ),
+	              React.createElement(
+	                'dd',
+	                null,
+	                data.request.method
+	              ),
+	              React.createElement(
+	                'dt',
+	                null,
+	                'URL'
+	              ),
+	              React.createElement(
+	                'dd',
+	                null,
+	                _.genUrl(data.ssl, data.request.hostname, data.request.port, data.request.path)
+	              ),
+	              React.createElement(
+	                'dt',
+	                null,
+	                'Status'
+	              ),
+	              React.createElement(
+	                'dd',
+	                null,
+	                data.response.status
+	              )
+	            ),
+	            React.createElement(
+	              Panel,
+	              { name: 'Request Headers' },
+	              Object.keys(requestHeaders).map(function (key) {
+	                return [React.createElement(
+	                  'dt',
+	                  null,
+	                  key
+	                ), React.createElement(
+	                  'dd',
+	                  null,
+	                  requestHeaders[key]
+	                )];
+	              })
+	            ),
+	            React.createElement(
+	              Panel,
+	              { name: 'Response Headers' },
+	              Object.keys(responseHeaders).map(function (key) {
+	                return [React.createElement(
+	                  'dt',
+	                  null,
+	                  key
+	                ), React.createElement(
+	                  'dd',
+	                  null,
+	                  responseHeaders[key]
+	                )];
+	              })
 	            )
-	          )
-	        ),
-	        React.createElement(
-	          Page,
-	          { value: 'response' },
+	          ),
 	          React.createElement(
-	            'code',
-	            null,
+	            Page,
+	            { value: 'request' },
 	            React.createElement(
-	              'pre',
+	              'code',
 	              null,
-	              code
+	              React.createElement(
+	                'pre',
+	                null,
+	                'empty'
+	              )
+	            )
+	          ),
+	          React.createElement(
+	            Page,
+	            { value: 'response' },
+	            React.createElement(
+	              'code',
+	              null,
+	              React.createElement(
+	                'pre',
+	                null,
+	                code
+	              )
 	            )
 	          )
 	        )
-	      )
-	    );
+	      );
+	    } else {
+	      return null;
+	    }
 	  }
 	
 	  handleTabChange(tabValue) {
@@ -513,6 +595,7 @@
 	}
 	
 	Pages.Item = Empty;
+	
 	module.exports = Pages;
 
 /***/ },
@@ -550,101 +633,12 @@
 	      React.createElement(
 	        'h3',
 	        { onClick: this.handleToggleClick.bind(this) },
-	        this.props.children
+	        this.props.name
 	      ),
 	      React.createElement(
 	        'dl',
 	        null,
-	        React.createElement(
-	          'dt',
-	          null,
-	          'Cache-Control'
-	        ),
-	        React.createElement(
-	          'dd',
-	          null,
-	          'max-age=86400'
-	        ),
-	        React.createElement(
-	          'dt',
-	          null,
-	          'Cache-Control'
-	        ),
-	        React.createElement(
-	          'dd',
-	          null,
-	          'private'
-	        ),
-	        React.createElement(
-	          'dt',
-	          null,
-	          'Connection'
-	        ),
-	        React.createElement(
-	          'dd',
-	          null,
-	          'Keep-Alive'
-	        ),
-	        React.createElement(
-	          'dt',
-	          null,
-	          'Content-Length'
-	        ),
-	        React.createElement(
-	          'dd',
-	          null,
-	          '160'
-	        ),
-	        React.createElement(
-	          'dt',
-	          null,
-	          'Content-Type'
-	        ),
-	        React.createElement(
-	          'dd',
-	          null,
-	          'text/html'
-	        ),
-	        React.createElement(
-	          'dt',
-	          null,
-	          'Date'
-	        ),
-	        React.createElement(
-	          'dd',
-	          null,
-	          'Thu, 27 Aug 2015 13:03:42 GMT'
-	        ),
-	        React.createElement(
-	          'dt',
-	          null,
-	          'Expires'
-	        ),
-	        React.createElement(
-	          'dd',
-	          null,
-	          'Fri, 28 Aug 2015 13:03:42 GMT'
-	        ),
-	        React.createElement(
-	          'dt',
-	          null,
-	          'Location'
-	        ),
-	        React.createElement(
-	          'dd',
-	          null,
-	          'https://www.baidu.com/'
-	        ),
-	        React.createElement(
-	          'dt',
-	          null,
-	          'Server'
-	        ),
-	        React.createElement(
-	          'dd',
-	          null,
-	          'bfe/1.0.8.5'
-	        )
+	        this.props.children
 	      )
 	    );
 	  }
@@ -687,17 +681,32 @@
 
 /***/ },
 /* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	let React = __webpack_require__(1);
+	
+	class No extends React.Component {
+	  render() {
+	    return this.props.children;
+	  }
+	}
+	module.exports = No;
+
+/***/ },
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = require("ipc");
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	let ipc = __webpack_require__(14);
+	let ipc = __webpack_require__(15);
 	let event = __webpack_require__(5);
 	
 	let timeline = []; // Map -> React Elements 性能较低
@@ -707,7 +716,9 @@
 	    return item.id === id;
 	  });
 	};
-	var __count = 0;
+	
+	let __count = 0;
+	
 	ipc.on('http-data', function (data) {
 	  console.log(`ipc.on('http-data', data => {\n`, data);
 	
@@ -761,9 +772,29 @@
 	exports.getTimeline = function () {
 	  return timeline;
 	};
+	exports.getItem = function (id) {
+	  return timeline.get(id);
+	};
 
 /***/ },
-/* 16 */
+/* 17 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.genUrl = genUrl;
+	
+	function genUrl(ssl, host, port, path) {
+	  let portPart = !port || Number(port) === 80 ? '' : ':' + port;
+	
+	  return (ssl ? 'https' : 'http') + '://' + host + portPart + path;
+	}
+
+/***/ },
+/* 18 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
