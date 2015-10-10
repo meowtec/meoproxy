@@ -78,6 +78,7 @@
 }
 .panel dl {
   margin-left: 10px;
+  line-height: 1.2;
 }
 .panel h3 {
   cursor: default;
@@ -97,13 +98,12 @@
 }
 .panel dt,
 .panel dd {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   box-sizing: border-box;
   margin: 0;
+  padding: 5px 0;
   padding-right: 10px;
   display: inline-block;
+  vertical-align: top;
 }
 .panel dt {
   width: 150px;
@@ -173,12 +173,12 @@ body {
 .layout > aside {
   height: 100%;
   width: 400px;
-  overflow-y: auto;
   float: left;
 }
 .layout > aside ul {
   height: 100%;
   border-right: 1px solid #eee;
+  overflow-y: auto;
 }
 .layout > .main {
   width: calc(100% - 401px);
