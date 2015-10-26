@@ -2,7 +2,8 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 module.exports = {
   entry: {
-    index: "./gui/src/index.js"
+    index: './gui/src/index.js',
+    ca: './gui/src/ca.js'
   },
   output: {
     filename: "./gui/dist/[name].js"
