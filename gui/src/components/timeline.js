@@ -79,7 +79,15 @@ export default class Timeline extends React.Component {
     }
   }
 
-  render() {
+  renderEmpty() {
+    return (
+      <div className="timeline empty">
+        Waiting for HTTP.
+      </div>
+    )
+  }
+
+  renderList() {
     return (
       <ul className="timeline">
         {
@@ -89,6 +97,15 @@ export default class Timeline extends React.Component {
         }
       </ul>
     )
+  }
+
+  render() {
+    if (this.props.data.length) {
+      return this.renderList()
+    }
+    else {
+      return this.renderEmpty()
+    }
   }
 
   handleItemClick(item) {
