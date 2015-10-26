@@ -7,4 +7,6 @@ cert
 HTTPDesc.md
 _gui.js
 build/
+gui/dist/
 snippets/
+npm-debug*
