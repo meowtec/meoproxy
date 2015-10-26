@@ -31,21 +31,29 @@
       // margin-right: 10px;
     }
 
-    &.active:after {
+    // &.active:after {
+    //   position: absolute;
+    //   content: '';
+    //   width: 8px;
+    //   height: 8px;
+    //   right: -5px;
+    //   top: 50%;
+    //   margin-top: -4px;
+    //   border: 1px solid #eee;
+    //   border-bottom: 0;
+    //   border-right: 0;
+    //   transform: rotate(-45deg);
+    //   background-color: #fff;
+    //   -webkit-clip-path: polygon(10px 0, 0 10px, 0 0);
+    //   clip-path: polygon(10px 0, 0 10px, 0 0);
+    // }
+    &.active::after {
       position: absolute;
       content: '';
-      width: 8px;
-      height: 8px;
-      right: -5px;
-      top: 50%;
-      margin-top: -4px;
-      border: 1px solid #eee;
-      border-bottom: 0;
-      border-right: 0;
-      transform: rotate(-45deg);
-      background-color: #fff;
-      -webkit-clip-path: polygon(10px 0, 0 10px, 0 0);
-      clip-path: polygon(10px 0, 0 10px, 0 0);
+      top: 0;
+      right: 0;
+      bottom: 0;
+      border-right: 3px solid #6cf;
     }
   }
 
