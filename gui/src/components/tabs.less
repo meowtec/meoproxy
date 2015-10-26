@@ -3,9 +3,12 @@
 
   > a {
     margin-right: 25px;
-    text-decoration: none;
     color: #666;
     display: inline-block;
+
+    &, &:hover {
+      text-decoration: none;
+    }
 
     &.selected {
       color: #000;
