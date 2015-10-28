@@ -2,7 +2,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 module.exports = {
   entry: {
-    index: './gui/src/index.js',
+    index: './gui/src/index.jsx',
     ca: './gui/src/ca.js'
   },
   output: {
@@ -35,5 +35,8 @@ module.exports = {
       allChunks: true
     })
   ],
-  devtool: 'source-map'
+  devtool: 'source-map',
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  }
 }
