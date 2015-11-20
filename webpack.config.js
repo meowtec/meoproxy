@@ -6,7 +6,7 @@ module.exports = {
     ca: './gui/src/ca.js'
   },
   output: {
-    filename: "./gui/dist/[name].js"
+    filename: './gui/dist/[name].js'
   },
   module: {
     loaders: [
@@ -17,21 +17,21 @@ module.exports = {
       {
         test: /\.less$/,
         // loader: "style!css!less"
-        loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       }
     ]
   },
   externals: [
     function(context, request, callback) {
-      if(/^[a-zA-Z]/.test(request)) {
-        return callback(null, "commonjs " + request)
-      } else {
+      if (!/^[a-zA-Z]/.test(request)) {
         callback()
+      } else {
+        return callback(null, 'commonjs ' + request)
       }
     }
   ],
   plugins: [
-    new ExtractTextPlugin("./gui/dist/[name].css", {
+    new ExtractTextPlugin('./gui/dist/[name].css', {
       allChunks: true
     })
   ],

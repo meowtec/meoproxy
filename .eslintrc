@@ -18,7 +18,7 @@
   "rules": {
     // "react/jsx-uses-vars": 2,
     // "react/no-unknown-property": 2,
-    // "react/require-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/require-extension": [1, { "extensions": [".js", ".jsx"] }],
     // "react/self-closing-comp": 2,
 
     "accessor-pairs": 2,

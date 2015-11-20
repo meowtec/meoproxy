@@ -1,14 +1,10 @@
 'use strict'
-
 let React = require('react')
 let Tabs = require('./tabs')
 let Tab = Tabs.Item
 let Pages = require('./Pages')
 let Page = Pages.Item
 let Panel = require('./panel')
-let No = require('./no')
-let ipc = require('ipc')
-let data = require('../data/data')
 let _ = require('../utils/utils')
 
 class HttpDetail extends React.Component {
@@ -17,45 +13,17 @@ class HttpDetail extends React.Component {
     super(props)
 
     this.state = {
-      selectedId: 'headers',
-      data: null
+      selectedId: 'headers'
     }
-
-    ipc.on('response-body-data', this.setState.bind(this))
-
-    ipc.on('test-emit', function(date) {
-      // console.log(date)
-    })
-  }
-
-  // 获取 HTTP body 的数据
-  updateBodyData() {
-    ipc.send('get-body-data', this.props.id)
-  }
-
-  componentWillReceiveProps(props) {
-    let item
-    console.log('componentWillReceiveProps', props.id)
-
-    if (props.id) {
-      item = Object.assign({
-        response: {},
-        request: {}
-      }, data.getItem(props.id))
-    }
-
-    this.setState({
-      data: item
-    })
   }
 
   render() {
     let code = `function() {\n  a()\n}`
-    let data = this.state.data
+    let data = this.props.data
 
     if (data) {
-      let requestHeaders = data.request.headers || {}
-      let responseHeaders = data.response.headers || {}
+      let requestHeaders = data.request.headers
+      let responseHeaders = data.response.headers
 
       return (
         <div style={{marginLeft: '15px'}}>
@@ -105,7 +73,7 @@ class HttpDetail extends React.Component {
             <Page value="request">
               <code>
                 <pre>
-                  {'empty'}
+                  {data.requestBody}
                 </pre>
               </code>
             </Page>
@@ -113,7 +81,7 @@ class HttpDetail extends React.Component {
             <Page value="response">
               <code>
                 <pre>
-                  {code}
+                  {data.responseBody}
                 </pre>
               </code>
             </Page>
@@ -131,6 +99,10 @@ class HttpDetail extends React.Component {
       selectedId: tabValue
     })
   }
+}
+
+HttpDetail.defaultProps = {
+  data: null
 }
 
 module.exports = HttpDetail

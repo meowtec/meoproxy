@@ -62,7 +62,6 @@ class TimelineItem extends React.Component {
   }
 
   copy() {
-    console.log('copy')
     clipboard.writeText(this.props.host + this.props.path, 'selection')
   }
 }

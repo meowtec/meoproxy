@@ -17,11 +17,15 @@ class TimelineItem extends React.Component {
     let scheme = props.ssl ? 'https' : 'http'
     let port = request.port
     let isDefaultPort = !port || port === 80
-    let url = scheme + '://' + request.hostname + (isDefaultPort ? '' : ':' + port)
+    let baseUrl = scheme + '://' + request.hostname + (isDefaultPort ? '' : ':' + port)
 
     this.state = {
-      url
+      baseUrl
     }
+  }
+
+  getFullUrl() {
+    return this.state.baseUrl + this.props.request.path
   }
 
   render() {
@@ -35,7 +39,7 @@ class TimelineItem extends React.Component {
           className={props.active ? 'active' : ''}
         >
         <div className="url">
-          <span className="host">{this.state.url}</span>
+          <span className="host">{this.state.baseUrl}</span>
           <span className="path">{request.path}</span>
         </div>
         <div className="aside">
@@ -61,8 +65,7 @@ class TimelineItem extends React.Component {
   }
 
   copy() {
-    console.log('copy')
-    clipboard.writeText(this.state.path, 'selection')
+    clipboard.writeText(this.getFullUrl(), 'selection')
   }
 }
 
@@ -82,7 +85,7 @@ export default class Timeline extends React.Component {
   renderEmpty() {
     return (
       <div className="timeline empty">
-        Waiting for HTTP.
+        Waiting for connect...
       </div>
     )
   }
