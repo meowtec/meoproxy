@@ -3,7 +3,6 @@
 import * as os from 'os'
 import * as fs from 'fs'
 import * as path from 'path'
-import * as uuidtools from 'uuid'
 
 const tempDir = path.resolve(os.tmpdir(), 'meoproxy')
 
@@ -31,10 +30,6 @@ export function readStream(p: string) {
 
 export function writeStream(p: string) {
   return fs.createWriteStream(getPhysicPath(p))
-}
-
-export function uuid() {
-  return uuidtools.v1()
 }
 
 export function readFile(p: string) {

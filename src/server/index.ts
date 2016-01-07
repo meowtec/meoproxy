@@ -1,7 +1,6 @@
 'use strict'
 
 import Proxy from 'catro'
-import * as uuid from 'uuid'
 import * as electron from 'electron'
 import * as _ from '../utils/utils'
 import * as storage from '../utils/storage'
@@ -19,7 +18,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
   })
 
   proxy.onRequest((handler) => {
-    const id = uuid.v1()
+    const id = _.id()
 
     ;{
       /** Storage request */
