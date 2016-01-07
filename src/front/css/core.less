@@ -1,0 +1,35 @@
+@import './clean';
+@import './mixin';
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'open sans';
+  font-weight: 100;
+}
+
+.button {
+  outline: none;
+  border: none;
+  background: #676077;
+  color: #fff;
+}
+
+.hide {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+  color: #09f;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: #06f;
+  }
+}
