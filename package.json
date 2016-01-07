@@ -5,7 +5,7 @@
   "main": "built/bootstrap.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "tsc -p src",
+    "tsc": "rm -rf built && tsc -p .",
     "start": "electron .",
     "gui": "npm run watch & npm run build && electron . --production"
   },
@@ -36,6 +36,7 @@
     "gulp-sourcemaps": "~1.6.0",
     "gulp-uglify": "~1.5.1",
     "less": "2.5.1",
+    "tsd": "~0.6.5",
     "tsify": "~0.13.1",
     "typescript": "~1.8.0-dev.20151219",
     "vinyl-buffer": "~1.0.0",
