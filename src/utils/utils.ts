@@ -62,3 +62,14 @@ export function parseQS(url: string) {
 export function addClass(className: string, condition: boolean) {
   return condition ? className : ''
 }
+
+export let id
+{
+  const baseDate = Date.now()
+  let idCount = -1
+
+  id = function id() {
+    idCount ++
+    return baseDate + '-' + idCount
+  }
+}
