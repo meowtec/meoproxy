@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "jsx": "react",
+    "outDir": "../built",
+
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "declaration": true,
+    "preserveConstEnums": true,
+    "noLib": false
+  }
+}

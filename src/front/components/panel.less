@@ -1,0 +1,55 @@
+.panel {
+  font-size: 12px;
+
+  &.closed {
+
+    h3:after {
+      transform: rotate(0);
+    }
+
+    dl {
+      display: none;
+    }
+  }
+
+  dl {
+    margin-left: 10px;
+    line-height: 1.2;
+  }
+
+  h3 {
+    cursor: default;
+    font-weight: 400;
+
+    &:after {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border: 5px solid transparent;
+      border-left-color: #ccc;
+      margin-left: 10px;
+      transform-origin: 25% 50%;
+      transform: rotate(90deg);
+      transition: 0.1s;
+    }
+  }
+
+  dt, dd {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 5px 0;
+    padding-right: 10px;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  dt {
+    width: 150px;
+  }
+
+  dd {
+    width: ~'calc(100% - 150px)';
+    color: #444;
+  }
+}
