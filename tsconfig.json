@@ -3,13 +3,14 @@
     "target": "es6",
     "module": "commonjs",
     "jsx": "react",
-    "outDir": "../built",
-
-    "noEmitOnError": true,
+    "outDir": "built",
+    "rootDir": "src",
     "noImplicitAny": false,
     "sourceMap": true,
-    "declaration": true,
-    "preserveConstEnums": true,
-    "noLib": false
-  }
+    "declaration": true
+
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
