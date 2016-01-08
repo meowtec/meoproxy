@@ -4,10 +4,10 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import Timeline from './components/timeline'
 import HttpDetail from './components/http-detail'
+import { Tab, TabItem } from './components/tabs'
 import * as data from './data/data'
 import event from '../utils/event'
 import * as assert from 'assert'
-import * as __ from 'lodash'
 
 // require('./css/index.less')
 
@@ -55,9 +55,26 @@ class Main extends React.Component<any, any> {
   render() {
     return (
       <div className="layout">
+        <Tab className="nav" defaultValue="network" onChange={() => {}}>
+          <TabItem value="network">
+            <i className="oi" data-glyph="transfer"/>
+            Network
+          </TabItem>
+          <TabItem value="sequence">
+            <i className="oi" data-glyph="layers"/>
+            Sequence
+          </TabItem>
+          <TabItem value="breakpoints">
+            <i className="oi" data-glyph="target"/>
+            Breakpoints
+            <span className="dot">12</span>
+          </TabItem>
+        </Tab>
+
         <aside>
           <Timeline data={this.state.timeline}/>
         </aside>
+
         <div className="main">
           <HttpDetail data={this.state.detail} />
         </div>

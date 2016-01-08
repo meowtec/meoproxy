@@ -11,8 +11,8 @@ export interface TabItemProps extends React.Props<any> {
 
 export interface TabProps extends React.Props<any> {
   onChange: (any)
-  children?: TabItem[]
   defaultValue: any
+  className?: string
 }
 
 export interface TabState {
@@ -38,10 +38,12 @@ export class Tab extends React.Component<TabProps, TabState> {
   }
 
   render() {
+    const props = this.props
+
     return (
-      <div className="tab-set">
+      <div className={props.className ? props.className : 'tab-set'}>
         {
-          this.props.children.map(item => {
+          React.Children.toArray(this.props.children).map((item: React.ReactElement<any>) => {
             let value = item.props.value
             return <TabContent onClick={this.handleClick.bind(this, value)} key={value} selected={this.state.value === value}>{item.props.children}</TabContent>
           })
