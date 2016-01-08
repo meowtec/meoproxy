@@ -43,7 +43,7 @@ gulp.task('less', function () {
 })
 
 gulp.task('watch', ['ts', 'less'], function () {
-  gulp.watch(['built/front'], ['ts'])
+  gulp.watch(['built/front/*.js', 'built/front/**/*.js'], ['ts'])
   gulp.watch(['src/front/*.less', 'src/front/**/*.less'], ['less'])
 })
 

@@ -11,3 +11,4 @@ gui/dist/
 snippets/
 npm-debug*
 typings/
+static/dist/

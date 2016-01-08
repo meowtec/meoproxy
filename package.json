@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "rm -rf built && tsc -p .",
-    "start": "electron .",
-    "gui": "npm run watch & npm run build && electron . --production"
+    "start": "electron . --production",
+    "build": "npm run tsc "
   },
   "repository": {
     "type": "git",
