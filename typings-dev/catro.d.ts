@@ -47,7 +47,6 @@ declare module "catro" {
       preventRequest(): void;
   }
 
-
   interface Options {
     /** proxy port */
     port: number;
@@ -60,12 +59,10 @@ declare module "catro" {
   }
 
   export default class Proxy extends EventEmitter {
-      httpServer: http.Server;
       constructor(options: Options, callback?: (err, proxy) => any);
-      static certRoot: string;
-      static certManager: CertManager;
+      static rootCAPath: string;
+      static logger: Readable;
       promise: Promise<any>;
-      onRequest(listener: (handler: RequestHandler) => any): void;
-      close(): void;
+      httpServer: http.Server;
   }
 }

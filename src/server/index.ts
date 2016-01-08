@@ -1,6 +1,7 @@
 'use strict'
 
 import Proxy from 'catro'
+import { RequestHandler } from 'catro'
 import * as electron from 'electron'
 import * as _ from '../utils/utils'
 import * as storage from '../utils/storage'
@@ -17,7 +18,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
     port: 8899
   })
 
-  proxy.onRequest((handler) => {
+  proxy.on('open', (handler: RequestHandler) => {
     const id = _.id()
 
     ;{
