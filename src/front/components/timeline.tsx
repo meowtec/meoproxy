@@ -54,14 +54,12 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
           onClick={this.handleClick.bind(this)}
           className={props.active ? 'active' : ''}
         >
+        <span className="method">{request.method}</span>
         <div className="url">
           <span className="host">{this.baseUrl}</span>
           <span className="path">{request.path}</span>
         </div>
-        <div className="aside">
-          <span className="method">{request.method}</span>
-          <span className="status">{response.status}</span>
-        </div>
+        <span className="status">{response.status}</span>
       </li>
     )
   }
