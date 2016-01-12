@@ -23,9 +23,12 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
 
     ;{
       /** Storage request */
-      const storageId = storage.filePath(id, 'request')
-      const writeable = storage.writeStream(storageId)
-      ;(<Readable>handler.request.body).pipe(writeable)
+      let storageId
+      if (handler.request.method.toUpperCase() !== 'GET') {
+        storageId = storage.filePath(id, 'request')
+        ;(<Readable>handler.request.body).pipe(storage.writeStream(storageId))
+      }
+
 
       renderer.send('http-data', <ipcData>{
         id,
