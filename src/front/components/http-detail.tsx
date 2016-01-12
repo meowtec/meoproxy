@@ -4,12 +4,14 @@ import * as React from 'react'
 
 import { Tab, TabItem } from './tabs'
 import { Page, PageItem } from './pages'
+import { Detail, Bodies } from '../data/data'
 
 import Panel from './panel'
 import * as _ from '../../utils/utils'
+import * as storage from '../../utils/storage'
 
 export interface HttpDetailProps extends React.Props<any> {
-  data: any
+  data: Detail & Bodies
 }
 
 export default class HttpDetail extends React.Component<HttpDetailProps, any> {
@@ -22,6 +24,25 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
     }
   }
 
+  renderResponsePreview() {
+    const data = this.props.data
+    const response = data.response
+
+    if (!data.response || !data.response.storageId) return null
+
+    if (/image/.test(response.headers['content-type'])) {
+      return <img src={"file://" + storage.getTempDir() + '/' + response.storageId}/>
+    }
+
+    return (
+      <code className="code-view">
+        <pre>
+          {data.responseBody}
+        </pre>
+      </code>
+    )
+  }
+
   render() {
     let code = `function() {\n  a()\n}`
     let data = this.props.data
@@ -31,14 +52,14 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
       let responseHeaders = data.response.headers
 
       return (
-        <div style={{marginLeft: '15px'}}>
+        <div className="detail-container">
           <Tab defaultValue={this.state.selectedId} onChange={this.handleTabChange.bind(this)}>
             <TabItem value="headers">Headers</TabItem>
             <TabItem value="request">Request</TabItem>
             <TabItem value="response">Response</TabItem>
           </Tab>
 
-          <Page value={this.state.selectedId}>
+          <Page className="detail-content" value={this.state.selectedId}>
 
             <PageItem value="headers">
               <Panel name="General">
@@ -76,7 +97,7 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
             </PageItem>
 
             <PageItem value="request">
-              <code>
+              <code className="code-view">
                 <pre>
                   {data.requestBody}
                 </pre>
@@ -84,11 +105,7 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
             </PageItem>
 
             <PageItem value="response">
-              <code>
-                <pre>
-                  {data.responseBody}
-                </pre>
-              </code>
+              { this.renderResponsePreview() }
             </PageItem>
 
           </Page>
