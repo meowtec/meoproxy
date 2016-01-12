@@ -5,11 +5,13 @@ import event from '../../utils/event'
 import * as assert from 'assert'
 import * as __ from 'lodash'
 import * as storage from '../../utils/storage'
+import * as mine from '../../utils/content-type'
 
 import { Headers, Request, Response, ipcData, ipcDataState } from '../../typed/typed'
 
 export interface Detail {
   id: string
+  ssl: boolean
   state: ipcDataState
   request: Request
   response: Response
@@ -73,10 +75,9 @@ export const getItem = (id: string) => {
     bodies.requestBody = storage.readFile(detail.request.storageId).toString()
   }
 
-  if (detail.response && detail.response.storageId) {
+  if (detail.response && detail.response.storageId && mine.isText(detail.response.headers['content-type'])) {
     bodies.responseBody = storage.readFile(detail.response.storageId).toString()
   }
-
 
   return Object.assign(bodies, detail)
 }

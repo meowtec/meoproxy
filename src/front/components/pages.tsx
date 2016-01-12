@@ -8,7 +8,7 @@ export interface PageItemProps extends React.Props<any> {
 }
 
 export interface PageProps extends React.Props<any> {
-  children?: PageItem[]
+  className?: string
   value: any
 }
 
@@ -18,9 +18,9 @@ export class PageItem extends React.Component<PageItemProps, any> {}
 export class Page extends React.Component<PageProps, any> {
   render() {
     return (
-      <div>
+      <div className={this.props.className}>
         {
-          this.props.children.map(item => {
+          React.Children.toArray(this.props.children).map((item: React.ReactElement<any>) => {
             let value = item.props.value
             return <section key={value} className={this.props.value === value ? '' : 'hide'}>{item.props.children}</section>
           })

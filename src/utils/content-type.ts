@@ -15,6 +15,7 @@ export function detectEncode(content: string) {
 }
 
 export function isText(content: string) {
+  if (!content) return true
   // 去掉后面的 `;charset`
   const contentMine = content.replace(/.*;/, '')
 
