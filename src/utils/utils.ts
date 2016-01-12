@@ -1,8 +1,6 @@
 'use strict'
 
-import dateFormat from 'dateformat'
 import { Readable } from 'stream'
-import { EventEmitter } from 'events'
 
 export function none() {}
 
@@ -53,7 +51,7 @@ export function parseQS(url: string) {
   let qs = url.replace(/.*\?/, '')
 
   return qs.split('&').reduce(function(obj, item) {
-    var kv = item.split('=')
+    const kv = item.split('=')
     obj[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || '')
     return obj
   }, {})

@@ -40,7 +40,7 @@ export interface Response {
   body?: any
 }
 
-export interface ipcData {
+export interface IpcData {
   id: string
   state: ipcDataState
   request?: Request

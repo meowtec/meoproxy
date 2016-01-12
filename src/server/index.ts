@@ -2,13 +2,10 @@
 
 import Proxy from 'catro'
 import { RequestHandler } from 'catro'
-import * as electron from 'electron'
 import * as _ from '../utils/utils'
 import * as storage from '../utils/storage'
-import { Writable, Readable } from 'stream'
-import { ipcData, ipcDataState } from '../typed/typed'
-
-import { BrowserWindow } from 'electron'
+import { Readable } from 'stream'
+import { IpcData, ipcDataState } from '../typed/typed'
 
 storage.initial()
 
@@ -21,16 +18,15 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
   proxy.on('open', (handler: RequestHandler) => {
     const id = _.id()
 
-    ;{
+    ; {
       /** Storage request */
       let storageId
       if (handler.request.method.toUpperCase() !== 'GET') {
         storageId = storage.filePath(id, 'request')
-        ;(<Readable>handler.request.body).pipe(storage.writeStream(storageId))
+        ; (<Readable>handler.request.body).pipe(storage.writeStream(storageId))
       }
 
-
-      renderer.send('http-data', <ipcData>{
+      renderer.send('http-data', <IpcData>{
         id,
         state: ipcDataState.open,
         scheme: handler.scheme,
@@ -42,7 +38,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
     }
 
     handler.on('requestFinish', () => {
-      renderer.send('http-data', <ipcData>{
+      renderer.send('http-data', <IpcData>{
         id,
         state: ipcDataState.requestFinish,
       })
@@ -51,9 +47,9 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
     handler.on('response', () => {
       const storageId = storage.filePath(id, 'response')
       const writeable = storage.writeStream(storageId)
-      ;(<Readable>handler.response.body).pipe(writeable)
+      ; (<Readable>handler.response.body).pipe(writeable)
 
-      renderer.send('http-data', <ipcData>{
+      renderer.send('http-data', <IpcData>{
         id,
         state: ipcDataState.response,
         response: Object.assign({}, handler.response, {
@@ -62,7 +58,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
       })
 
       writeable.on('finish', () => {
-        renderer.send('http-data', <ipcData>{
+        renderer.send('http-data', <IpcData>{
           id,
           state: ipcDataState.responseFinish
         })
@@ -70,7 +66,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
     })
 
     handler.on('finish', () => {
-      renderer.send('http-data', <ipcData>{
+      renderer.send('http-data', <IpcData>{
         id,
         state: ipcDataState.finish
       })
