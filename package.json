@@ -5,8 +5,8 @@
   "main": "built/bootstrap.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "rm -rf built && tsc -p .",
-    "start": "electron . --production"
+    "start": "electron . --production",
+    "debug": "npm start & tsc -p . --watch & gulp watch"
   },
   "repository": {
     "type": "git",
