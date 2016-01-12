@@ -1,11 +1,11 @@
 'use strict'
 
-import { Menu, dialog, app } from 'electron'
+import { Menu, dialog } from 'electron'
 import caPage from './ca-page'
 import * as ip from 'ip'
 
 export default function initMenu() {
-  var template = [
+  const template = [
     {
       label: 'Window',
       role: 'window',

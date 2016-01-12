@@ -7,7 +7,7 @@ import * as __ from 'lodash'
 import * as storage from '../../utils/storage'
 import * as mine from '../../utils/content-type'
 
-import { Headers, Request, Response, ipcData, ipcDataState } from '../../typed/typed'
+import { Headers, Request, Response, IpcData, ipcDataState } from '../../typed/typed'
 
 export interface Detail {
   id: string
