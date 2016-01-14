@@ -1,0 +1,21 @@
+.text-editor {
+  overflow: auto;
+  width: 100%;
+  display: block;
+
+  .CodeMirror, .CodeMirror-scroll {
+    height: auto;
+  }
+
+  .CodeMirror {
+    .CodeMirror-cursor {
+      width: 1px;
+      background: #999;
+    }
+
+    .CodeMirror-linenumber {
+      font-size: 12px;
+      top: 3px;
+    }
+  }
+}
