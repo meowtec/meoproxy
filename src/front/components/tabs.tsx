@@ -5,17 +5,17 @@ import * as React from 'react'
 
 export interface TabItemProps extends React.Props<any> {
   selected?: boolean
-  value: any
+  value: string | number
 }
 
 export interface TabProps extends React.Props<any> {
-  onChange: (any)
+  onChange: (value: string | number) => void
   defaultValue: any
   className?: string
 }
 
 export interface TabState {
-  value: any
+  value: string | number
 }
 
 export class TabItem extends React.Component<TabItemProps, any> {}
