@@ -1,7 +1,6 @@
 'use strict'
 
 import * as React from 'react'
-import { Empty } from './empty'
 
 export interface PageItemProps extends React.Props<any> {
   value: any

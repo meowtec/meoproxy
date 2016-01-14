@@ -7,9 +7,6 @@ import HttpDetail from './components/http-detail'
 import { Tab, TabItem } from './components/tabs'
 import * as data from './data/data'
 import event from '../utils/event'
-import * as assert from 'assert'
-
-// require('./css/index.less')
 
 class Main extends React.Component<any, any> {
 
