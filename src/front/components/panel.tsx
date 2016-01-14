@@ -44,7 +44,7 @@ export default class Panel extends React.Component<PanelProps, PanelState> {
     })
   }
 
-  static defaultProps:PanelProps = {
+  static defaultProps: PanelProps = {
     name: null,
     defaultOpen: true
   }

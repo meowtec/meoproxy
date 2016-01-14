@@ -2,12 +2,10 @@
 
 import { ipcRenderer } from 'electron'
 import event from '../../utils/event'
-import * as assert from 'assert'
-import * as __ from 'lodash'
 import * as storage from '../../utils/storage'
 import * as mine from '../../utils/content-type'
 
-import { Headers, Request, Response, IpcData, ipcDataState } from '../../typed/typed'
+import { Request, Response, ipcDataState } from '../../typed/typed'
 
 export interface Detail {
   id: string
@@ -26,7 +24,7 @@ export interface Bodies {
   responseBody_?: string
 }
 
-const timeline:Detail[] = [] // Map -> React Elements 性能较低
+const timeline: Detail[] = [] // Map -> React Elements 性能较低
 
 const find = (id: string) => timeline.find(item => item.id === id)
 

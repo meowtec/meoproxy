@@ -31,7 +31,7 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
     if (!data.response || !data.response.storageId) return null
 
     if (/image/.test(response.headers['content-type'])) {
-      return <img src={"file://" + storage.getTempDir() + '/' + response.storageId}/>
+      return <img src={'file://' + storage.getTempDir() + '/' + response.storageId}/>
     }
 
     return (
@@ -44,7 +44,6 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
   }
 
   render() {
-    let code = `function() {\n  a()\n}`
     let data = this.props.data
 
     if (data) {
