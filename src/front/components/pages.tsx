@@ -1,8 +1,10 @@
 'use strict'
 
 import * as React from 'react'
+import { toString, addClass } from '../../utils/utils'
 
 export interface PageItemProps extends React.Props<any> {
+  className?: string
   value: any
 }
 
@@ -21,7 +23,7 @@ export class Page extends React.Component<PageProps, any> {
         {
           React.Children.toArray(this.props.children).map((item: React.ReactElement<any>) => {
             let value = item.props.value
-            return <section key={value} className={this.props.value === value ? '' : 'hide'}>{item.props.children}</section>
+            return <section key={value} className={`${toString(item.props.className)} ${addClass('hide', this.props.value !== value )}`}>{item.props.children}</section>
           })
         }
       </div>

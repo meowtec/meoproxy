@@ -4,6 +4,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import Timeline from './components/timeline'
 import HttpDetail from './components/http-detail'
+import { Page, PageItem } from './components/pages'
 import { Tab, TabItem } from './components/tabs'
 import * as data from './data/data'
 import event from '../utils/event'
@@ -14,7 +15,8 @@ class Main extends React.Component<any, any> {
     super(props)
 
     this.state = {
-      timeline: data.getTimeline()
+      timeline: data.getTimeline(),
+      navValue: 'network'
     }
 
     this.listenEvents()
@@ -49,10 +51,16 @@ class Main extends React.Component<any, any> {
     })
   }
 
+  handleMainNavChange(value: string) {
+    this.setState({
+      navValue: value
+    })
+  }
+
   render() {
     return (
       <div className="layout">
-        <Tab className="nav" defaultValue="network" onChange={() => {}}>
+        <Tab className="nav" defaultValue={this.state.navValue} onChange={this.handleMainNavChange.bind(this)}>
           <TabItem value="network">
             <i className="oi" data-glyph="transfer"/>
             Network
@@ -67,14 +75,22 @@ class Main extends React.Component<any, any> {
             <span className="dot">12</span>
           </TabItem>
         </Tab>
-
-        <aside>
-          <Timeline data={this.state.timeline}/>
-        </aside>
-
-        <div className="main">
-          <HttpDetail data={this.state.detail} />
-        </div>
+        <Page value={this.state.navValue} className="body">
+          <PageItem value="network" className="network">
+            <div className="list">
+              <Timeline data={this.state.timeline}/>
+            </div>
+            <div className="main">
+              <HttpDetail data={this.state.detail} />
+            </div>
+          </PageItem>
+          <PageItem value="sequence">
+            seq
+          </PageItem>
+          <PageItem value="breakpoints">
+            bk
+          </PageItem>
+        </Page>
       </div>
     )
   }

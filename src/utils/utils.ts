@@ -61,6 +61,10 @@ export function addClass(className: string, condition: boolean) {
   return condition ? className : ''
 }
 
+export function toString(value) {
+  return value == null ? '' : value
+}
+
 export let id
 {
   const baseDate = Date.now()
