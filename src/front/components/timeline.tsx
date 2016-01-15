@@ -17,12 +17,17 @@ export interface TimelineItemState {}
 
 export interface TimelineProps {
   data: any[]
+  role?: TimelineRole
 }
 
 export interface TimelineState {
   activeId: string
 }
 
+export enum TimelineRole {
+  network,
+  breakpoint
+}
 
 class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState> {
 

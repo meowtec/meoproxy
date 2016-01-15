@@ -2,6 +2,7 @@
 
 @import './components/tabs';
 @import './components/panel';
+@import './components/editor-core';
 @import './components/timeline';
 @import './components/http-detail';
 
@@ -38,7 +39,7 @@
         background: #EAEAEA;
       }
 
-      .oi {
+      .icon {
         font-size: 18px;
         margin-right: 8px;
 
@@ -68,13 +69,15 @@
     height: 100%;
 
     > section {
-      display: flex;
       height: 100%;
     }
   }
 }
 
 .network {
+  display: flex;
+  height: 100%;
+
   .list {
     width: 600px;
     flex-shrink: 0;
@@ -84,6 +87,15 @@
 
   .main {
     overflow: auto;
+    flex-grow: 1;
+  }
+}
+
+.breakpoint {
+  display: flex;
+  height: 100%;
+
+  .list {
     flex-grow: 1;
   }
 }
