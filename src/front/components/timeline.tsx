@@ -106,11 +106,21 @@ export default class Timeline extends React.Component<TimelineProps, TimelineSta
   }
 
   renderEmpty() {
-    return (
-      <div className="timeline empty">
-        Waiting for connect...
-      </div>
-    )
+    if (this.props.role === TimelineRole.breakpoint) {
+      return (
+        <div className="timeline empty">
+          <i className="icon-inbox"></i>
+          <p>当前无断点请求</p>
+        </div>
+      )
+    }
+    else {
+      return (
+        <div className="timeline empty">
+          Waiting for connect...
+        </div>
+      )
+    }
   }
 
   renderList() {
