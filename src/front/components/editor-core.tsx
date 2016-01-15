@@ -1,7 +1,6 @@
 'use strict'
 
 import * as React from 'react'
-import * as _ from '../../utils/utils'
 
 const EditorMode = {
   html: 'text/html',
