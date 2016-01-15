@@ -31,15 +31,15 @@ class Main extends React.Component<any, any> {
       <div className="layout">
         <Tab className="nav" defaultValue={this.state.navValue} onChange={this.handleMainNavChange.bind(this)}>
           <TabItem value="network">
-            <i className="oi" data-glyph="transfer"/>
+            <i className="icon icon-network"/>
             Network
           </TabItem>
           <TabItem value="sequence">
-            <i className="oi" data-glyph="layers"/>
+            <i className="icon icon-flow-tree"/>
             Sequence
           </TabItem>
           <TabItem value="breakpoints">
-            <i className="oi" data-glyph="target"/>
+            <i className="icon icon-target"/>
             Breakpoints
             <span className="dot">12</span>
           </TabItem>
