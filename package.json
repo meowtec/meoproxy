@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": " tsc -p . && gulp dev",
     "start": "electron . --production",
-    "debug": "npm start & tsc -p . --watch & gulp watch",
-    "lint": "tslint ./src/*.ts ./src/**/*.ts"
+    "debug": "npm run build && npm start & tsc -p . --watch & gulp watch",
+    "lint": "tslint ./src/*.ts* ./src/**/*.ts* ./src/**/**/*.ts*"
   },
   "repository": {
     "type": "git",
