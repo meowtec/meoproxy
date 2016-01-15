@@ -1,5 +1,9 @@
 'use strict'
 
+import { Request, Headers, Response } from 'catro'
+
+export { Headers }
+
 export enum ipcDataState {
   /** 代理收到下游请求 */
   open,
@@ -17,27 +21,12 @@ export enum ipcDataState {
   finish
 }
 
-export interface Headers {
-  [key: string]: string
+export interface Request extends Request {
+  storageId: string
 }
 
-export interface Request {
-  method: string
-  hostname: string
-  port: number
-  path: string
-  headers: Headers
+export interface Response extends Response {
   storageId: string
-  /** useless */
-  body?: any
-}
-
-export interface Response {
-  status: number
-  headers: Headers
-  storageId: string
-  /** useless */
-  body?: any
 }
 
 export interface IpcData {

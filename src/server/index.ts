@@ -7,6 +7,7 @@ import * as storage from '../utils/storage'
 import { Readable } from 'stream'
 import { IpcData, ipcDataState } from '../typed/typed'
 
+
 storage.initial()
 
 export default function setup(window: GitHubElectron.BrowserWindow) {
@@ -16,8 +17,8 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
   })
 
   proxy.on('open', (handler: RequestHandler) => {
+    /** generate an uid */
     const id = _.id()
-
     ; {
       /** Storage request */
       let storageId
@@ -29,7 +30,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
       renderer.send('http-data', <IpcData>{
         id,
         state: ipcDataState.open,
-        scheme: handler.scheme,
+        protocol: handler.protocol,
         request: Object.assign({}, handler.request, {
           storageId,
           body: null
