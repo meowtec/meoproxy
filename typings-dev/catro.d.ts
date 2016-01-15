@@ -2,7 +2,7 @@ declare module "catro" {
 
   import * as http from 'http'
   import { EventEmitter } from 'events'
-  import { Readable } from 'stream';
+  import { Readable } from 'stream'
 
   interface Headers {
       [key: string]: string;
@@ -13,7 +13,7 @@ declare module "catro" {
   interface Request {
       method: string;
       hostname: string;
-      port: number;
+      port: string;
       path: string;
       headers: Headers;
       body: Readable | string | Buffer;
@@ -37,13 +37,14 @@ declare module "catro" {
   }
 
   interface RequestHandler extends EventEmitter {
-      scheme: string;
+      protocol: string;
       req: http.IncomingMessage;
       res: http.ServerResponse;
       replaceRequest: (request: Request, requestHandler?: RequestHandler) => Promise<Request> | Request;
       replaceResponse: (request: Response, requestHandler?: RequestHandler) => Promise<Response> | Response;
       request: Request;
       response: Response;
+      url: string;
       preventRequest(): void;
   }
 
@@ -51,8 +52,7 @@ declare module "catro" {
     /** proxy port */
     port: number;
     /** path to storage certRoot */
-    certRoot?: string;
-    /** whether proxy ssl */
+
     https?: {
         (host: string): boolean;
     } | boolean;
