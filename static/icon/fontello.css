@@ -1,10 +1,6 @@
 @font-face {
   font-family: 'fontello';
-  src: url('./fontello.eot?71584402');
-  src: url('./fontello.eot?71584402#iefix') format('embedded-opentype'),
-       url('./fontello.woff?71584402') format('woff'),
-       url('./fontello.ttf?71584402') format('truetype'),
-       url('./fontello.svg?71584402#fontello') format('svg');
+  src: url('./fontello.woff?71584402') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -19,7 +15,7 @@
 }
 */
 
- [class^="icon-"]:before, [class*=" icon-"]:before {
+.icon:before {
   font-family: "fontello";
   font-style: normal;
   font-weight: normal;
@@ -54,17 +50,17 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
-.icon-network:before { content: '\e800'; } /* '' */
-.icon-flow-parallel:before { content: '\e801'; } /* '' */
-.icon-tools:before { content: '\e802'; } /* '' */
-.icon-target:before { content: '\e803'; } /* '' */
-.icon-flow-tree:before { content: '\e804'; } /* '' */
-.icon-spin2:before { content: '\e805'; } /* '' */
-.icon-monitor:before { content: '\e806'; } /* '' */
-.icon-folder-empty:before { content: '\e807'; } /* '' */
-.icon-star:before { content: '\e808'; } /* '' */
-.icon-star-empty:before { content: '\e809'; } /* '' */
-.icon-file-code:before { content: '\e80a'; } /* '' */
-.icon-inbox:before { content: '\e80b'; } /* '' */
-.icon-down:before { content: '\e80c'; } /* '' */
-.icon-up:before { content: '\e80d'; } /* '' */
+.icon[data-glyph=network]:before { content: '\e800'; } /* '' */
+.icon[data-glyph=flow-parallel]:before { content: '\e801'; } /* '' */
+.icon[data-glyph=tools]:before { content: '\e802'; } /* '' */
+.icon[data-glyph=target]:before { content: '\e803'; } /* '' */
+.icon[data-glyph=flow-tree]:before { content: '\e804'; } /* '' */
+.icon[data-glyph=spin2]:before { content: '\e805'; } /* '' */
+.icon[data-glyph=monitor]:before { content: '\e806'; } /* '' */
+.icon[data-glyph=folder-empty]:before { content: '\e807'; } /* '' */
+.icon[data-glyph=star]:before { content: '\e808'; } /* '' */
+.icon[data-glyph=star-empty]:before { content: '\e809'; } /* '' */
+.icon[data-glyph=file-code]:before { content: '\e80a'; } /* '' */
+.icon[data-glyph=inbox]:before { content: '\e80b'; } /* '' */
+.icon[data-glyph=down]:before { content: '\e80c'; } /* '' */
+.icon[data-glyph=up]:before { content: '\e80d'; } /* '' */
