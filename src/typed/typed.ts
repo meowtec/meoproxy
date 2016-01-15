@@ -4,6 +4,10 @@ import { Request, Headers, Response } from 'catro'
 
 export { Headers }
 
+export enum Type {
+  request, response
+}
+
 export enum ipcDataState {
   /** 代理收到下游请求 */
   open,

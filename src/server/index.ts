@@ -5,8 +5,9 @@ import { RequestHandler } from 'catro'
 import * as _ from '../utils/utils'
 import * as storage from '../utils/storage'
 import { Readable } from 'stream'
-import { IpcData, ipcDataState } from '../typed/typed'
-
+import { IpcData, ipcDataState, Type } from '../typed/typed'
+import { shouldBreak } from './options'
+import replace from './replace'
 
 storage.initial()
 
@@ -19,6 +20,13 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
   proxy.on('open', (handler: RequestHandler) => {
     /** generate an uid */
     const id = _.id()
+    const url = handler.url
+
+    if (shouldBreak(url)) {
+      handler.replaceRequest = replace(id, Type.request)
+      handler.replaceResponse = replace(id, Type.response)
+    }
+
     ; {
       /** Storage request */
       let storageId
