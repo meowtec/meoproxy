@@ -109,7 +109,7 @@ export default class Timeline extends React.Component<TimelineProps, TimelineSta
     if (this.props.role === TimelineRole.breakpoint) {
       return (
         <div className="timeline empty">
-          <i className="icon-inbox"></i>
+          <i className="icon" data-glyph="inbox"></i>
           <p>当前无断点请求</p>
         </div>
       )
