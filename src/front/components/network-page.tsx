@@ -3,13 +3,13 @@
 import * as React from 'react'
 import Timeline from './timeline'
 import HttpDetail from './http-detail'
-import * as data from '../data/data'
+import data from '../data/data'
+import { MixedDetail, Detail } from '../data/data'
 import event from '../../utils/event'
 
 export interface NetworkState {
-  timeline?: data.Detail[]
-  detailId?: string
-  detail?: data.MixedDetail
+  detailId?: string;
+  detail?: MixedDetail;
 }
 
 export default class Network extends React.Component<any, NetworkState> {
@@ -18,7 +18,6 @@ constructor(props) {
     super(props)
 
     this.state = {
-      timeline: data.getTimeline()
     }
 
     this.listenEvents()
@@ -26,22 +25,19 @@ constructor(props) {
 
   listenEvents() {
     // 监听 timeline 数据的更新
-    event.on('timeline-update', item => {
-      // 更新到最新的 timeline
-      let timeline = data.getTimeline()
-      this.setState({
-        timeline
-      })
-
+    data.on('update', (item: Detail) => {
       // 如果发生更新的数据和当前详情的数据一致，则更新详情
       if (item.id === this.state.detailId) {
         this.updateDetail()
       }
+      else {
+        this.forceUpdate()
+      }
     })
+  }
 
-    event.on('timeline-item-click', item => {
-      this.updateDetail(item.id)
-    })
+  handleTimelineClick(item) {
+    this.updateDetail(item.id)
   }
 
   updateDetail(id?) {
@@ -57,7 +53,7 @@ constructor(props) {
     return (
       <div className="network">
         <div className="list">
-          <Timeline data={this.state.timeline}/>
+          <Timeline data={data.timeline} onClick={this.handleTimelineClick.bind(this)}/>
         </div>
         <div className="main">
           <HttpDetail data={this.state.detail} />

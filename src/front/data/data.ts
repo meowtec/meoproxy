@@ -1,9 +1,9 @@
 'use strict'
 
 import { ipcRenderer } from 'electron'
-import event from '../../utils/event'
 import * as storage from '../../utils/storage'
 import * as mine from '../../utils/content-type'
+import { EventEmitter } from 'events'
 
 import { Request, Response, ipcDataState } from '../../typed/typed'
 
@@ -26,58 +26,83 @@ export interface Bodies {
 
 export interface MixedDetail extends Detail, Bodies {}
 
-const timeline: Detail[] = [] // Map -> React Elements 性能较低
 
-const find = (id: string) => timeline.find(item => item.id === id)
+export class Data extends EventEmitter {
+  private _timeline: Detail[];
+  private _breakpoints: Detail[];
 
+  constructor() {
+    super()
 
-ipcRenderer.on('http-data', (sender, data: Detail) => {
-  console.log('ipc.on \'http-data\' data => ', data)
-  let detail
+    this._timeline = []
+    this._breakpoints = []
 
-  /**
-   * create a new detail
-   */
-  if (data.state === ipcDataState.open) {
-    detail = data
-    timeline.unshift(data)
+    this.listenEvents()
   }
-  /**
-   * get exist detail
-   * update it by state
-   */
-  else {
-    detail = find(data.id)
 
-    if (!detail) {
-      return // Ignore error.
+  private listenEvents() {
+
+    ipcRenderer.on('http-data', (sender, data: Detail) => {
+      console.log('ipc.on \'http-data\' data => ', data)
+      let detail
+
+      /**
+       * create a new detail
+       */
+      if (data.state === ipcDataState.open) {
+        detail = data
+        this.timeline.unshift(data)
+      }
+      /**
+       * get exist detail
+       * update it by state
+       */
+      else {
+        detail = this.findTimelineItem(data.id)
+
+        if (!detail) {
+          return // Ignore error.
+        }
+
+        Object.assign(detail, data)
+
+      }
+
+      this.emit('update', detail)
+    })
+  }
+
+  private findTimelineItem(id: string) {
+    return this.timeline.find(item => item.id === id)
+  }
+
+  get timeline() {
+    return this._timeline
+  }
+
+  get breakpoints() {
+    return this._breakpoints
+  }
+
+  /** TODO cache. */
+  getItem(id: string): MixedDetail {
+
+    const detail = this.findTimelineItem(id)
+    const bodies: Bodies = {}
+    const request = detail.request
+    const response = detail.response
+
+    if (request && request.storageId) {
+      bodies.requestBody = storage.readFile(request.storageId).toString()
     }
 
-    Object.assign(detail, data)
+    if (response && response.storageId && mine.isText(response.headers['content-type'])) {
+      bodies.responseBody = storage.readFile(response.storageId).toString()
+    }
 
+    return Object.assign(bodies, detail)
   }
 
-  event.emit('timeline-update', detail)
-})
-
-// 获取 TimeLine
-export const getTimeline = () => timeline
-
-// 获取记录细则
-// TODO: 缓存最近几次的 bodyData
-export const getItem = (id: string): MixedDetail => {
-
-  let detail = find(id)
-
-  let bodies: Bodies = {}
-
-  if (detail.request && detail.request.storageId) {
-    bodies.requestBody = storage.readFile(detail.request.storageId).toString()
-  }
-
-  if (detail.response && detail.response.storageId && mine.isText(detail.response.headers['content-type'])) {
-    bodies.responseBody = storage.readFile(detail.response.storageId).toString()
-  }
-
-  return Object.assign(bodies, detail)
 }
+
+export default new Data()

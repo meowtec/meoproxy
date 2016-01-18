@@ -3,6 +3,7 @@
 import * as React  from 'react'
 import { clipboard, remote, Menu } from 'electron'
 import event from '../../utils/event'
+import { Detail } from '../data/data'
 
 
 export interface TimelineItemProps extends React.Props<any> {
@@ -16,8 +17,9 @@ export interface TimelineItemProps extends React.Props<any> {
 export interface TimelineItemState {}
 
 export interface TimelineProps {
-  data: any[]
+  data: Detail[]
   role?: TimelineRole
+  onClick(item: Detail): void
 }
 
 export interface TimelineState {
@@ -148,10 +150,11 @@ export default class Timeline extends React.Component<TimelineProps, TimelineSta
     this.setState({
       activeId: item.id
     })
-    event.emit('timeline-item-click', item)
+    this.props.onClick(item)
   }
 
   static defaultProps: TimelineProps = {
-    data: []
+    data: [],
+    onClick() {}
   }
 }
