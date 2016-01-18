@@ -49,7 +49,7 @@ class Main extends React.Component<any, any> {
             <Network/>
           </PageItem>
           <PageItem value="sequence">
-            <Editor mode="js" onChange={(value, code) => {console.log(value.length)}}/>
+
           </PageItem>
           <PageItem value="breakpoints">
             <Breakpoint/>

@@ -24,6 +24,8 @@ export interface Bodies {
   responseBody_?: string
 }
 
+export interface MixedDetail extends Detail, Bodies {}
+
 const timeline: Detail[] = [] // Map -> React Elements 性能较低
 
 const find = (id: string) => timeline.find(item => item.id === id)
@@ -63,7 +65,7 @@ export const getTimeline = () => timeline
 
 // 获取记录细则
 // TODO: 缓存最近几次的 bodyData
-export const getItem = (id: string) => {
+export const getItem = (id: string): MixedDetail => {
 
   let detail = find(id)
 

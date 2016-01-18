@@ -6,14 +6,19 @@ import HttpDetail from './http-detail'
 import * as data from '../data/data'
 import event from '../../utils/event'
 
-export default class BreakPoint extends React.Component<any, any> {
+export interface NetworkState {
+  timeline?: data.Detail[]
+  detailId?: string
+  detail?: data.MixedDetail
+}
+
+export default class Network extends React.Component<any, NetworkState> {
 
 constructor(props) {
     super(props)
 
     this.state = {
-      timeline: data.getTimeline(),
-      navValue: 'network'
+      timeline: data.getTimeline()
     }
 
     this.listenEvents()
@@ -44,7 +49,7 @@ constructor(props) {
     let detail = data.getItem(id)
     this.setState({
       detail,
-      id
+      detailId: id
     })
   }
 
