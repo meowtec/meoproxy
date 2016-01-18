@@ -10,7 +10,7 @@ const EditorMode = {
 
 export interface EditorProps {
   mode: string
-  onChange(value: string, codeMirror: CodeMirror.Editor): void
+  onChange?(value: string, codeMirror: CodeMirror.Editor): void
   defaultValue?: string
 }
 
@@ -22,7 +22,7 @@ export default class Editor extends React.Component<EditorProps, any> {
     super(props)
 
     this.cmConfig = {
-      value: props.defaultValue || '',
+      value: props.defaultValue,
       mode: EditorMode[props.mode],
       indentUnit: 2,
       indentWithTabs: true,
@@ -60,4 +60,7 @@ export default class Editor extends React.Component<EditorProps, any> {
     )
   }
 
+  static defaultProps = {
+    onChange() {}
+  }
 }
