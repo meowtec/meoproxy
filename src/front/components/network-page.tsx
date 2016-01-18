@@ -6,6 +6,7 @@ import HttpDetail from './http-detail'
 import data from '../data/data'
 import { MixedDetail, Detail } from '../data/data'
 import event from '../../utils/event'
+import { autobind } from '../../utils/decorators'
 
 export interface NetworkState {
   detailId?: string;
@@ -36,6 +37,7 @@ constructor(props) {
     })
   }
 
+  @autobind
   handleTimelineClick(item) {
     this.updateDetail(item.id)
   }
@@ -53,7 +55,7 @@ constructor(props) {
     return (
       <div className="network">
         <div className="list">
-          <Timeline data={data.timeline} onClick={this.handleTimelineClick.bind(this)}/>
+          <Timeline data={data.timeline} onClick={this.handleTimelineClick}/>
         </div>
         <div className="main">
           <HttpDetail data={this.state.detail} />

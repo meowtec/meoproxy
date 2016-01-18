@@ -4,6 +4,7 @@ import * as React  from 'react'
 import { clipboard, remote, Menu } from 'electron'
 import event from '../../utils/event'
 import { Detail } from '../data/data'
+import { autobind } from '../../utils/decorators'
 
 
 export interface TimelineItemProps extends React.Props<any> {
@@ -57,8 +58,8 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
     let response = props.response || {}
 
     return (
-      <li onContextMenu={this.handleContextMenu.bind(this)}
-          onClick={this.handleClick.bind(this)}
+      <li onContextMenu={this.handleContextMenu}
+          onClick={this.handleClick}
           className={props.active ? 'active' : ''}
         >
         <span className="method">{request.method}</span>
@@ -71,6 +72,7 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
     )
   }
 
+  @autobind
   handleContextMenu(e) {
     Menu.buildFromTemplate([{
       label: 'Copy Link Address',
@@ -81,6 +83,7 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
     }]).popup(remote.getCurrentWindow())
   }
 
+  @autobind
   handleClick() {
     this.props.onClick(this.props)
   }
@@ -130,7 +133,7 @@ export default class Timeline extends React.Component<TimelineProps, TimelineSta
       <ul className="timeline">
         {
           this.props.data.map(item => {
-            return <TimelineItem key={item.id} {...item} active={item.id === this.state.activeId} onClick={this.handleItemClick.bind(this)}/>
+            return <TimelineItem key={item.id} {...item} active={item.id === this.state.activeId} onClick={this.handleItemClick}/>
           })
         }
       </ul>
@@ -146,6 +149,7 @@ export default class Timeline extends React.Component<TimelineProps, TimelineSta
     }
   }
 
+  @autobind
   handleItemClick(item) {
     this.setState({
       activeId: item.id
