@@ -6,7 +6,7 @@
 
 import * as React from 'react'
 import { addClass } from '../../utils/utils'
-
+import { autobind } from '../../utils/decorators'
 
 export interface PanelProps extends React.Props<any> {
   name: string
@@ -30,7 +30,7 @@ export default class Panel extends React.Component<PanelProps, PanelState> {
   render() {
     return (
       <section className={`panel ${addClass('closed', !this.state.open)}`}>
-        <h3 onClick={this.handleToggleClick.bind(this)}>{this.props.name}</h3>
+        <h3 onClick={this.handleToggleClick}>{this.props.name}</h3>
         <dl>
           {this.props.children}
         </dl>
@@ -38,6 +38,7 @@ export default class Panel extends React.Component<PanelProps, PanelState> {
     )
   }
 
+  @autobind
   handleToggleClick() {
     this.setState({
       open: !this.state.open

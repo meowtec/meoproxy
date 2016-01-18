@@ -9,6 +9,7 @@ import { Detail, Bodies } from '../data/data'
 import Panel from './panel'
 import * as _ from '../../utils/utils'
 import * as storage from '../../utils/storage'
+import { autobind } from '../../utils/decorators'
 
 export interface HttpDetailProps extends React.Props<any> {
   data: Detail & Bodies
@@ -52,7 +53,7 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
 
       return (
         <div className="detail-container">
-          <Tab defaultValue={this.state.selectedId} onChange={this.handleTabChange.bind(this)}>
+          <Tab defaultValue={this.state.selectedId} onChange={this.handleTabChange}>
             <TabItem value="headers">Headers</TabItem>
             <TabItem value="request">Request</TabItem>
             <TabItem value="response">Response</TabItem>
@@ -116,6 +117,7 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
     }
   }
 
+  @autobind
   handleTabChange(tabValue) {
     this.setState({
       selectedId: tabValue

@@ -7,7 +7,8 @@
     "rootDir": "src",
     "noImplicitAny": false,
     "sourceMap": true,
-    "declaration": true
+    "declaration": true,
+    "experimentalDecorators": true
 
   },
   "exclude": [
