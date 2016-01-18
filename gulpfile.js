@@ -1,5 +1,4 @@
 var browserify = require('browserify')
-var tsify = require('tsify')
 var gulp = require('gulp')
 var buffer = require('vinyl-buffer')
 var source = require('vinyl-source-stream')
@@ -8,9 +7,9 @@ var uglify = require('gulp-uglify')
 var less = require('gulp-less')
 
 
-function tsBuild(min) {
+function jsBundle(min) {
   var stream = browserify({
-//    debug: true,
+    debug: !min,
     ignore: [],
     bundleExternal: false
   })
@@ -19,21 +18,18 @@ function tsBuild(min) {
     .pipe(source('./index.js'))
     .pipe(buffer())
 
-  if (min) {
-    stream = stream.pipe(uglify())
-  }
 
   return stream.pipe(gulp.dest('./static/dist'))
 }
 
 // for development
-gulp.task('ts', function() {
-  return tsBuild(false)
+gulp.task('js', function() {
+  return jsBundle(false)
 })
 
 // for production
-gulp.task('ts-procudtion', function() {
-  return tsBuild(true)
+gulp.task('js-production', function() {
+  return jsBundle(true)
 })
 
 gulp.task('less', function () {
@@ -42,11 +38,11 @@ gulp.task('less', function () {
     .pipe(gulp.dest('./static/dist'))
 })
 
-gulp.task('watch', ['ts', 'less'], function () {
-  gulp.watch(['built/front/*.js', 'built/front/**/*.js'], ['ts'])
+gulp.task('watch', ['js', 'less'], function () {
+  gulp.watch(['built/front/*.js', 'built/front/**/*.js'], ['js'])
   gulp.watch(['src/front/*.less', 'src/front/**/*.less'], ['less'])
 })
 
-gulp.task('dev', ['ts', 'less'])
+gulp.task('dev', ['js', 'less'])
 
-gulp.task('default', ['ts-procudtion', 'less'])
+gulp.task('default', ['js-production', 'less'])
