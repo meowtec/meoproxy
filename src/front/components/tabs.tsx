@@ -59,4 +59,9 @@ export class Tab extends React.Component<TabProps, TabState> {
       this.props.onChange(value)
     }
   }
+
+  static defaultProps = {
+    onChange() {},
+    className: ''
+  }
 }

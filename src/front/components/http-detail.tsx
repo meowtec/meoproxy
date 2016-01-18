@@ -122,7 +122,4 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
     })
   }
 
-  static defaultProps = {
-    data: null
-  }
 }
