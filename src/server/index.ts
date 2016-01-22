@@ -17,12 +17,17 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
     port: 8899
   })
 
+  function ipcSend(data: IpcData) {
+    renderer.send('http-data', data)
+  }
+
   proxy.on('open', (handler: RequestHandler) => {
     /** generate an uid */
     const id = _.id()
     const url = handler.url
-
-    if (shouldBreak(url)) {
+    const hasBreak = shouldBreak(url)
+    console.log(hasBreak)
+    if (hasBreak) {
       handler.replaceRequest = replace(id, Type.request)
       handler.replaceResponse = replace(id, Type.response)
     }
@@ -35,19 +40,21 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
         ; (<Readable>handler.request.body).pipe(storage.writeStream(storageId))
       }
 
-      renderer.send('http-data', <IpcData>{
+      ipcSend({
         id,
         state: ipcDataState.open,
         protocol: handler.protocol,
+        breakpoint: hasBreak,
         request: Object.assign({}, handler.request, {
           storageId,
           body: null
         })
       })
+
     }
 
     handler.on('requestFinish', () => {
-      renderer.send('http-data', <IpcData>{
+      ipcSend({
         id,
         state: ipcDataState.requestFinish,
       })
@@ -58,24 +65,26 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
       const writeable = storage.writeStream(storageId)
       ; (<Readable>handler.response.body).pipe(writeable)
 
-      renderer.send('http-data', <IpcData>{
+      ipcSend({
         id,
         state: ipcDataState.response,
         response: Object.assign({}, handler.response, {
-          storageId
+          storageId,
+          body: null
         })
       })
 
       writeable.on('finish', () => {
-        renderer.send('http-data', <IpcData>{
+        ipcSend({
           id,
-          state: ipcDataState.responseFinish
+          state: ipcDataState.responseFinish,
+          breakpoint: hasBreak
         })
       })
     })
 
     handler.on('finish', () => {
-      renderer.send('http-data', <IpcData>{
+      ipcSend({
         id,
         state: ipcDataState.finish
       })
