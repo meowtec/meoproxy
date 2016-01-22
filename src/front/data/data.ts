@@ -5,7 +5,7 @@ import * as storage from '../../utils/storage'
 import * as mine from '../../utils/content-type'
 import { EventEmitter } from 'events'
 
-import { Request, Response, ipcDataState, IpcData } from '../../typed/typed'
+import { ipcDataState, IpcData } from '../../typed/typed'
 
 // export interface Detail {
 //   id: string

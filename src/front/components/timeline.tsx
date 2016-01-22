@@ -2,7 +2,6 @@
 
 import * as React  from 'react'
 import { clipboard, remote, Menu } from 'electron'
-import event from '../../utils/event'
 import { Detail } from '../data/data'
 import { autobind } from '../../utils/decorators'
 

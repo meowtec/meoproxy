@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { Tab, TabItem } from './tabs'
 import { Page, PageItem } from './pages'
-import { Detail, Bodies, MixedDetail } from '../data/data'
+import { MixedDetail } from '../data/data'
 
 import Panel from './panel'
 import * as _ from '../../utils/utils'
