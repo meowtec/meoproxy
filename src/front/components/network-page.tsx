@@ -5,7 +5,6 @@ import Timeline from './timeline'
 import HttpDetail from './http-detail'
 import data from '../data/data'
 import { MixedDetail, Detail } from '../data/data'
-import event from '../../utils/event'
 import { autobind } from '../../utils/decorators'
 
 export interface NetworkState {

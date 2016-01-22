@@ -2,7 +2,6 @@
 
 import * as React from 'react'
 import EditorCore from './editor-core'
-import * as data from '../data/data'
 import { MixedDetail } from '../data/data'
 import { Type } from '../../typed/typed'
 import { autobind } from '../../utils/decorators'
