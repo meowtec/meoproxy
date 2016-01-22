@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { Tab, TabItem } from './tabs'
 import { Page, PageItem } from './pages'
-import { Detail, Bodies } from '../data/data'
+import { Detail, Bodies, MixedDetail } from '../data/data'
 
 import Panel from './panel'
 import * as _ from '../../utils/utils'
@@ -12,7 +12,7 @@ import * as storage from '../../utils/storage'
 import { autobind } from '../../utils/decorators'
 
 export interface HttpDetailProps extends React.Props<any> {
-  data: Detail & Bodies
+  data: MixedDetail
 }
 
 export default class HttpDetail extends React.Component<HttpDetailProps, any> {
@@ -66,7 +66,7 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
                 <dt>Method</dt>
                 <dd>{data.request.method}</dd>
                 <dt>URL</dt>
-                <dd>{_.genUrl(data.ssl, data.request.hostname, data.request.port, data.request.path)}</dd>
+                <dd>{_.genUrl(data.protocol, data.request.hostname, data.request.port, data.request.path)}</dd>
                 <dt>Status</dt>
                 <dd>{data.response.status}</dd>
               </Panel>

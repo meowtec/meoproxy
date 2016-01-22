@@ -41,10 +41,10 @@ export function streamReadAll(readable: Readable) {
   })
 }
 
-export function genUrl(ssl: boolean, hostname: string, port: string, path: string) {
+export function genUrl(protocol: string, hostname: string, port: string, path: string) {
   let portPart = (!port || Number(port) === 80) ? '' : (':' + port)
 
-  return (ssl ? 'https' : 'http') + '://' + hostname + portPart + path
+  return protocol + '://' + hostname + portPart + path
 }
 
 export function parseQS(url: string) {
