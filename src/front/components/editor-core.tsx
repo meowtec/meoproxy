@@ -8,7 +8,7 @@ const EditorMode = {
   js: 'text/js'
 }
 
-export interface EditorProps {
+export interface EditorProps extends React.Props<any> {
   mode: string
   onChange?(value: string, codeMirror: CodeMirror.Editor): void
   defaultValue?: string

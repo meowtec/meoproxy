@@ -7,6 +7,8 @@ import { Tab, TabItem } from './components/tabs'
 import Editor from './components/editor-core'
 import Network from './components/network-page'
 import Breakpoint from './components/breakpoint-page'
+import data from './data/data'
+import * as _ from '../utils/utils'
 
 
 class Main extends React.Component<any, any> {
@@ -15,9 +17,20 @@ class Main extends React.Component<any, any> {
     super(props)
 
     this.state = {
-      navValue: 'network'
+      navValue: 'network',
+      breakCount: 0
     }
 
+    this.listenEvents()
+
+  }
+
+  listenEvents() {
+    data.on('update', () => {
+      this.setState({
+        breakCount: data.breakpoints.length
+      })
+    })
   }
 
   handleMainNavChange(value: string) {
@@ -41,7 +54,7 @@ class Main extends React.Component<any, any> {
           <TabItem value="breakpoints">
             <i className="icon" data-glyph="target"/>
             Breakpoints
-            <span className="dot">12</span>
+            <span className={`dot ${_.addClass('hide', this.state.breakCount === 0)}`}>{this.state.breakCount}</span>
           </TabItem>
         </Tab>
         <Page value={this.state.navValue} className="body">
