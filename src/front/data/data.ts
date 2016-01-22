@@ -5,17 +5,17 @@ import * as storage from '../../utils/storage'
 import * as mine from '../../utils/content-type'
 import { EventEmitter } from 'events'
 
-import { Request, Response, ipcDataState } from '../../typed/typed'
+import { Request, Response, ipcDataState, IpcData } from '../../typed/typed'
 
-export interface Detail {
-  id: string
-  ssl: boolean
-  state: ipcDataState
-  request: Request
-  response: Response
-  request_: Request
-  response_: Response
-}
+// export interface Detail {
+//   id: string
+//   ssl: boolean
+//   state: ipcDataState
+//   request: Request
+//   response: Response
+//   request_: Request
+//   response_: Response
+// }
 
 export interface Bodies {
   requestBody?: string
@@ -24,12 +24,13 @@ export interface Bodies {
   responseBody_?: string
 }
 
-export interface MixedDetail extends Detail, Bodies {}
+export { IpcData as Detail }
 
+export interface MixedDetail extends IpcData, Bodies {}
 
 export class Data extends EventEmitter {
-  private _timeline: Detail[];
-  private _breakpoints: Detail[];
+  private _timeline: IpcData[];
+  private _breakpoints: IpcData[];
 
   constructor() {
     super()
@@ -42,7 +43,7 @@ export class Data extends EventEmitter {
 
   private listenEvents() {
 
-    ipcRenderer.on('http-data', (sender, data: Detail) => {
+    ipcRenderer.on('http-data', (sender, data: IpcData) => {
       console.log('ipc.on \'http-data\' data => ', data)
       let detail
 
@@ -66,6 +67,10 @@ export class Data extends EventEmitter {
 
         Object.assign(detail, data)
 
+      }
+
+      if (data.breakpoint) {
+        this.breakpoints.push(data)
       }
 
       this.emit('update', detail)

@@ -1,6 +1,10 @@
 'use strict'
 
-import { Request, Headers, Response } from 'catro'
+import {
+  Request as CatroRequest,
+  Response as CatroResponse,
+  Headers
+} from 'catro'
 
 export { Headers }
 
@@ -25,17 +29,19 @@ export enum ipcDataState {
   finish
 }
 
-export interface Request extends Request {
+export interface Request extends CatroRequest {
   storageId: string
 }
 
-export interface Response extends Response {
+export interface Response extends CatroResponse {
   storageId: string
 }
 
 export interface IpcData {
   id: string
   state: ipcDataState
+  protocol?: string
+  breakpoint?: boolean
   request?: Request
   response?: Response
 }

@@ -9,7 +9,7 @@ import { autobind } from '../../utils/decorators'
 
 export interface TimelineItemProps extends React.Props<any> {
   request: any
-  ssl: boolean
+  protocol: string
   response: any
   active: boolean
   onClick(props: TimelineItemProps)
@@ -38,10 +38,9 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
     super(props)
 
     let request = props.request
-    let scheme = props.ssl ? 'https' : 'http'
     let port = request.port
     let isDefaultPort = !port || port === 80
-    let baseUrl = scheme + '://' + request.hostname + (isDefaultPort ? '' : ':' + port)
+    let baseUrl = props.protocol + '://' + request.hostname + (isDefaultPort ? '' : ':' + port)
 
     this.baseUrl = baseUrl
   }
@@ -96,7 +95,7 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
     onClick() {},
     request: {},
     response: {},
-    ssl: false,
+    protocol: 'http',
     active: false
   }
 }
