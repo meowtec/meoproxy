@@ -21,7 +21,7 @@ function headersStringify(headers: Headers) {
 function headersParse(string: string): Headers {
   const obj: Headers = {}
   string.split('\n').forEach((line) => {
-    var tuple = line
+    // const tuple = line
   })
   return obj
 }
@@ -63,7 +63,7 @@ export default class Editor extends React.Component<EditorProps, any> {
       responseForm: {}
     }
 
-    let select = this.refs.method
+    // let select = this.refs.method
   }
 
   componentDidMount() {

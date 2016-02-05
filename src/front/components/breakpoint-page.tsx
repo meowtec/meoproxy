@@ -9,7 +9,7 @@ import { autobind } from '../../utils/decorators'
 import Editor from './breakpoint-editor'
 import { Type } from '../../typed/typed'
 import { Request, Response } from 'catro'
-import * as storage from '../../utils/storage'
+// import * as storage from '../../utils/storage'
 
 export interface BreakpointState {
   detail?: MixedDetail
