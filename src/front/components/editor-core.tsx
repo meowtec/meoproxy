@@ -12,6 +12,7 @@ export interface EditorProps extends React.Props<any> {
   mode: string
   onChange?(value: string, codeMirror: CodeMirror.Editor): void
   defaultValue?: string
+  value?: string
 }
 
 export default class Editor extends React.Component<EditorProps, any> {
@@ -22,7 +23,7 @@ export default class Editor extends React.Component<EditorProps, any> {
     super(props)
 
     this.cmConfig = {
-      value: props.defaultValue,
+      value: props.value || props.defaultValue,
       mode: EditorMode[props.mode],
       indentUnit: 2,
       indentWithTabs: true,
@@ -32,25 +33,30 @@ export default class Editor extends React.Component<EditorProps, any> {
       },
       theme: 'neo'
     }
-
   }
 
   componentDidMount() {
     const element: any = this.refs['target']
 
-    setTimeout(() => {
-      let codeMirror = CodeMirror(element, this.cmConfig)
-      this.codeMirror = codeMirror
+    this.codeMirror = CodeMirror(element, this.cmConfig)
+    this.bindEvent()
+  }
 
-      this.bindEvent()
-    }, 3000)
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value != null) {
+      this.updateEditorValue(nextProps.value)
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return false
   }
 
   bindEvent() {
     const codeMirror = this.codeMirror
 
     codeMirror.on('change', (codeMirror) => {
-      this.props.onChange(codeMirror.getDoc().getValue(), codeMirror)
+      this.props.onChange && this.props.onChange(codeMirror.getDoc().getValue(), codeMirror)
     })
   }
 
@@ -60,7 +66,19 @@ export default class Editor extends React.Component<EditorProps, any> {
     )
   }
 
+  updateEditorValue(value) {
+    this.codeMirror.getDoc().setValue(value)
+  }
+
+  get value() {
+    return this.codeMirror.getDoc().getValue()
+  }
+
+  set value(value) {
+    this.updateEditorValue(value)
+  }
+
   static defaultProps = {
-    onChange() {}
+    defaultValue: ''
   }
 }
