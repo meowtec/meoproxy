@@ -34,7 +34,13 @@ app.on('ready', function() {
   appMenuSetup()
 
   // Create the browser window.
-  const window = new BrowserWindow({width: 1200, height: 800})
+  const window = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    useContentSize: true,
+    minWidth: 800,
+    titleBarStyle: 'hidden'
+  })
 
   // and load the index.html of the app.
   window.loadURL('file://' + path.resolve() + '/static/index.html')
