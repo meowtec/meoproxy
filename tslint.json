@@ -17,7 +17,8 @@
     "no-var-keyword": true,
     "quotemark": [
       true,
-      "single"
+      "single",
+      "jsx-double"
     ],
     "semicolon": false,
     "whitespace": [

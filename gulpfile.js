@@ -1,15 +1,14 @@
+'use strict'
+
 const browserify = require('browserify')
 const gulp = require('gulp')
 const buffer = require('vinyl-buffer')
 const source = require('vinyl-source-stream')
-const sourcemaps = require('gulp-sourcemaps')
-const uglify = require('gulp-uglify')
 const less = require('gulp-less')
-const ts = require('gulp-typescript')
 const path = require('path')
 
 function jsBundle(min) {
-  var stream = browserify({
+  let stream = browserify({
     debug: !min,
     ignore: [],
     bundleExternal: false
