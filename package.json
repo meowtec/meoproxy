@@ -2,7 +2,7 @@
   "name": "myproxy",
   "version": "0.0.0",
   "description": "",
-  "main": "built/bootstrap.js",
+  "main": "build/bootstrap.js",
   "scripts": {
     "i": "npm install && tsd install",
     "test": "echo \"Error: no test specified\" && exit 1",

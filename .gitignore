@@ -6,7 +6,7 @@ node_modules/
 cert
 HTTPDesc.md
 _gui.js
-built/
+build/
 gui/dist/
 snippets/
 npm-debug*
