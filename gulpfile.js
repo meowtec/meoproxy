@@ -13,7 +13,7 @@ function jsBundle(min) {
     ignore: [],
     bundleExternal: false
   })
-    .add('./built/front/index.js')
+    .add('./build/front/index.js')
     .bundle()
     .pipe(source('./index.js'))
     .pipe(buffer())
@@ -38,7 +38,7 @@ gulp.task('less', function () {
 })
 
 gulp.task('watch', ['js', 'less'], () => {
-  gulp.watch(['built/front/*.js', 'built/front/**/*.js'], ['js'])
+  gulp.watch(['build/front/*.js', 'build/front/**/*.js'], ['js'])
   gulp.watch(['src/front/*.less', 'src/front/**/*.less'], ['less'])
 })
 
