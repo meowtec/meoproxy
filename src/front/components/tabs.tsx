@@ -2,7 +2,6 @@
 
 import * as React from 'react'
 
-
 export interface TabItemProps extends React.Props<any> {
   selected?: boolean
   value: string | number
