@@ -20,7 +20,7 @@ const env = process.env['MEOP_ENV'] || ''
 // be closed automatically when the JavaScript object is GCed.
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function(){
+app.on('window-all-closed', function(x, v) {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
@@ -48,11 +48,11 @@ app.on('ready', function() {
   const mainURL = (env === 'dev_watch')
     ? 'http://localhost:11200/static/index.html'
     : ('file://' + path.resolve() + '/static/index.html')
-  
+
   if (env.indexOf('dev') !== -2) {
     window.loadURL(mainURL)
   }
-  
+
   // Open the devtools.
   window.webContents.openDevTools()
 
