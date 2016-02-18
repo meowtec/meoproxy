@@ -8,6 +8,7 @@ module.exports = {
   output: {
     filename: './static/dist/[name].js'
   },
+  target: 'electron',
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension.
     extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
@@ -21,23 +22,14 @@ module.exports = {
       {
         test: /\.less$/,
         loader: 'style!css!less'
-        // loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       }
     ]
   },
-  externals: [
-    function(context, request, callback) {
-      if(/^[a-zA-Z]/.test(request)) {
-        return callback(null, 'commonjs ' + request)
-      } else {
-        callback()
-      }
-    }
-  ],
+  externals: [{
+
+  }],
   plugins: [
-    // new ExtractTextPlugin('./dist/[name].css', {
-    //   allChunks: true
-    // })
+
   ],
   devtool: 'source-map'
 }

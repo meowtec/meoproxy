@@ -6,10 +6,12 @@
   "scripts": {
     "i": "npm install && tsd install",
     "lint": "tslint ./src/*.ts* ./src/**/*.ts* ./src/**/**/*.ts*",
-    "start": "electron .",
+    "electron": "electron .",
     "build:back": "tsc -p . && babel build --out-dir build",
     "build:front": "webpack",
-    "watch": "webpack --watch",
+    "start": "npm run build:back && MEOP_ENV=dev_watch npm run electron",
+    "start:once": "npm run build:front && npm run build:back && MEOP_ENV=dev npm run electron",
+    "watch": "./node_modules/.bin/webpack-dev-server --port 11200",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -42,6 +44,7 @@
     "tsd": "^0.6.5",
     "tslint": "~3.3.0",
     "typescript": "^1.8.0",
-    "webpack": "^1.12.13"
+    "webpack": "^1.12.13",
+    "webpack-dev-server": "^1.14.1"
   }
 }

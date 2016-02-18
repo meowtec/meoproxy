@@ -7,6 +7,7 @@ import server from './server/'
 
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
+const env = process.env['MEOP_ENV'] || ''
 
 // console.log(app.getPath('userData'))
 // console.log(app.getPath('cache'))
@@ -43,8 +44,15 @@ app.on('ready', function() {
   })
 
   // and load the index.html of the app.
-  window.loadURL('file://' + path.resolve() + '/static/index.html')
-
+  // window.loadURL()
+  const mainURL = (env === 'dev_watch')
+    ? 'http://localhost:11200/static/index.html'
+    : ('file://' + path.resolve() + '/static/index.html')
+  
+  if (env.indexOf('dev') !== -2) {
+    window.loadURL(mainURL)
+  }
+  
   // Open the devtools.
   window.webContents.openDevTools()
 
