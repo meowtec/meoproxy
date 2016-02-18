@@ -8,7 +8,7 @@ import Network from './components/network-page'
 import Breakpoint from './components/breakpoint-page'
 import data from './data/data'
 import * as _ from '../utils/utils'
-
+import './index.less'
 
 class Main extends React.Component<any, any> {
 
