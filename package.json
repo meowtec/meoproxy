@@ -5,17 +5,20 @@
   "main": "build/bootstrap.js",
   "scripts": {
     "i": "npm install && tsd install",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": " tsc -p . && gulp dev",
-    "start": "electron . --production",
-    "debug": "npm run build && npm start & tsc -p . --watch & gulp watch",
-    "lint": "tslint ./src/*.ts* ./src/**/*.ts* ./src/**/**/*.ts*"
+    "lint": "tslint ./src/*.ts* ./src/**/*.ts* ./src/**/**/*.ts*",
+    "electron": "electron .",
+    "build:back": "tsc -p . && babel build --out-dir build",
+    "build:front": "webpack",
+    "start": "npm run build:back && MEOP_ENV=dev_watch npm run electron",
+    "start:once": "npm run build:front && npm run build:back && MEOP_ENV=dev npm run electron",
+    "watch": "./node_modules/.bin/webpack-dev-server --port 11200",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": ""
   },
-  "author": "",
+  "author": "Meowtec<bertonzh@gmail.com>",
   "private": true,
   "dependencies": {
     "electron-prebuilt": "^0.36.2",
@@ -27,14 +30,21 @@
     "catro": "0.1.5"
   },
   "devDependencies": {
-    "browserify": "~12.0.1",
+    "babel-cli": "^6.5.1",
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.2",
+    "babel-plugin-transform-es2015-destructuring": "^6.5.0",
+    "babel-plugin-transform-es2015-parameters": "^6.5.0",
     "chai": "^3.4.0",
-    "gulp": "~3.9.0",
-    "gulp-less": "~3.0.5",
-    "tsd": "~0.6.5",
+    "css-loader": "^0.23.1",
+    "less": "^2.6.0",
+    "less-loader": "^2.2.2",
+    "style-loader": "^0.13.0",
+    "ts-loader": "^0.8.1",
+    "tsd": "^0.6.5",
     "tslint": "~3.3.0",
-    "typescript": "~1.8.0",
-    "vinyl-buffer": "~1.0.0",
-    "vinyl-source-stream": "~1.1.0"
+    "typescript": "^1.8.0",
+    "webpack": "^1.12.13",
+    "webpack-dev-server": "^1.14.1"
   }
 }

@@ -2,8 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>MeowProxy</title>
-    <link rel="stylesheet" type="text/css" href="./dist/index.css">
+    <title>MeoProxy</title>
     <link rel="stylesheet" type="text/css" href="./icon/fontello.css">
     <link rel="stylesheet" type="text/css" href="lib/codemirror/lib/codemirror.css">
     <link rel="stylesheet" type="text/css" href="lib/codemirror/theme/neo.css">
@@ -33,6 +32,15 @@
     <div id="target">
       loading...
     </div>
-    <script type="text/javascript" src="./dist/index.js"></script>
+    <script>
+    'use strict'
+    {
+      let env = (location.search.match(/env=([^&]+)/) || [])[1]
+      let scriptBase = env === 'dev_watch' ? 'http://localhost:11200/static/' : './'
+      let script = document.createElement('script')
+      script.src = scriptBase + 'dist/index.js'
+      document.body.appendChild(script)   
+    }
+    </script>
   </body>
 </html>

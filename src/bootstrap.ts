@@ -7,6 +7,7 @@ import server from './server/'
 
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
+const env = process.env['MEOP_ENV'] || ''
 
 // console.log(app.getPath('userData'))
 // console.log(app.getPath('cache'))
@@ -19,7 +20,7 @@ const BrowserWindow = electron.BrowserWindow
 // be closed automatically when the JavaScript object is GCed.
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function(){
+app.on('window-all-closed', function(x, v) {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
@@ -43,7 +44,8 @@ app.on('ready', function() {
   })
 
   // and load the index.html of the app.
-  window.loadURL('file://' + path.resolve() + '/static/index.html')
+  // window.loadURL()
+  window.loadURL(`file://${path.resolve()}/static/index.html?env=${env}`)
 
   // Open the devtools.
   window.webContents.openDevTools()
