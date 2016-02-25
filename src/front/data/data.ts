@@ -43,7 +43,7 @@ export class Data extends EventEmitter {
 
   private listenEvents() {
 
-    ipcRenderer.on('http-data', (sender, data: IpcData) => {
+    ipcRenderer.on('http-data', (event, data: IpcData) => {
       console.log('ipc.on \'http-data\' data => ', data)
       let detail
 

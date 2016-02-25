@@ -45,13 +45,7 @@ app.on('ready', function() {
 
   // and load the index.html of the app.
   // window.loadURL()
-  const mainURL = (env === 'dev_watch')
-    ? 'http://localhost:11200/static/index.html'
-    : ('file://' + path.resolve() + '/static/index.html')
-
-  if (env.indexOf('dev') !== -2) {
-    window.loadURL(mainURL)
-  }
+  window.loadURL(`file://${path.resolve()}/static/index.html?env=${env}`)
 
   // Open the devtools.
   window.webContents.openDevTools()

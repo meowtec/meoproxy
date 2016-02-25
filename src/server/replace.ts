@@ -8,7 +8,7 @@ const event = new EventEmitter()
 
 const eventName = (id, type) => id + '_' + type
 
-ipcMain.on('replaced', (sender, data: {
+ipcMain.on('replaced', (event, data: {
   id: string
   type: Type
   data: Request | Response
