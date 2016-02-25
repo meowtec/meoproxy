@@ -19,6 +19,15 @@ export default function initMenu() {
           label: 'Close',
           accelerator: 'CmdOrCtrl+W',
           role: 'close'
+        },
+        {
+          label: '刷新',
+          accelerator: 'CmdOrCtrl+R',
+          click: (item, focusedWindow) => {
+            if (focusedWindow) {
+              focusedWindow.reload()
+            }
+          }
         }
       ]
     },

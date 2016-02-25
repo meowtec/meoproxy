@@ -26,8 +26,8 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
     const id = _.id()
     const url = handler.url
     const hasBreak = shouldBreak(url)
-    console.log(hasBreak)
     if (hasBreak) {
+      console.log(url, 'will be replaced!!')
       handler.replaceRequest = replace(id, Type.request)
       handler.replaceResponse = replace(id, Type.response)
     }
