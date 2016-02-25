@@ -1,10 +1,10 @@
 'use strict'
 
 import * as React  from 'react'
-import { clipboard, remote, Menu } from 'electron'
+import { clipboard, remote } from 'electron'
 import { Detail } from '../data/data'
 import { autobind } from '../../utils/decorators'
-
+const Menu = remote.Menu
 
 export interface TimelineItemProps extends React.Props<any> {
   request: any

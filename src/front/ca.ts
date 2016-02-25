@@ -1,10 +1,11 @@
 'use strict'
 
-declare var QRCode: Function
+import * as ip from 'ip'
+import './ca.less'
 
-import { parseQS } from '../utils/utils'
+const QRCode = window['QRCode']
 
-const ip = parseQS(document.location.href)['ip']
-const downloadLink = `http://${ip}:8899/ca.crt`
-QRCode(document.getElementById('qrcode'), downloadLink)
-(<HTMLAnchorElement>document.getElementById('download')).href = downloadLink
+const ipAddr = ip.address()
+const downloadLink = `http://${ipAddr}:8899/ca.crt`
+new QRCode(document.getElementById('qrcode'), downloadLink)
+; (<HTMLAnchorElement>document.getElementById('download')).href = downloadLink
