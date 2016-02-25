@@ -1,19 +1,34 @@
 .detail-container {
+  display: flex;
+  flex-direction: column;
   margin: 0 15px;
+  height: 100%;
 }
 
 .detail-content {
-  padding-top: 10px;
+  position: relative;
+  flex-grow: 1;
+  margin-top: 10px;
 
   img {
     max-width: 100%;
   }
+
+  .headers {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+  }
 }
 
 .code-view {
-  display: block;
-  font-size: 11px;
-  padding: 10px;
+  box-sizing: border-box;
+  position: absolute;
+  max-height: 100%;
+  width: 100%;
+  overflow: auto;
+  padding: 5px;
 
   word-break: break-word;
   border: 2px solid #eee;
