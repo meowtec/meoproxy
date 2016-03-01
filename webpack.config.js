@@ -25,9 +25,15 @@ module.exports = {
       }
     ]
   },
-  externals: [{
-
-  }],
+  externals: [
+    function(context, request, callback) {
+      if (!/^[a-zA-Z]/.test(request)) {
+        callback()
+      } else {
+        return callback(null, 'commonjs ' + request)
+      }
+    }
+  ],
   plugins: [
 
   ],
