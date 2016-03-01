@@ -44,7 +44,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
         id,
         state: ipcDataState.open,
         protocol: handler.protocol,
-        breakpoint: hasBreak,
+        breakpoint: hasBreak ? Type.request : null,
         request: Object.assign({}, handler.request, {
           storageId,
           body: null
@@ -78,7 +78,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
         ipcSend({
           id,
           state: ipcDataState.responseFinish,
-          breakpoint: hasBreak
+          breakpoint: hasBreak ? Type.response : null
         })
       })
     })

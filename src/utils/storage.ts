@@ -24,16 +24,20 @@ export function filePath(...args) {
   return args.join('.')
 }
 
-export function readStream(p: string) {
-  return fs.createReadStream(getPhysicPath(p))
+export function readStream(path: string) {
+  return fs.createReadStream(getPhysicPath(path))
 }
 
-export function writeStream(p: string) {
-  return fs.createWriteStream(getPhysicPath(p))
+export function writeStream(path: string) {
+  return fs.createWriteStream(getPhysicPath(path))
 }
 
-export function readFile(p: string) {
-  return fs.readFileSync(getPhysicPath(p))
+export function readFile(path: string) {
+  return fs.readFileSync(getPhysicPath(path))
+}
+
+export function writeFile(path: string, content) {
+  return fs.writeFileSync(path, content)
 }
 
 export function getTempDir() {

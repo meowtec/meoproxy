@@ -7,9 +7,7 @@ import data from '../data/data'
 import { Detail, MixedDetail } from '../data/data'
 import { autobind } from '../../utils/decorators'
 import Editor from './breakpoint-editor'
-import { Type } from '../../typed/typed'
 import { Request, Response } from 'catro'
-// import * as storage from '../../utils/storage'
 
 export interface BreakpointState {
   detail?: MixedDetail
@@ -45,22 +43,9 @@ export default class Breakpoint extends React.Component<any, BreakpointState> {
   }
 
   @autobind
-  handleEditorSubmit(data: Request | Response) {
-    console.log(data)
-    if (this.detailType === Type.request) {
-      // storage.writeStream()
-    }
-    else {
-
-    }
-  }
-
-  get detailType() {
+  handleEditorSubmit(formData: Request | Response) {
     const detail = this.state.detail
-    if (!detail) {
-      return
-    }
-    return this.state.detail.response ? Type.response : Type.request
+    data.closeBreakPoint(detail.id, detail.breakpoint, formData)
   }
 
   render() {
@@ -70,9 +55,8 @@ export default class Breakpoint extends React.Component<any, BreakpointState> {
           <Timeline data={data.breakpoints} role={TimelineRole.breakpoint} onClick={this.handleListClick}/>
         </div>
         {
-          this.state.detail ? <Editor data={this.state.detail} type={this.detailType} onSubmit={this.handleEditorSubmit}/> : null
+          this.state.detail ? <Editor data={this.state.detail} onSubmit={this.handleEditorSubmit}/> : null
         }
-
       </div>
     )
   }

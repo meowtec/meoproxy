@@ -1,11 +1,11 @@
 'use strict'
 
-import { ipcRenderer } from 'electron'
+import { ipcRenderer as ipc } from 'electron'
 import * as storage from '../../utils/storage'
 import * as mine from '../../utils/content-type'
 import { EventEmitter } from 'events'
-
-import { ipcDataState, IpcData } from '../../typed/typed'
+import { Request, Response } from 'catro'
+import { ipcDataState, IpcData, Type } from '../../typed/typed'
 
 // export interface Detail {
 //   id: string
@@ -43,7 +43,7 @@ export class Data extends EventEmitter {
 
   private listenEvents() {
 
-    ipcRenderer.on('http-data', (event, data: IpcData) => {
+    ipc.on('http-data', (event, data: IpcData) => {
       console.log('ipc.on \'http-data\' data => ', data)
       let detail
 
@@ -69,7 +69,7 @@ export class Data extends EventEmitter {
 
       }
 
-      if (data.breakpoint) {
+      if (data.breakpoint != null) {
         this.breakpoints.push(data)
       }
 
@@ -106,6 +106,25 @@ export class Data extends EventEmitter {
     }
 
     return Object.assign(bodies, detail)
+  }
+
+  closeBreakPoint(id: string, type: Type, data: Request | Response) {
+    let storageId
+    if (data.body) {
+      storageId = id + type + '.MODI'
+      storage.writeFile(storageId, data.body)
+    }
+
+    const ipcData = Object.assign({}, data, {
+      body: null,
+      bodyId: storageId
+    })
+
+    ipc.send('replaced', {
+      id: id,
+      type,
+      data: ipcData
+    })
   }
 
 }

@@ -41,7 +41,7 @@ export interface IpcData {
   id: string
   state: ipcDataState
   protocol?: string
-  breakpoint?: boolean
+  breakpoint?: Type
   request?: Request
   response?: Response
 }
