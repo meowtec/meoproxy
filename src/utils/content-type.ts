@@ -1,10 +1,10 @@
 'use strict'
 
 const textFileTypes = [
-  'application/json',
-  'application/javascript',
-  'image/svg+xml'
+  'text', 'json', 'javascript', 'xml'
 ]
+
+const textFileRegexp = new RegExp(textFileTypes.join('|'))
 
 export function detectEncode(content: string) {
   const charset = content.match(/charset=([\w\-]+)/)
@@ -16,8 +16,5 @@ export function detectEncode(content: string) {
 
 export function isText(content: string) {
   if (!content) return true
-  // 去掉后面的 `;charset`
-  const contentMine = content.replace(/.*;/, '')
-
-  return /text/i.test(contentMine) || textFileTypes.indexOf(contentMine) > -1
+  return textFileRegexp.test(content)
 }
