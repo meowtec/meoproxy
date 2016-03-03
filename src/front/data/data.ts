@@ -115,7 +115,7 @@ export class Data extends EventEmitter {
   }
 
   getBreakPoint(id: string, type: Type): MixedDetail {
-    let breakpoint = this.getBreakPoint(id, type)
+    let breakpoint = this.findBreakPointItem(id, type)
     return this.getMixedData(breakpoint)
   }
 
