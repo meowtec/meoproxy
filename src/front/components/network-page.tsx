@@ -6,6 +6,7 @@ import HttpDetail from './http-detail'
 import data from '../data/data'
 import { MixedDetail, Detail } from '../data/data'
 import { autobind } from '../../utils/decorators'
+import { throttle } from '../../utils/utils'
 
 export interface NetworkState {
   detailId?: string;
@@ -14,7 +15,7 @@ export interface NetworkState {
 
 export default class Network extends React.Component<any, NetworkState> {
 
-constructor(props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -24,6 +25,8 @@ constructor(props) {
   }
 
   listenEvents() {
+    let throttleUpdate = throttle(300, () => this.forceUpdate())
+
     // 监听 timeline 数据的更新
     data.on('update', (item: Detail) => {
       // 如果发生更新的数据和当前详情的数据一致，则更新详情
@@ -31,7 +34,7 @@ constructor(props) {
         this.updateDetail()
       }
       else {
-        this.forceUpdate()
+        throttleUpdate()
       }
     })
   }

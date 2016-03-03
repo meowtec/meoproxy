@@ -15,6 +15,19 @@ export function debounce(wait: number, fun0?: Function) {
   }
 }
 
+export function throttle(wait: number, fun0?: Function) {
+  let lastDate = 0
+
+  return (func1?: Function) => {
+    let nowDate = Date.now()
+    if (nowDate - lastDate > wait ) {
+      lastDate = nowDate
+      let fun = func1 || fun0
+      fun && fun()
+    }
+  }
+}
+
 export function parseHost(host: string) {
   let tuple = host.split(':')
   return {
