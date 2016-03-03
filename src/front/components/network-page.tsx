@@ -24,8 +24,15 @@ export default class Network extends React.Component<any, NetworkState> {
     this.listenEvents()
   }
 
+  shouldComponentUpdate(nextProps, nextState: NetworkState) {
+    return nextState.detail !== this.state.detail
+  }
+
   listenEvents() {
-    let throttleUpdate = throttle(300, () => this.forceUpdate())
+    let throttleUpdate = throttle(200, () => {
+      this.forceUpdate()
+      console.log('force update')
+    })
 
     // 监听 timeline 数据的更新
     data.on('update', (item: Detail) => {

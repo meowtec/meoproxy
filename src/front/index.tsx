@@ -21,14 +21,15 @@ class Main extends React.Component<any, any> {
     }
 
     this.listenEvents()
-
   }
 
   listenEvents() {
     data.on('update', () => {
-      this.setState({
-        breakCount: data.breakpoints.length
-      })
+      if (data.breakpoints.length !== this.state.breakCount) {
+        this.setState({
+          breakCount: data.breakpoints.length
+        })
+      }
     })
   }
 
