@@ -44,7 +44,7 @@ export class Data extends EventEmitter {
   private listenEvents() {
 
     ipc.on('http-data', (event, data: IpcData) => {
-      console.log('ipc.on \'http-data\' data => ', data)
+      // console.log('ipc.on \'http-data\' data => ', data)
       let detail
 
       /**
@@ -66,7 +66,6 @@ export class Data extends EventEmitter {
         }
 
         Object.assign(detail, data)
-
       }
 
       if (data.breakpoint != null) {
@@ -81,6 +80,10 @@ export class Data extends EventEmitter {
     return this.timeline.find(item => item.id === id)
   }
 
+  private findBreakPointItem(id: string, type: Type) {
+    return this.breakpoints.find(item => item.id === id && item.breakpoint === type)
+  }
+
   get timeline() {
     return this._timeline
   }
@@ -89,13 +92,11 @@ export class Data extends EventEmitter {
     return this._breakpoints
   }
 
-  /** TODO cache. */
-  getItem(id: string): MixedDetail {
-
-    const detail = this.findTimelineItem(id)
+  /** TODO 根据普通 item/breakpoint 区分下 */
+  getMixedData(data: IpcData) {
     const bodies: Bodies = {}
-    const request = detail.request
-    const response = detail.response
+    const request = data.request
+    const response = data.response
 
     if (request && request.storageId) {
       bodies.requestBody = storage.readFile(request.storageId).toString()
@@ -105,13 +106,24 @@ export class Data extends EventEmitter {
       bodies.responseBody = storage.readFile(response.storageId).toString()
     }
 
-    return Object.assign(bodies, detail)
+    return Object.assign(bodies, data)
+  }
+  /** TODO cache. */
+  getItem(id: string): MixedDetail {
+    const item = this.findTimelineItem(id)
+    return this.getMixedData(item)
   }
 
-  closeBreakPoint(id: string, type: Type, data: Request | Response) {
+  getBreakPoint(id: string, type: Type): MixedDetail {
+    let breakpoint = this.getBreakPoint(id, type)
+    return this.getMixedData(breakpoint)
+  }
+
+  closeBreakPoint(id: string, data: Request | Response) {
+    const detail = this.findTimelineItem(id)
     let storageId
     if (data.body) {
-      storageId = id + type + '.MODI'
+      storageId = id + detail.breakpoint + '.MODI'
       storage.writeFile(storageId, data.body)
     }
 
@@ -122,7 +134,7 @@ export class Data extends EventEmitter {
 
     ipc.send('replaced', {
       id: id,
-      type,
+      type: detail.breakpoint,
       data: ipcData
     })
   }
