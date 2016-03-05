@@ -25,7 +25,7 @@ export default class Breakpoint extends React.Component<any, BreakpointState> {
 
   listenEvents() {
     data.on('update', (item: Detail) => {
-      if (item.breakpoint) {
+      if (item.breakpoint != null) {
         this.forceUpdate()
       }
     })

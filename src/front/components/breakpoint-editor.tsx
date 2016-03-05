@@ -14,7 +14,7 @@ import {
 import * as headersUtil from '../../utils/headers'
 
 interface Request {
-  url: string
+  url: string // hostname:port/path
   method: string
   headers: string
   body: string
@@ -101,13 +101,19 @@ export default class Editor extends React.Component<EditorProps, any> {
   }
 
   private afterhandleRequest(request: Request): CatroRequest {
-    const obj = url.parse(request.url)
+    let fixedUrl = request.url
+    if (!/^https?:\/\//.test(fixedUrl)) {
+      /** Add protocol just for using url.parse... */
+      fixedUrl = 'http://' + fixedUrl
+    }
+
+    const { hostname, port, path } = url.parse(fixedUrl)
 
     return {
       method: request.method,
-      hostname: obj.hostname,
-      port: obj.port,
-      path: obj.path,
+      hostname,
+      port,
+      path,
       headers: headersUtil.parse(request.headers),
       body: request.body
     }

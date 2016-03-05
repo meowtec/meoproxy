@@ -37,7 +37,7 @@ export function readFile(path: string) {
 }
 
 export function writeFile(path: string, content) {
-  return fs.writeFileSync(path, content)
+  return fs.writeFileSync(getPhysicPath(path), content)
 }
 
 export function getTempDir() {

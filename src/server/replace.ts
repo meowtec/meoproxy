@@ -3,16 +3,21 @@
 import { EventEmitter } from 'events'
 import { ipcMain } from 'electron'
 import { Request, Response, Type } from '../typed/typed'
+import * as storage from '../utils/storage'
 
 const event = new EventEmitter()
 
 const eventName = (id, type) => id + '_' + type
 
-ipcMain.on('replaced', (event, data: {
+ipcMain.on('replaced', (sender, data: {
   id: string
   type: Type
   data: Request | Response
 }) => {
+  const catroData = data.data
+  if (catroData.storageId) {
+    catroData.body = storage.readStream(catroData.storageId)
+  }
   event.emit(eventName(data.id, data.type), data.data)
 })
 

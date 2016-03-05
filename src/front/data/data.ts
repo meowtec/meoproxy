@@ -129,7 +129,7 @@ export class Data extends EventEmitter {
 
     const ipcData = Object.assign({}, data, {
       body: null,
-      bodyId: storageId
+      storageId: storageId
     })
 
     ipc.send('replaced', {
