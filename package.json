@@ -27,7 +27,7 @@
     "mkdirp": "0.5.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
-    "catro": "0.1.5"
+    "catro": "0.2.0-dev.1"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",

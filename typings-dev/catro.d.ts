@@ -5,47 +5,47 @@ declare module "catro" {
   import { Readable } from 'stream'
 
   interface Headers {
-      [key: string]: string;
+    [key: string]: string;
   }
   /**
    * Request is a superset of <http.requestOptions>
    */
   interface Request {
-      method: string;
-      hostname: string;
-      port: string;
-      path: string;
-      headers: Headers;
-      body: Readable | string | Buffer;
+    method: string;
+    hostname: string;
+    port: string;
+    path: string;
+    headers: Headers;
+    body: Readable | string | Buffer;
   }
 
   interface Response {
-      status: number;
-      headers: Headers;
-      body: Readable | string | Buffer;
+    status: number;
+    headers: Headers;
+    body: Readable | string | Buffer;
   }
 
   interface KeyCertPair {
-      key: Buffer;
-      cert: Buffer;
+    key: Buffer;
+    cert: Buffer;
   }
 
   interface CertManager {
-      readCerts(domain: string): Promise<KeyCertPair>;
-      rootCAExist(): Promise<boolean>;
-      getCerts(domain: string): Promise<KeyCertPair>;
+    readCerts(domain: string): Promise<KeyCertPair>;
+    rootCAExist(): Promise<boolean>;
+    getCerts(domain: string): Promise<KeyCertPair>;
   }
 
   interface RequestHandler extends EventEmitter {
-      protocol: string;
-      req: http.IncomingMessage;
-      res: http.ServerResponse;
-      replaceRequest: (request: Request, requestHandler?: RequestHandler) => Promise<Request> | Request;
-      replaceResponse: (request: Response, requestHandler?: RequestHandler) => Promise<Response> | Response;
-      request: Request;
-      response: Response;
-      url: string;
-      preventRequest(): void;
+    protocol: string;
+    req: http.IncomingMessage;
+    res: http.ServerResponse;
+    replaceRequest: (request: Request, requestHandler?: RequestHandler) => Promise<Request> | Request;
+    replaceResponse: (request: Response, requestHandler?: RequestHandler) => Promise<Response> | Response;
+    request: Request;
+    response: Response;
+    url: string;
+    preventRequest(): void;
   }
 
   interface Options {
@@ -54,15 +54,20 @@ declare module "catro" {
     /** path to storage certRoot */
 
     https?: {
-        (host: string): boolean;
+      (host: string): boolean;
     } | boolean;
+
+    rejectUnauthorized?: boolean;
   }
 
   export default class Proxy extends EventEmitter {
-      constructor(options: Options, callback?: (err, proxy) => any);
-      static rootCAPath: string;
-      static logger: Readable;
-      promise: Promise<any>;
-      httpServer: http.Server;
+    constructor(options: Options, callback?: (err, proxy) => any);
+    static logger: Readable;
+    /** set cert dir path */
+    static certPath: string;
+    /** get CA cert file path */
+    static rootCAPath: string;
+    promise: Promise<any>;
+    httpServer: http.Server;
   }
 }
