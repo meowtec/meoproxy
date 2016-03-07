@@ -31,7 +31,6 @@ export default class Network extends React.Component<any, NetworkState> {
   listenEvents() {
     let throttleUpdate = throttle(200, () => {
       this.forceUpdate()
-      console.log('force update')
     })
 
     // 监听 timeline 数据的更新

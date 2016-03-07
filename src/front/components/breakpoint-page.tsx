@@ -45,7 +45,7 @@ export default class Breakpoint extends React.Component<any, BreakpointState> {
   @autobind
   handleEditorSubmit(formData: Request | Response) {
     const detail = this.state.detail
-    data.closeBreakPoint(detail.id, formData)
+    data.closeBreakPoint(detail.id, detail.breakpoint, formData)
   }
 
   render() {

@@ -7,15 +7,6 @@ import { EventEmitter } from 'events'
 import { Request, Response } from 'catro'
 import { ipcDataState, IpcData, Type } from '../../typed/typed'
 
-// export interface Detail {
-//   id: string
-//   ssl: boolean
-//   state: ipcDataState
-//   request: Request
-//   response: Response
-//   request_: Request
-//   response_: Response
-// }
 
 export interface Bodies {
   requestBody?: string
@@ -69,7 +60,8 @@ export class Data extends EventEmitter {
       }
 
       if (data.breakpoint != null) {
-        this.breakpoints.push(data)
+        // TODO: may should clone?
+        this.breakpoints.push(detail)
       }
 
       this.emit('update', detail)
@@ -119,9 +111,18 @@ export class Data extends EventEmitter {
     return this.getMixedData(breakpoint)
   }
 
-  closeBreakPoint(id: string, data: Request | Response) {
-    const detail = this.findTimelineItem(id)
+  removeBreakPoint(item: IpcData) {
+    let breakpoints = this._breakpoints
+    let index = breakpoints.indexOf(item)
+    index > -1 && breakpoints.splice(index, 1)
+  }
+
+  closeBreakPoint(id: string, type: Type, data: Request | Response) {
+    const detail = this.findBreakPointItem(id, type)
     let storageId
+
+    this.removeBreakPoint(detail)
+
     if (data.body) {
       storageId = id + detail.breakpoint + '.MODI'
       storage.writeFile(storageId, data.body)
