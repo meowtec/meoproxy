@@ -32,6 +32,7 @@ export interface EditorProps {
 }
 
 
+/** TODO: refactor */
 export default class Editor extends React.Component<EditorProps, any> {
 
   refs: {
@@ -56,9 +57,9 @@ export default class Editor extends React.Component<EditorProps, any> {
     this.updateDomFromProps(this.props)
   }
 
-  componentWillReceiveProps(nextProps: EditorProps) {
-    if (nextProps.data !== this.props.data) {
-      this.updateDomFromProps(nextProps)
+  componentDidUpdate(prevProps: EditorProps) {
+    if (prevProps.data !== this.props.data) {
+      this.updateDomFromProps(this.props)
     }
   }
 
@@ -184,13 +185,17 @@ export default class Editor extends React.Component<EditorProps, any> {
     return (
       <div className="form-list">
         <div className="head-line">
-          <input value="200" ref="status"/>
+          <input ref="status"/>
         </div>
         <div className="headers">
+          <label className="section-title">HEADERS</label>
           <textarea rows={4} ref="headers"/>
         </div>
         <div className="body">
-          <EditorCore mode="text" ref="body"/>
+          <label className="section-title">BODY</label>
+          <div className="editor-wrap">
+            <EditorCore mode="text" ref="body"/>
+          </div>
         </div>
       </div>
     )
