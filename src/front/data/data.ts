@@ -15,8 +15,9 @@ export interface Bodies {
   responseBody_?: string
 }
 
+export type DetailWithBody = IpcData & Bodies;
+
 export { IpcData as Detail }
-export type DetailWithBody = IpcData & Bodies
 
 export class Data extends EventEmitter {
   private _timeline: IpcData[];

@@ -8,18 +8,19 @@ import { Readable } from 'stream'
 import { IpcData, ipcDataState, Type } from '../typed/typed'
 import { shouldBreak } from './options'
 import replace from './replace'
+import * as electron from 'electron'
 
 storage.initial()
 
-export default function setup(window: GitHubElectron.BrowserWindow) {
-  const renderer = window.webContents
+export default function setup(options: {
+  send(data: IpcData): void
+}) {
+
+  const send = options.send
+
   const proxy = new Proxy({
     port: 8899
   })
-
-  function ipcSend(data: IpcData) {
-    renderer.send('http-data', data)
-  }
 
   proxy.on('open', (handler: RequestHandler) => {
     /** generate an uid */
@@ -40,7 +41,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
         ; (<Readable>handler.request.body).pipe(storage.writeStream(storageId))
       }
 
-      ipcSend({
+      send({
         id,
         state: ipcDataState.open,
         protocol: handler.protocol,
@@ -54,7 +55,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
     }
 
     handler.on('requestFinish', () => {
-      ipcSend({
+      send({
         id,
         state: ipcDataState.requestFinish,
       })
@@ -65,7 +66,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
       const writeable = storage.writeStream(storageId)
       ; (<Readable>handler.response.body).pipe(writeable)
 
-      ipcSend({
+      send({
         id,
         state: ipcDataState.response,
         response: Object.assign({}, handler.response, {
@@ -75,7 +76,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
       })
 
       writeable.on('finish', () => {
-        ipcSend({
+        send({
           id,
           state: ipcDataState.responseFinish,
           breakpoint: hasBreak ? Type.response : null
@@ -84,7 +85,7 @@ export default function setup(window: GitHubElectron.BrowserWindow) {
     })
 
     handler.on('finish', () => {
-      ipcSend({
+      send({
         id,
         state: ipcDataState.finish
       })

@@ -4,12 +4,13 @@ import * as React  from 'react'
 import { clipboard, remote } from 'electron'
 import { Detail } from '../data/data'
 import { autobind } from '../../utils/decorators'
+import { Request, Response } from '../../typed/typed'
 const Menu = remote.Menu
 
 export interface TimelineItemProps extends React.Props<any> {
-  request: any
+  request: Request
   protocol: string
-  response: any
+  response: Response
   active: boolean
   onClick(props: TimelineItemProps)
 }
@@ -40,7 +41,7 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
 
     let request = props.request
     let port = request.port
-    let isDefaultPort = !port || port === 80
+    let isDefaultPort = !port || port === '80'
     let baseUrl = props.protocol + '://' + request.hostname + (isDefaultPort ? '' : ':' + port)
 
     this.baseUrl = baseUrl
@@ -53,7 +54,8 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
   render() {
     let props = this.props
     let request = props.request
-    let response = props.response || {}
+    let response = props.response
+    let status = response ? response.status : null
 
     return (
       <li onContextMenu={this.handleContextMenu}
@@ -65,7 +67,7 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
           <span className="host">{this.baseUrl}</span>
           <span className="path">{request.path}</span>
         </div>
-        <span className="status">{response.status}</span>
+        <span className="status">{status}</span>
       </li>
     )
   }
@@ -92,8 +94,8 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
 
   static defaultProps: TimelineItemProps = {
     onClick() {},
-    request: {},
-    response: {},
+    request: null,
+    response: null,
     protocol: 'http',
     active: false
   }

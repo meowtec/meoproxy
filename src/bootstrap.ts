@@ -3,7 +3,7 @@
 import * as electron from 'electron'
 import * as path from 'path'
 import appMenuSetup from './atom/menu'
-import server from './server/'
+import serverSetup from './server/'
 
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
@@ -59,5 +59,9 @@ app.on('ready', function() {
     app.quit()
   })
 
-  server(window)
+  serverSetup({
+    send: (data) => {
+      window.webContents.send('http-data', data)
+    }
+  })
 })
