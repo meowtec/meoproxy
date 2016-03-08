@@ -1,7 +1,7 @@
 'use strict'
 
 import * as React from 'react'
-import Timeline from './timeline'
+import { BreakPointTimeLine } from './timeline'
 import { TimelineRole } from './timeline'
 import data from '../data/data'
 import { Detail, DetailWithBody } from '../data/data'
@@ -52,7 +52,7 @@ export default class Breakpoint extends React.Component<any, BreakpointState> {
     return (
       <div className="breakpoint">
         <div className="list">
-          <Timeline data={data.breakpoints} role={TimelineRole.breakpoint} onClick={this.handleListClick}/>
+          <BreakPointTimeLine data={data.breakpoints} role={TimelineRole.breakpoint} onClick={this.handleListClick}/>
         </div>
         {
           this.state.detail ? <Editor data={this.state.detail} onSubmit={this.handleEditorSubmit}/> : null

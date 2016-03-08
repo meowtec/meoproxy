@@ -33,6 +33,8 @@ export enum TimelineRole {
 
 class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState> {
 
+  baseUrl: string
+
   constructor(props: TimelineItemProps) {
     super(props)
 
@@ -43,8 +45,6 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
 
     this.baseUrl = baseUrl
   }
-
-  baseUrl: string
 
   getFullUrl() {
     return this.baseUrl + this.props.request.path
@@ -99,13 +99,17 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
   }
 }
 
-export default class Timeline extends React.Component<TimelineProps, TimelineState> {
+export class Timeline extends React.Component<TimelineProps, TimelineState> {
   constructor(props: TimelineProps) {
     super(props)
 
     this.state = {
       activeId: null
     }
+  }
+
+  uid(item: Detail) {
+    return item.id
   }
 
   renderEmpty() {
@@ -131,7 +135,10 @@ export default class Timeline extends React.Component<TimelineProps, TimelineSta
       <ul className="timeline">
         {
           this.props.data.map(item => {
-            return <TimelineItem key={item.id} {...item} active={item.id === this.state.activeId} onClick={this.handleItemClick}/>
+            const uid = this.uid(item)
+            return (
+              <TimelineItem key={uid} {...item} active={uid === this.state.activeId} onClick={this.handleItemClick}/>
+            )
           })
         }
       </ul>
@@ -150,7 +157,7 @@ export default class Timeline extends React.Component<TimelineProps, TimelineSta
   @autobind
   handleItemClick(item) {
     this.setState({
-      activeId: item.id
+      activeId: this.uid(item)
     })
     this.props.onClick(item)
   }
@@ -159,4 +166,12 @@ export default class Timeline extends React.Component<TimelineProps, TimelineSta
     data: [],
     onClick() {}
   }
+}
+
+export class BreakPointTimeLine extends Timeline {
+
+  uid(item: Detail) {
+    return item.id + '_' + item.breakpoint
+  }
+
 }

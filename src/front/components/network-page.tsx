@@ -1,7 +1,7 @@
 'use strict'
 
 import * as React from 'react'
-import Timeline from './timeline'
+import { Timeline } from './timeline'
 import HttpDetail from './http-detail'
 import data from '../data/data'
 import { DetailWithBody, Detail } from '../data/data'

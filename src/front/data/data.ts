@@ -16,8 +16,7 @@ export interface Bodies {
 }
 
 export { IpcData as Detail }
-
-export interface DetailWithBody extends IpcData, Bodies {}
+export type DetailWithBody = IpcData & Bodies
 
 export class Data extends EventEmitter {
   private _timeline: IpcData[];
@@ -60,12 +59,8 @@ export class Data extends EventEmitter {
       }
 
       if (data.breakpoint != null) {
-        const breapoint = Object.assign({}, detail, {
-          id: detail.id + '_' + detail.breakpoint,
-          activityId: detail.id
-        })
+        const breapoint = Object.assign({}, detail)
         this.breakpoints.push(breapoint)
-
         this.emit('breakpoint-update', breapoint)
       }
 
@@ -105,6 +100,7 @@ export class Data extends EventEmitter {
 
     return Object.assign(bodies, data)
   }
+
   /** TODO cache. */
   getItem(id: string): DetailWithBody {
     const item = this.findTimelineItem(id)
@@ -139,7 +135,7 @@ export class Data extends EventEmitter {
     })
 
     ipc.send('replaced', {
-      id: detail['activityId'],
+      id,
       type: detail.breakpoint,
       data: ipcData
     })
