@@ -17,7 +17,7 @@ export interface Bodies {
 
 export { IpcData as Detail }
 
-export interface MixedDetail extends IpcData, Bodies {}
+export interface DetailWithBody extends IpcData, Bodies {}
 
 export class Data extends EventEmitter {
   private _timeline: IpcData[];
@@ -36,7 +36,7 @@ export class Data extends EventEmitter {
 
     ipc.on('http-data', (event, data: IpcData) => {
       // console.log('ipc.on \'http-data\' data => ', data)
-      let detail
+      let detail: IpcData
 
       /**
        * create a new detail
@@ -47,7 +47,7 @@ export class Data extends EventEmitter {
       }
       /**
        * get exist detail
-       * update it by state
+       * update it
        */
       else {
         detail = this.findTimelineItem(data.id)
@@ -60,8 +60,13 @@ export class Data extends EventEmitter {
       }
 
       if (data.breakpoint != null) {
-        // TODO: may should clone?
-        this.breakpoints.push(detail)
+        const breapoint = Object.assign({}, detail, {
+          id: detail.id + '_' + detail.breakpoint,
+          activityId: detail.id
+        })
+        this.breakpoints.push(breapoint)
+
+        this.emit('breakpoint-update', breapoint)
       }
 
       this.emit('update', detail)
@@ -101,12 +106,12 @@ export class Data extends EventEmitter {
     return Object.assign(bodies, data)
   }
   /** TODO cache. */
-  getItem(id: string): MixedDetail {
+  getItem(id: string): DetailWithBody {
     const item = this.findTimelineItem(id)
     return this.getMixedData(item)
   }
 
-  getBreakPoint(id: string, type: Type): MixedDetail {
+  getBreakPoint(id: string, type: Type): DetailWithBody {
     let breakpoint = this.findBreakPointItem(id, type)
     return this.getMixedData(breakpoint)
   }
@@ -124,7 +129,7 @@ export class Data extends EventEmitter {
     this.removeBreakPoint(detail)
 
     if (data.body) {
-      storageId = id + detail.breakpoint + '.MODI'
+      storageId = id + '_M'
       storage.writeFile(storageId, data.body)
     }
 
@@ -134,10 +139,12 @@ export class Data extends EventEmitter {
     })
 
     ipc.send('replaced', {
-      id: id,
+      id: detail['activityId'],
       type: detail.breakpoint,
       data: ipcData
     })
+
+    this.emit('breakpoint-rm')
   }
 
 }

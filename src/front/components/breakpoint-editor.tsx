@@ -3,7 +3,7 @@
 import * as React from 'react'
 import * as url from 'url'
 import EditorCore from './editor-core'
-import { MixedDetail } from '../data/data'
+import { DetailWithBody } from '../data/data'
 import { Type } from '../../typed/typed'
 import { autobind } from '../../utils/decorators'
 import Select from './select'
@@ -27,7 +27,7 @@ interface Response {
 }
 
 export interface EditorProps {
-  data: MixedDetail
+  data: DetailWithBody
   onSubmit(result: CatroRequest | CatroResponse)
 }
 
@@ -84,7 +84,7 @@ export default class Editor extends React.Component<EditorProps, any> {
     return props.data && props.data.breakpoint
   }
 
-  private beforehandRequest(data: MixedDetail): Request {
+  private beforehandRequest(data: DetailWithBody): Request {
     return {
       url: data.request.hostname + ':' + data.request.port + data.request.path,
       method: data.request.method,
@@ -93,7 +93,7 @@ export default class Editor extends React.Component<EditorProps, any> {
     }
   }
 
-  private beforehandResponse(data: MixedDetail): Response {
+  private beforehandResponse(data: DetailWithBody): Response {
     return {
       status: String(data.response.status),
       headers: headersUtil.stringify(data.response.headers),

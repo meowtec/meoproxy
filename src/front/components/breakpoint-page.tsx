@@ -4,13 +4,13 @@ import * as React from 'react'
 import Timeline from './timeline'
 import { TimelineRole } from './timeline'
 import data from '../data/data'
-import { Detail, MixedDetail } from '../data/data'
+import { Detail, DetailWithBody } from '../data/data'
 import { autobind } from '../../utils/decorators'
 import Editor from './breakpoint-editor'
 import { Request, Response } from 'catro'
 
 export interface BreakpointState {
-  detail?: MixedDetail
+  detail?: DetailWithBody
 }
 
 export default class Breakpoint extends React.Component<any, BreakpointState> {
@@ -24,11 +24,8 @@ export default class Breakpoint extends React.Component<any, BreakpointState> {
   }
 
   listenEvents() {
-    data.on('update', (item: Detail) => {
-      if (item.breakpoint != null) {
-        this.forceUpdate()
-      }
-    })
+    data.on('breakpoint-update', () => this.setState(this.state))
+    data.on('breakpoint-rm', () => this.setState(this.state))
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -46,6 +43,9 @@ export default class Breakpoint extends React.Component<any, BreakpointState> {
   handleEditorSubmit(formData: Request | Response) {
     const detail = this.state.detail
     data.closeBreakPoint(detail.id, detail.breakpoint, formData)
+    this.setState({
+      detail: null
+    })
   }
 
   render() {

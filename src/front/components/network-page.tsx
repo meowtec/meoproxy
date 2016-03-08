@@ -4,13 +4,13 @@ import * as React from 'react'
 import Timeline from './timeline'
 import HttpDetail from './http-detail'
 import data from '../data/data'
-import { MixedDetail, Detail } from '../data/data'
+import { DetailWithBody, Detail } from '../data/data'
 import { autobind } from '../../utils/decorators'
 import { throttle } from '../../utils/utils'
 
 export interface NetworkState {
   detailId?: string;
-  detail?: MixedDetail;
+  detail?: DetailWithBody;
 }
 
 export default class Network extends React.Component<any, NetworkState> {

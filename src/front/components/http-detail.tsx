@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { Tab, TabItem } from './tabs'
 import { Page, PageItem } from './pages'
-import { MixedDetail } from '../data/data'
+import { DetailWithBody } from '../data/data'
 
 import Panel from './panel'
 import * as _ from '../../utils/utils'
@@ -12,7 +12,7 @@ import * as storage from '../../utils/storage'
 import { autobind } from '../../utils/decorators'
 
 export interface HttpDetailProps extends React.Props<any> {
-  data: MixedDetail
+  data: DetailWithBody
 }
 
 export default class HttpDetail extends React.Component<HttpDetailProps, any> {
