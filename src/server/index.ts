@@ -8,8 +8,11 @@ import { Readable } from 'stream'
 import { IpcData, ipcDataState, Type } from '../typed/typed'
 import { shouldBreak } from './options'
 import replace from './replace'
+import * as log4js from 'log4js'
 
 storage.initial()
+
+const logger = log4js.getLogger('server/index')
 
 export default function setup(options: {
   send(data: IpcData): void
@@ -22,12 +25,15 @@ export default function setup(options: {
   })
 
   proxy.on('open', (handler: RequestHandler) => {
+    if (handler.req.url.startsWith('/')) {
+      return
+    }
     /** generate an uid */
     const id = _.id()
     const url = handler.url
     const hasBreak = shouldBreak(url)
     if (hasBreak) {
-      console.log(url, 'will be replaced!!')
+      logger.info('Will replace:', url)
       handler.replaceRequest = replace(id, Type.request)
       handler.replaceResponse = replace(id, Type.response)
     }
