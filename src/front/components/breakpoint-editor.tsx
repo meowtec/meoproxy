@@ -155,7 +155,7 @@ export default class Editor extends React.Component<EditorProps, any> {
 
     return (
       <div className="form-list">
-        <div className="head-line">
+        <div className="form-section head-line">
           <Select ref="method" defaultValue={data.request.method}>
             <option value="GET">GET</option>
             <option value="POST">POST</option>
@@ -167,11 +167,11 @@ export default class Editor extends React.Component<EditorProps, any> {
           <textarea rows={3} ref="url" style={{maxHeight: '90px'}}
             defaultValue={data.request.hostname + data.request.port + data.request.path}/>
         </div>
-        <div className="headers">
+        <div className="form-section headers">
           <label className="section-title">HEADERS</label>
           <textarea rows={4} ref="headers" style={{maxHeight: '120px'}}/>
         </div>
-        <div className="body">
+        <div className="form-section body">
           <label className="section-title">PAYLOAD</label>
           <div className="editor-wrap">
             <EditorCore mode="html" ref="body"/>
@@ -184,14 +184,14 @@ export default class Editor extends React.Component<EditorProps, any> {
   renderResponseEditor() {
     return (
       <div className="form-list">
-        <div className="head-line">
+        <div className="form-section head-line">
           <input ref="status"/>
         </div>
-        <div className="headers">
+        <div className="form-section headers">
           <label className="section-title">HEADERS</label>
           <textarea rows={4} ref="headers"/>
         </div>
-        <div className="body">
+        <div className="form-section body">
           <label className="section-title">BODY</label>
           <div className="editor-wrap">
             <EditorCore mode="text" ref="body"/>
