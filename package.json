@@ -21,13 +21,14 @@
   "author": "Meowtec<bertonzh@gmail.com>",
   "private": true,
   "dependencies": {
+    "catro": "0.2.0-dev.1",
     "electron-prebuilt": "^0.36.2",
     "ip": "^1.0.1",
     "lodash": "^3.10.1",
+    "log4js": "^0.6.32",
     "mkdirp": "0.5.1",
     "react": "^0.14.3",
-    "react-dom": "^0.14.3",
-    "catro": "0.2.0-dev.1"
+    "react-dom": "^0.14.3"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",

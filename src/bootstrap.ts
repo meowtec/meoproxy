@@ -4,15 +4,17 @@ import * as electron from 'electron'
 import * as path from 'path'
 import appMenuSetup from './atom/menu'
 import serverSetup from './server/'
+import * as log4js from 'log4js'
+
+const logger = log4js.getLogger('bootstrap')
 
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 const env = process.env['MEOP_ENV'] || ''
 
-// console.log(app.getPath('userData'))
-// console.log(app.getPath('cache'))
-// console.log(app.getPath('temp'))
-
+logger.info('USERDATA dir:', app.getPath('userData'))
+logger.info('TEMP dir:', app.getPath('temp'))
+logger.info('CACHE dir:', app.getPath('cache'))
 // Report crashes to our server.
 // electron.crashReporter.start()
 
