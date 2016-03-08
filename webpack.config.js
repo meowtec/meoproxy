@@ -26,6 +26,9 @@ module.exports = {
     ]
   },
   externals: [
+    {
+      codemirror: 'CodeMirror'
+    },
     function(context, request, callback) {
       if (!/^[a-zA-Z]/.test(request)) {
         callback()

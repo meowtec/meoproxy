@@ -15,6 +15,8 @@ export function detectEncode(content: string) {
 }
 
 export function isText(content: string) {
-  if (!content) return true
+  if (!content) {
+    return true
+  }
   return textFileRegexp.test(content)
 }

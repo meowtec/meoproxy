@@ -1,6 +1,7 @@
 {
   "rules": {
     "class-name": true,
+    "curly": true,
     "comment-format": [
       true,
       "check-space"
@@ -21,7 +22,7 @@
       "single",
       "jsx-double"
     ],
-    "semicolon": false,
+    "semicolon": "never",
     "whitespace": [
       true,
       "check-branch",
@@ -49,6 +50,11 @@
     "no-trailing-whitespace": true,
     "no-inferrable-types": true,
     "no-unused-variable": true,
-    "no-use-before-declare": true
+    "no-use-before-declare": true,
+    "no-require-imports": true,
+    "no-shadowed-variable": true,
+    "no-trailing-whitespace ": true,
+    "no-unreachable": true,
+    "radix": true
   }
 }

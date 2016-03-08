@@ -6,10 +6,10 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "github-electron/github-electron.d.ts": {
-      "commit": "81b951f1ac437d1eb5ff5171a0bfa6c467634b13"
+      "commit": "9f0f926a12026287b5a4a229e5672c01e7549313"
     },
     "node/node.d.ts": {
-      "commit": "81b951f1ac437d1eb5ff5171a0bfa6c467634b13"
+      "commit": "9f0f926a12026287b5a4a229e5672c01e7549313"
     },
     "mkdirp/mkdirp.d.ts": {
       "commit": "81b951f1ac437d1eb5ff5171a0bfa6c467634b13"
@@ -25,6 +25,18 @@
     },
     "codemirror/codemirror.d.ts": {
       "commit": "aefd8146158b9f17c9eb79bbf158e6d8d3c2a87b"
+    },
+    "log4js/log4js.d.ts": {
+      "commit": "9f0f926a12026287b5a4a229e5672c01e7549313"
+    },
+    "express/express.d.ts": {
+      "commit": "9f0f926a12026287b5a4a229e5672c01e7549313"
+    },
+    "serve-static/serve-static.d.ts": {
+      "commit": "9f0f926a12026287b5a4a229e5672c01e7549313"
+    },
+    "mime/mime.d.ts": {
+      "commit": "9f0f926a12026287b5a4a229e5672c01e7549313"
     }
   }
 }

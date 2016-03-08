@@ -1,6 +1,6 @@
 'use strict'
 
-import { Menu, dialog } from 'electron'
+import { Menu, dialog, shell } from 'electron'
 import caPage from './ca-page'
 import * as ip from 'ip'
 
@@ -106,7 +106,7 @@ export default function initMenu() {
         {
           label: 'Learn More',
           click: function() {
-            require('shell').openExternal('http://electron.atom.io')
+            shell.openExternal('http://electron.atom.io')
           }
         }
       ]

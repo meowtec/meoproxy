@@ -29,7 +29,9 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
     const data = this.props.data
     const response = data.response
 
-    if (!data.response || !data.response.storageId) return null
+    if (!data.response || !data.response.storageId) {
+      return null
+    }
 
     if (/image/.test(response.headers['content-type'])) {
       return <img src={'file://' + storage.getTempDir() + '/' + response.storageId}/>

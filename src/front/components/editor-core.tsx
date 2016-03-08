@@ -1,6 +1,7 @@
 'use strict'
 
 import * as React from 'react'
+import * as CodeMirror from 'codemirror'
 
 const EditorMode = {
   html: 'text/html',
@@ -55,7 +56,7 @@ export default class Editor extends React.Component<EditorProps, any> {
   bindEvent() {
     const codeMirror = this.codeMirror
 
-    codeMirror.on('change', (codeMirror) => {
+    codeMirror.on('change', () => {
       this.props.onChange && this.props.onChange(codeMirror.getDoc().getValue(), codeMirror)
     })
   }

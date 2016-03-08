@@ -8,7 +8,6 @@ import { Readable } from 'stream'
 import { IpcData, ipcDataState, Type } from '../typed/typed'
 import { shouldBreak } from './options'
 import replace from './replace'
-import * as electron from 'electron'
 
 storage.initial()
 
@@ -33,7 +32,7 @@ export default function setup(options: {
       handler.replaceResponse = replace(id, Type.response)
     }
 
-    ; {
+    {
       /** Storage request */
       let storageId
       if (handler.request.method.toUpperCase() !== 'GET') {
