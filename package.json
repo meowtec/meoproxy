@@ -21,7 +21,7 @@
   "author": "Meowtec<bertonzh@gmail.com>",
   "private": true,
   "dependencies": {
-    "catro": "0.2.0-dev.1",
+    "catro": "next",
     "electron-prebuilt": "^0.36.2",
     "ip": "^1.0.1",
     "lodash": "^3.10.1",
@@ -43,7 +43,7 @@
     "style-loader": "^0.13.0",
     "ts-loader": "^0.8.1",
     "tsd": "^0.6.5",
-    "tslint": "~3.3.0",
+    "tslint": "^3.5.0",
     "typescript": "^1.8.0",
     "webpack": "^1.12.13",
     "webpack-dev-server": "^1.14.1"

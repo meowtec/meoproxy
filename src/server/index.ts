@@ -21,7 +21,8 @@ export default function setup(options: {
   const send = options.send
 
   const proxy = new Proxy({
-    port: 8899
+    port: 8899,
+    certPath: './cert'
   })
 
   proxy.on('open', (handler: RequestHandler) => {
@@ -95,6 +96,10 @@ export default function setup(options: {
         state: ipcDataState.finish
       })
     })
+  })
+
+  proxy.start().catch((e) => {
+    console.log(e)
   })
 
 }
