@@ -1,7 +1,7 @@
 import * as React from 'react'
 import './icon.less'
 
-import '../res/icon.svg'
+const iconPrefix = require('../res/icon.svg')
 
 export interface IconProps {
   glyph: string
@@ -19,7 +19,7 @@ export default class Icon extends React.Component<IconProps, any> {
   }
 
   createUseElement() {
-    return `<use xlink:href="${this.svgPath}#icon-${this.props.glyph}"></use>`
+    return `<use xlink:href="${this.svgPath}#${iconPrefix}${this.props.glyph}"></use>`
   }
 
   render() {
