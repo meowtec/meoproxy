@@ -1,6 +1,7 @@
 import * as React from 'react'
 import './icon.less'
 
+/* tslint:disable:no-require-imports */
 const iconPrefix = require('../res/icon.svg')
 
 export interface IconProps {
