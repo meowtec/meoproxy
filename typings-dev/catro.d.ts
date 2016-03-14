@@ -12,7 +12,7 @@ declare module 'catro' {
     import { Headers, Request, Response } from 'catro/typed';
     export interface Options {
         port: number;
-        certPath: string;
+        certPath?: string;
         https?: {
             (host: string): boolean;
         } | boolean;
@@ -78,7 +78,6 @@ declare module 'catro/utils/cert' {
         customCA: KeyCertPair;
         opensslPath: string;
         constructor(options: CertManagerOptions);
-        init(): Promise<void>;
         CAKeyPath: string;
         CACertPath: string;
         readCerts(domain: string): Promise<{
@@ -87,6 +86,7 @@ declare module 'catro/utils/cert' {
         }>;
         CAExist(): Promise<boolean>;
         getCerts(domain: string): Promise<KeyCertPair>;
+        init(): Promise<this>;
     }
 }
 
