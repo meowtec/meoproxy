@@ -1,6 +1,8 @@
 import * as React from 'react'
 import './icon.less'
 
+import '../res/icon.svg'
+
 export interface IconProps {
   glyph: string
   className?: string
@@ -13,11 +15,11 @@ function toClass(str: any) {
 export default class Icon extends React.Component<IconProps, any> {
 
   get svgPath() {
-    return 'icon/icon.svg'
+    return ''
   }
 
   createUseElement() {
-    return `<use xlink:href="${this.svgPath}#${this.props.glyph}"></use>`
+    return `<use xlink:href="${this.svgPath}#icon-${this.props.glyph}"></use>`
   }
 
   render() {

@@ -1,4 +1,4 @@
-// var ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path')
 
 module.exports = {
   entry: {
@@ -22,6 +22,10 @@ module.exports = {
       {
         test: /\.less$/,
         loader: 'style!css!less'
+      },
+      {
+        test: /\.svg$/,
+        loader: path.resolve(__dirname, './script/svg-loader.js')
       }
     ]
   },
