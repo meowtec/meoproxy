@@ -1,5 +1,9 @@
 const path = require('path')
 
+function customLoader(name) {
+  return path.resolve(__dirname, './loaders/' + name + '.js')
+}
+
 module.exports = {
   entry: {
     index: './src/front/index.tsx',
@@ -25,7 +29,7 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        loader: path.resolve(__dirname, './script/svg-loader.js')
+        loader: customLoader('svg-spirit')
       }
     ]
   },
