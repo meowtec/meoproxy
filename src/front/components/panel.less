@@ -3,7 +3,7 @@
 
   &.closed {
 
-    h3:after {
+    h3 .icon {
       transform: rotate(0);
     }
 
@@ -21,18 +21,16 @@
     cursor: default;
     font-weight: 400;
 
-    &:after {
-      content: '';
-      display: inline-block;
-      width: 0;
-      height: 0;
-      border: 5px solid transparent;
-      border-left-color: #ccc;
+    .icon {
+      color: #666;
       margin-left: 10px;
-      transform-origin: 25% 50%;
+      font-size: 12px;
+      position: relative;
+      top: 1px;
       transform: rotate(90deg);
       transition: 0.1s;
     }
+
   }
 
   dt, dd {

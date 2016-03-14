@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Icon from './icon'
 import { autobind } from '../../utils/decorators'
 
 export interface SelectState {
@@ -63,7 +64,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
           >
           {this.props.children}
         </select>
-       <i className="icon" data-glyph="arrow-combo"/>
+       <Icon glyph="select"/>
       </div>
     )
   }

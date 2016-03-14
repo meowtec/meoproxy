@@ -2,6 +2,7 @@
 
 import * as React  from 'react'
 import { clipboard, remote } from 'electron'
+import Icon from './icon'
 import { Detail } from '../data/data'
 import { autobind } from '../../utils/decorators'
 import { Request, Response } from '../../typed/typed'
@@ -118,7 +119,7 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
     if (this.props.role === TimelineRole.breakpoint) {
       return (
         <div className="timeline empty">
-          <i className="icon" data-glyph="inbox"></i>
+          <Icon glyph="inbox" />
           <p>当前无断点请求</p>
         </div>
       )

@@ -6,6 +6,7 @@ import { Page, PageItem } from './components/pages'
 import { Tab, TabItem } from './components/tabs'
 import Network from './components/network-page'
 import Breakpoint from './components/breakpoint-page'
+import Icon from './components/icon'
 import data from './data/data'
 import * as _ from '../utils/utils'
 import './index.less'
@@ -44,28 +45,28 @@ class Main extends React.Component<any, any> {
       <div className="layout">
         <Tab className="nav" defaultValue={this.state.navValue} onChange={this.handleMainNavChange.bind(this)}>
           <TabItem value="network">
-            <i className="icon" data-glyph="network"/>
+            <Icon glyph="network"/>
             Network
           </TabItem>
-          <TabItem value="sequence">
-            <i className="icon" data-glyph="flow-tree"/>
-            Sequence
-          </TabItem>
           <TabItem value="breakpoints">
-            <i className="icon" data-glyph="target"/>
+            <Icon glyph="target"/>
             Breakpoints
             <span className={`dot ${_.addClass('hide', this.state.breakCount === 0)}`}>{this.state.breakCount}</span>
+          </TabItem>
+          <TabItem value="settings">
+            <Icon glyph="settings"/>
+            Sequence
           </TabItem>
         </Tab>
         <Page value={this.state.navValue} className="body">
           <PageItem value="network">
             <Network/>
           </PageItem>
-          <PageItem value="sequence">
-
-          </PageItem>
           <PageItem value="breakpoints">
             <Breakpoint/>
+          </PageItem>
+          <PageItem value="settings">
+
           </PageItem>
         </Page>
       </div>
