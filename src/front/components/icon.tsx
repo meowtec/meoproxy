@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { pureRender } from '../../utils/decorators'
+import { toString } from '../../utils/utils'
 import './icon.less'
 
 /* tslint:disable:no-require-imports */
@@ -9,11 +11,12 @@ export interface IconProps {
   className?: string
 }
 
-function toClass(str: any) {
-  return str || ''
-}
-
+@pureRender
 export default class Icon extends React.Component<IconProps, any> {
+
+  constructor() {
+    super()
+  }
 
   get svgPath() {
     return ''
@@ -25,7 +28,7 @@ export default class Icon extends React.Component<IconProps, any> {
 
   render() {
     return (
-      <svg className={`icon ${toClass(this.props.className)}`} dangerouslySetInnerHTML={{__html: this.createUseElement()}}></svg>
+      <svg className={`icon ${toString(this.props.className)}`} dangerouslySetInnerHTML={{__html: this.createUseElement()}}></svg>
     )
   }
 

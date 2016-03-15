@@ -1,3 +1,5 @@
+import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
+
 export function autobind(target, key, descriptor) {
   return {
     get() {
@@ -8,4 +10,8 @@ export function autobind(target, key, descriptor) {
       return fun
     }
   }
+}
+
+export function pureRender(target) {
+  target.prototype.shouldComponentUpdate = shouldComponentUpdate
 }

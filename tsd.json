@@ -18,7 +18,7 @@
       "commit": "81b951f1ac437d1eb5ff5171a0bfa6c467634b13"
     },
     "react/react.d.ts": {
-      "commit": "81b951f1ac437d1eb5ff5171a0bfa6c467634b13"
+      "commit": "81ebfb3d08cd608a7c801668a6d5f7b2ea9ecc38"
     },
     "react/react-dom.d.ts": {
       "commit": "81b951f1ac437d1eb5ff5171a0bfa6c467634b13"
@@ -37,6 +37,9 @@
     },
     "mime/mime.d.ts": {
       "commit": "9f0f926a12026287b5a4a229e5672c01e7549313"
+    },
+    "react/react-addons-pure-render-mixin.d.ts": {
+      "commit": "81ebfb3d08cd608a7c801668a6d5f7b2ea9ecc38"
     }
   }
 }
