@@ -1,13 +1,11 @@
 'use strict'
 
-/*!
- * 可折叠的 panel
- **/
-
 import * as React from 'react'
 import Icon from './icon'
 import { addClass } from '../../utils/utils'
 import { autobind } from '../../utils/decorators'
+
+import './panel.less'
 
 export interface PanelProps extends React.Props<any> {
   name: string

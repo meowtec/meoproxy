@@ -1,10 +1,10 @@
+'use strict'
+
 import * as React from 'react'
 import Icon from './icon'
-import { autobind } from '../../utils/decorators'
+import { autobind, pureRender } from '../../utils/decorators'
 
-export interface SelectState {
-  displayName: string
-}
+import './select.less'
 
 export interface SelectProps extends React.Props<any> {
   value?: string
@@ -13,51 +13,43 @@ export interface SelectProps extends React.Props<any> {
   theme?: string
 }
 
-export default class Select extends React.Component<SelectProps, SelectState> {
+@pureRender
+export default class Select extends React.Component<SelectProps, any> {
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      displayName: null
-    }
-  }
+  optionText: string
 
   refs: {
     [key: string]: any
     select: HTMLSelectElement
+    optionText: HTMLElement
   }
 
   componentDidMount() {
-    this.resetDisplayName()
+    this.syncOptionText()
   }
 
   componentDidUpdate() {
-    this.resetDisplayName()
+    this.syncOptionText()
   }
 
-  resetDisplayName() {
-    let select = this.refs['select'] as HTMLSelectElement
-    let selectedOption = select[select.selectedIndex]
-    let displayName = selectedOption.text
+  syncOptionText() {
+    let optionText = this.refs.select.selectedOptions[0].textContent
 
-    if (displayName !== this.state.displayName) {
-      this.setState({
-        displayName: displayName
-      })
+    if (optionText !== this.optionText) {
+      this.optionText = this.refs.optionText.textContent = optionText
     }
   }
 
   @autobind
   handleChange(e) {
-    this.resetDisplayName()
+    this.syncOptionText()
     this.props.onChange(e)
   }
 
   render() {
     return (
       <div className={`select ${this.props.theme}`}>
-        <span className="select-content">{this.state.displayName}</span>
+        <span className="select-content" ref="optionText"></span>
         <select ref="select"
           {...this.props}
           onChange={this.handleChange}
@@ -75,6 +67,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 
   set value(value) {
     this.refs.select.value = value
+    this.syncOptionText()
   }
 
   static defaultProps = {

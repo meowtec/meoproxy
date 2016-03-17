@@ -1,18 +1,26 @@
 'use strict'
 
 import * as React from 'react'
-
-import { Tab, TabItem } from './tabs'
-import { Page, PageItem } from './pages'
+import { Tab, TabItem } from '../base/tabs'
+import { Page, PageItem } from '../base/pages'
 import { DetailWithBody } from '../data/data'
-
-import Panel from './panel'
+import Panel from '../base/panel'
 import * as _ from '../../utils/utils'
 import * as storage from '../../utils/storage'
 import { autobind } from '../../utils/decorators'
 
+import './http-detail.less'
+
+export const enum TabSymbol {
+  headers, request, response
+}
+
 export interface HttpDetailProps extends React.Props<any> {
   data: DetailWithBody
+}
+
+export interface HttpDetailState {
+  selectedId: TabSymbol
 }
 
 export default class HttpDetail extends React.Component<HttpDetailProps, any> {
@@ -21,7 +29,7 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
     super(props)
 
     this.state = {
-      selectedId: 'headers'
+      selectedId: TabSymbol.headers
     }
   }
 
@@ -61,15 +69,15 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
 
       return (
         <div className="detail-container">
-          <Tab defaultValue={this.state.selectedId} onChange={this.handleTabChange}>
-            <TabItem value="headers">Headers</TabItem>
-            <TabItem value="request">Request</TabItem>
-            <TabItem value="response">Response</TabItem>
+          <Tab value={this.state.selectedId} onChange={this.handleTabChange}>
+            <TabItem value={TabSymbol.headers}>Headers</TabItem>
+            <TabItem value={TabSymbol.request}>Request</TabItem>
+            <TabItem value={TabSymbol.response}>Response</TabItem>
           </Tab>
 
           <Page className="detail-content" value={this.state.selectedId}>
 
-            <PageItem value="headers">
+            <PageItem value={TabSymbol.headers}>
               <div className="headers">
                 <Panel name="General">
                   <dt>Method</dt>
@@ -106,7 +114,7 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
               </div>
             </PageItem>
 
-            <PageItem value="request">
+            <PageItem value={TabSymbol.request}>
               <code className="code-view">
                 <pre>
                   {data.requestBody}
@@ -114,7 +122,7 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
               </code>
             </PageItem>
 
-            <PageItem value="response">
+            <PageItem value={TabSymbol.response}>
               { this.renderResponsePreview() }
             </PageItem>
 

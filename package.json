@@ -12,7 +12,7 @@
     "build": "npm run build:back && npm run build:front",
     "start": "npm run build:back && MEOP_ENV=dev_watch npm run electron",
     "start:once": "npm run build:front && npm run build:back && MEOP_ENV=dev npm run electron",
-    "watch": "./node_modules/.bin/webpack-dev-server --port 11200",
+    "watch": "webpack-dev-server --port 11200",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

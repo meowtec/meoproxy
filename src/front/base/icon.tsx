@@ -1,6 +1,9 @@
+'use strict'
+
 import * as React from 'react'
 import { pureRender } from '../../utils/decorators'
 import { toString } from '../../utils/utils'
+
 import './icon.less'
 
 /* tslint:disable:no-require-imports */

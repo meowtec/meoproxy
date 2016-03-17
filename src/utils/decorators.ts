@@ -12,6 +12,12 @@ export function autobind(target, key, descriptor) {
   }
 }
 
-export function pureRender(target) {
-  target.prototype.shouldComponentUpdate = shouldComponentUpdate
+export function pureRender(component) {
+  component.prototype.shouldComponentUpdate = shouldComponentUpdate
+}
+
+export function independent(component) {
+  component.prototype.shouldComponentUpdate = function(nextProps, nextState) {
+    return this.state !== nextState
+  }
 }

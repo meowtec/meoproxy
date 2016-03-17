@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { toString, addClass } from '../../utils/utils'
+import { pureRender } from '../../utils/decorators'
 
 export interface PageItemProps extends React.Props<any> {
   className?: string
@@ -13,9 +14,9 @@ export interface PageProps extends React.Props<any> {
   value: any
 }
 
-
 export class PageItem extends React.Component<PageItemProps, any> {}
 
+@pureRender
 export class Page extends React.Component<PageProps, any> {
   render() {
     return (

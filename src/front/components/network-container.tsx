@@ -8,6 +8,8 @@ import { DetailWithBody, Detail } from '../data/data'
 import { autobind } from '../../utils/decorators'
 import { throttle } from '../../utils/utils'
 
+import './network-container.less'
+
 export interface NetworkState {
   detailId?: string;
   detail?: DetailWithBody;

@@ -2,6 +2,8 @@
 
 import * as React from 'react'
 
+import './tabs.less'
+
 export interface TabItemProps extends React.Props<any> {
   selected?: boolean
   value: string | number
@@ -9,12 +11,8 @@ export interface TabItemProps extends React.Props<any> {
 
 export interface TabProps extends React.Props<any> {
   onChange: (value: string | number) => void
-  defaultValue: any
+  value: any
   className?: string
-}
-
-export interface TabState {
-  value: string | number
 }
 
 export class TabItem extends React.Component<TabItemProps, any> {}
@@ -25,15 +23,7 @@ class TabContent extends React.Component<any, any> {
   }
 }
 
-export class Tab extends React.Component<TabProps, TabState> {
-
-  constructor(props: TabProps) {
-    super(props)
-
-    this.state = {
-      value: props.defaultValue
-    }
-  }
+export class Tab extends React.Component<TabProps, any> {
 
   render() {
     const props = this.props
@@ -43,7 +33,7 @@ export class Tab extends React.Component<TabProps, TabState> {
         {
           React.Children.toArray(this.props.children).map((item: React.ReactElement<any>) => {
             let value = item.props.value
-            return <TabContent onClick={this.handleClick.bind(this, value)} key={value} selected={this.state.value === value}>{item.props.children}</TabContent>
+            return <TabContent onClick={() => this.handleClick(value)} key={value} selected={this.props.value === value}>{item.props.children}</TabContent>
           })
         }
       </div>
@@ -51,10 +41,7 @@ export class Tab extends React.Component<TabProps, TabState> {
   }
 
   handleClick(value) {
-    if (value !== this.state.value) {
-      this.setState({
-        value: value
-      })
+    if (value !== this.props.value) {
       this.props.onChange(value)
     }
   }

@@ -3,6 +3,8 @@
 import * as React from 'react'
 import * as CodeMirror from 'codemirror'
 
+import './editor-core.less'
+
 const EditorMode = {
   html: 'text/html',
   css: 'text/css',

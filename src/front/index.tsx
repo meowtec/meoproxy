@@ -2,11 +2,12 @@
 
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { Page, PageItem } from './components/pages'
-import { Tab, TabItem } from './components/tabs'
-import Network from './components/network-page'
-import Breakpoint from './components/breakpoint-page'
-import Icon from './components/icon'
+import { Page, PageItem } from './base/pages'
+import { Tab, TabItem } from './base/tabs'
+import Network from './components/network-container'
+import Breakpoint from './components/breakpoint-container'
+import Settings from './components/settings'
+import Icon from './base/icon'
 import data from './data/data'
 import * as _ from '../utils/utils'
 import './index.less'
@@ -43,7 +44,7 @@ class Main extends React.Component<any, any> {
   render() {
     return (
       <div className="layout">
-        <Tab className="nav" defaultValue={this.state.navValue} onChange={this.handleMainNavChange.bind(this)}>
+        <Tab className="nav" value={this.state.navValue} onChange={this.handleMainNavChange.bind(this)}>
           <TabItem value="network">
             <Icon glyph="network"/>
             Network
@@ -55,7 +56,7 @@ class Main extends React.Component<any, any> {
           </TabItem>
           <TabItem value="settings">
             <Icon glyph="settings"/>
-            Sequence
+            Settings
           </TabItem>
         </Tab>
         <Page value={this.state.navValue} className="body">
@@ -66,7 +67,7 @@ class Main extends React.Component<any, any> {
             <Breakpoint/>
           </PageItem>
           <PageItem value="settings">
-
+            <Settings/>
           </PageItem>
         </Page>
       </div>

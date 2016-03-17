@@ -1,13 +1,14 @@
 'use strict'
 
 import * as React from 'react'
-import { BreakPointTimeLine } from './timeline'
-import { TimelineRole } from './timeline'
+import { BreakPointTimeLine, TimelineRole } from './timeline'
 import data from '../data/data'
 import { Detail, DetailWithBody } from '../data/data'
 import { autobind } from '../../utils/decorators'
 import Editor from './breakpoint-editor'
 import { Request, Response } from 'catro'
+
+import './breakpoint-container.less'
 
 export interface BreakpointState {
   detail?: DetailWithBody

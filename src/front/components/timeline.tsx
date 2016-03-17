@@ -2,10 +2,13 @@
 
 import * as React  from 'react'
 import { clipboard, remote } from 'electron'
-import Icon from './icon'
+import Icon from '../base/icon'
 import { Detail } from '../data/data'
 import { autobind } from '../../utils/decorators'
 import { Request, Response } from '../../typed/typed'
+
+import './timeline.less'
+
 const Menu = remote.Menu
 
 export interface TimelineItemProps extends React.Props<any> {

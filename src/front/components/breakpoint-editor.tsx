@@ -2,16 +2,18 @@
 
 import * as React from 'react'
 import * as url from 'url'
-import EditorCore from './editor-core'
+import EditorCore from '../base/editor-core'
 import { DetailWithBody } from '../data/data'
 import { Type } from '../../typed/typed'
 import { autobind } from '../../utils/decorators'
-import Select from './select'
+import Select from '../base/select'
 import {
   Request as CatroRequest,
   Response as CatroResponse
 } from 'catro'
 import * as headersUtil from '../../utils/headers'
+
+import './breakpoint-editor.less'
 
 interface Request {
   url: string // hostname:port/path
