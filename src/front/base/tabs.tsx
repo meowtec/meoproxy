@@ -1,6 +1,7 @@
 'use strict'
 
 import * as React from 'react'
+import { pureRender } from '../../utils/decorators'
 
 import './tabs.less'
 
@@ -23,6 +24,7 @@ class TabContent extends React.Component<any, any> {
   }
 }
 
+@pureRender
 export class Tab extends React.Component<TabProps, any> {
 
   render() {
@@ -33,16 +35,18 @@ export class Tab extends React.Component<TabProps, any> {
         {
           React.Children.toArray(this.props.children).map((item: React.ReactElement<any>) => {
             let value = item.props.value
-            return <TabContent onClick={() => this.handleClick(value)} key={value} selected={this.props.value === value}>{item.props.children}</TabContent>
+            return <a href="#" onClick={this.bindClick(value)} className={this.props.value === value ? 'selected' : ''} key={value}>{item.props.children}</a>
           })
         }
       </div>
     )
   }
 
-  handleClick(value) {
-    if (value !== this.props.value) {
-      this.props.onChange(value)
+  bindClick(value) {
+    return () => {
+      if (value !== this.props.value) {
+        this.props.onChange(value)
+      }
     }
   }
 

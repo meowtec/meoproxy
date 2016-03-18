@@ -12,13 +12,17 @@ import data from './data/data'
 import * as _ from '../utils/utils'
 import './index.less'
 
+const enum NavSymbol {
+  network, breakpoints, settings
+}
+
 class Main extends React.Component<any, any> {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      navValue: 'network',
+      navValue: NavSymbol.settings,
       breakCount: 0
     }
 
@@ -45,28 +49,28 @@ class Main extends React.Component<any, any> {
     return (
       <div className="layout">
         <Tab className="nav" value={this.state.navValue} onChange={this.handleMainNavChange.bind(this)}>
-          <TabItem value="network">
+          <TabItem value={NavSymbol.network}>
             <Icon glyph="network"/>
             Network
           </TabItem>
-          <TabItem value="breakpoints">
+          <TabItem value={NavSymbol.breakpoints}>
             <Icon glyph="target"/>
             Breakpoints
             <span className={`dot ${_.addClass('hide', this.state.breakCount === 0)}`}>{this.state.breakCount}</span>
           </TabItem>
-          <TabItem value="settings">
+          <TabItem value={NavSymbol.settings}>
             <Icon glyph="settings"/>
             Settings
           </TabItem>
         </Tab>
         <Page value={this.state.navValue} className="body">
-          <PageItem value="network">
+          <PageItem value={NavSymbol.network}>
             <Network/>
           </PageItem>
-          <PageItem value="breakpoints">
+          <PageItem value={NavSymbol.breakpoints}>
             <Breakpoint/>
           </PageItem>
-          <PageItem value="settings">
+          <PageItem value={NavSymbol.settings}>
             <Settings/>
           </PageItem>
         </Page>

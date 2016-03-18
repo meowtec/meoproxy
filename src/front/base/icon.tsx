@@ -17,10 +17,6 @@ export interface IconProps {
 @pureRender
 export default class Icon extends React.Component<IconProps, any> {
 
-  constructor() {
-    super()
-  }
-
   get svgPath() {
     return ''
   }
