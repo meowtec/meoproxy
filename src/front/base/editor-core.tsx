@@ -46,7 +46,7 @@ export default class Editor extends React.Component<EditorProps, any> {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value != null) {
+    if (nextProps.value != null && nextProps.value !== this.value) {
       this.updateEditorValue(nextProps.value)
     }
   }
@@ -59,7 +59,7 @@ export default class Editor extends React.Component<EditorProps, any> {
     const codeMirror = this.codeMirror
 
     codeMirror.on('change', () => {
-      this.props.onChange && this.props.onChange(codeMirror.getDoc().getValue(), codeMirror)
+      this.props.onChange && this.props.onChange(this.value, codeMirror)
     })
   }
 
