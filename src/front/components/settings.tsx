@@ -4,6 +4,9 @@ import * as React from 'react'
 import { Page, PageItem } from '../base/pages'
 import { Tab, TabItem } from '../base/tabs'
 import { autobind } from '../../utils/decorators'
+import General from './settings/general'
+import HTTPSSettings from './settings/https'
+
 import './settings.less'
 
 export enum SettingsId {
@@ -20,7 +23,7 @@ export default class Settings extends React.Component<any, SettingsState> {
     super(props)
 
     this.state = {
-      tabValue: SettingsId.general
+      tabValue: SettingsId.breakpoint
     }
   }
 
@@ -36,11 +39,15 @@ export default class Settings extends React.Component<any, SettingsState> {
       <div className="settings">
         <Tab value={this.state.tabValue} onChange={this.handleTabChange}>
           <TabItem value={SettingsId.general}>General</TabItem>
-          <TabItem value={SettingsId.breakpoint}>BreakPoint</TabItem>
+          <TabItem value={SettingsId.breakpoint}>HTTPS</TabItem>
         </Tab>
-        <Page value={this.state.tabValue}>
-          <PageItem value={SettingsId.general}>1</PageItem>
-          <PageItem value={SettingsId.breakpoint}>2</PageItem>
+        <Page className="settings-body" value={this.state.tabValue} cache={false}>
+          <PageItem value={SettingsId.general}>
+            <General/>
+          </PageItem>
+          <PageItem value={SettingsId.breakpoint}>
+            <HTTPSSettings/>
+          </PageItem>
         </Page>
       </div>
     )

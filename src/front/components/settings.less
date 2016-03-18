@@ -1,3 +1,48 @@
 .settings {
-  margin-left: 20px;
+  padding: 20px;
+}
+
+.settings-body {
+  padding: 20px 0;
+}
+
+.options-form {
+  border: 0;
+  box-shadow: 0 0 1px #ccc;
+  font-size: 12px;
+  padding: 10px 0;
+
+  .item {
+    margin: 15px 0;
+    display: flex;
+
+    > label {
+      padding: 0;
+      margin: 0;
+      width: 100px;
+      padding-right: 20px;
+      flex-shrink: 0;
+      text-align: right;
+      color: #666;
+    }
+
+    > .content {
+      flex-grow: 1;
+
+      .input {
+        width: 200px;
+        transition: 0.2s;
+
+        &:focus {
+          flex-grow: 1;
+        }
+      }
+    }
+  }
+}
+
+.https-editors > section {
+  margin: 10px 20px;
+  height: 250px;
+  border: 1px solid #ddd;
 }
