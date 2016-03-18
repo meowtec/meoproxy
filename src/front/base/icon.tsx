@@ -17,12 +17,8 @@ export interface IconProps {
 @pureRender
 export default class Icon extends React.Component<IconProps, any> {
 
-  get svgPath() {
-    return ''
-  }
-
   createUseElement() {
-    return `<use xlink:href="${this.svgPath}#${iconPrefix}${this.props.glyph}"></use>`
+    return `<use xlink:href="#${iconPrefix}${this.props.glyph}"></use>`
   }
 
   render() {
