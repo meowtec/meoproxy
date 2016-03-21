@@ -1,6 +1,10 @@
 'use strict'
 
 import Proxy from 'catro'
+import { IncomingMessage, ServerResponse } from 'http'
+import * as url from 'url'
+import * as fs from 'fs'
+import * as os from 'os'
 import { RequestHandler } from 'catro'
 import * as _ from '../utils/utils'
 import * as storage from '../utils/storage'
@@ -9,10 +13,15 @@ import { IpcData, ipcDataState, Type } from '../typed/typed'
 import { shouldBreak } from './options'
 import replace from './replace'
 import * as log4js from 'log4js'
+import * as mkdirp from 'mkdirp'
 
 storage.initial()
 
 const logger = log4js.getLogger('server/index')
+
+const certDir = os.homedir + '/.meoproxy/cert'
+
+mkdirp.sync(certDir)
 
 export default function setup(options: {
   send(data: IpcData): void
@@ -22,7 +31,10 @@ export default function setup(options: {
 
   const proxy = new Proxy({
     port: 8899,
-    certPath: './cert'
+    certPath: certDir,
+    // TODO https options
+    // if https is false, not show https menu
+    https: true
   })
 
   proxy.on('open', (handler: RequestHandler) => {
@@ -98,8 +110,26 @@ export default function setup(options: {
     })
   })
 
+  proxy.on('direct', (req: IncomingMessage, res: ServerResponse, prevent: Function) => {
+    if (url.parse(req.url).path === '/ca.crt') {
+      prevent()
+      res.writeHead(200, {
+        'Content-Type': 'application/x-x509-ca-cert'
+      })
+      fs.createReadStream(proxy.CACertPath).pipe(res)
+    }
+  })
+
+  proxy.on('log:info', (...args) => {
+    logger.info.apply(logger, args)
+  })
+
+  proxy.on('error', (e) => {
+    logger.error(e)
+  })
+
   proxy.start().catch((e) => {
-    console.log(e)
+    logger.error('Start error', e)
   })
 
 }

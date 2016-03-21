@@ -35,7 +35,8 @@ module.exports = {
   },
   externals: [
     {
-      codemirror: 'CodeMirror'
+      codemirror: 'CodeMirror',
+      qrcode: 'QRCode'
     },
     function(context, request, callback) {
       if (!/^[a-zA-Z]/.test(request)) {

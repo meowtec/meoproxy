@@ -2,7 +2,7 @@
 
 import * as ip from 'ip'
 import './ca.less'
-import QRCode from 'qrcode'
+import * as QRCode from 'qrcode'
 
 const ipAddr = ip.address()
 const downloadLink = `http://${ipAddr}:8899/ca.crt`
