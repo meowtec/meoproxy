@@ -18,10 +18,10 @@
       "commit": "81b951f1ac437d1eb5ff5171a0bfa6c467634b13"
     },
     "react/react.d.ts": {
-      "commit": "81ebfb3d08cd608a7c801668a6d5f7b2ea9ecc38"
+      "commit": "4bd9b47f0ea79ba83c2e831c56bcaf8ba3a2c8ad"
     },
     "react/react-dom.d.ts": {
-      "commit": "81b951f1ac437d1eb5ff5171a0bfa6c467634b13"
+      "commit": "4bd9b47f0ea79ba83c2e831c56bcaf8ba3a2c8ad"
     },
     "codemirror/codemirror.d.ts": {
       "commit": "aefd8146158b9f17c9eb79bbf158e6d8d3c2a87b"
@@ -40,6 +40,15 @@
     },
     "react/react-addons-pure-render-mixin.d.ts": {
       "commit": "81ebfb3d08cd608a7c801668a6d5f7b2ea9ecc38"
+    },
+    "react-redux/react-redux.d.ts": {
+      "commit": "6766ed1d0faf02ede9e2edf2e66bbb2388c825ec"
+    },
+    "redux/redux.d.ts": {
+      "commit": "6766ed1d0faf02ede9e2edf2e66bbb2388c825ec"
+    },
+    "mocha/mocha.d.ts": {
+      "commit": "a44529fcb1e1cdc0355e71c42a6048de99b57c34"
     }
   }
 }

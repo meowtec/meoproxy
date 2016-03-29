@@ -1,3 +1,5 @@
+'use strict'
+
 import { Headers } from '../typed/typed'
 
 export function stringify(headers: Headers) {

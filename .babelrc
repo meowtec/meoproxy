@@ -1,6 +1,5 @@
 {
-  "plugins": ["transform-es2015-destructuring", "transform-es2015-parameters"],
-  //  "presets": ["es2015", "react"],
+  "plugins": ["transform-es2015-destructuring", "transform-es2015-parameters", "transform-es2015-spread"],
   "env": {
     "development": {
 

@@ -1,3 +1,5 @@
+'use strict'
+
 import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
 
 export function autobind(target, key, descriptor) {

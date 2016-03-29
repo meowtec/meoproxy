@@ -13,7 +13,7 @@
     "start": "npm run build:back && MEOP_ENV=dev_watch npm run electron",
     "start:once": "npm run build:front && npm run build:back && MEOP_ENV=dev npm run electron",
     "watch": "webpack-dev-server --port 11200",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run build:back && mocha build/__tests"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "author": "Meowtec<bertonzh@gmail.com>",
   "private": true,
   "dependencies": {
+    "babel-plugin-transform-es2015-spread": "^6.6.5",
     "catro": "next",
     "electron-prebuilt": "^0.37.2",
     "ip": "^1.0.1",
@@ -30,15 +31,16 @@
     "mkdirp": "0.5.1",
     "react": "^0.14.7",
     "react-addons-pure-render-mixin": "^0.14.7",
-    "react-dom": "^0.14.3"
+    "react-dom": "^0.14.3",
+    "redux": "^3.3.1"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.2",
     "babel-loader": "^6.2.2",
+    "babel-plugin-transform-async-to-generator": "^6.7.4",
     "babel-plugin-transform-es2015-destructuring": "^6.5.0",
     "babel-plugin-transform-es2015-parameters": "^6.5.0",
-    "chai": "^3.4.0",
     "css-loader": "^0.23.1",
     "less": "^2.6.0",
     "less-loader": "^2.2.2",
