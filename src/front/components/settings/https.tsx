@@ -1,9 +1,7 @@
 import * as React from 'react'
 import HTTPSList from './https-list'
 import Checkbox from '../../base/checkbox'
-import FileOpener from '../../base/file'
 import { autobind } from '../../../utils/decorators'
-import { testCommand } from '../../../utils/exec'
 
 
 export interface HttpsSettingsState {

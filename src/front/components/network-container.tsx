@@ -6,7 +6,7 @@ import HttpDetail from './http-detail'
 import data from '../data/data'
 import { DetailWithBody, Detail } from '../data/data'
 import { autobind } from '../../utils/decorators'
-import { throttle } from '../../utils/catro-utils'
+import { throttle } from '../../utils/catro-utils/'
 
 import './network-container.less'
 
