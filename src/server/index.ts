@@ -19,7 +19,7 @@ storage.initial()
 
 const logger = log4js.getLogger('server/index')
 
-const certDir = os.homedir + '/.meoproxy/cert'
+const certDir = os.homedir() + '/.meoproxy/cert'
 
 mkdirp.sync(certDir)
 
