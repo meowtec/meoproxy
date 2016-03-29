@@ -1,0 +1,3 @@
+[submodule "src/utils/catro-utils"]
+	path = src/utils/catro-utils
+	url = https://github.com/meowtec/catro-utils.git

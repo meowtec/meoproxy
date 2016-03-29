@@ -1,58 +1,6 @@
 'use strict'
 
-import { Readable } from 'stream'
-
 export function none() {}
-
-export function debounce(wait: number, fun0?: Function) {
-  let timer
-
-  return (func1?: Function) => {
-    clearTimeout(timer)
-    let fun = func1 || fun0
-
-    fun && (timer = setTimeout(fun, wait))
-  }
-}
-
-export function throttle(wait: number, fun0?: Function) {
-  let lastDate = 0
-
-  return (func1?: Function) => {
-    let nowDate = Date.now()
-    if (nowDate - lastDate > wait ) {
-      lastDate = nowDate
-      let fun = func1 || fun0
-      fun && fun()
-    }
-  }
-}
-
-export function parseHost(host: string) {
-  let tuple = host.split(':')
-  return {
-    host: tuple[0],
-    port: parseInt(tuple[1] || '80', 10)
-  }
-}
-
-export function streamReadAll(readable: Readable) {
-  return new Promise(function(resolve, reject) {
-    let buffers = []
-
-    readable.on('data', function(data) {
-      buffers.push(data)
-    })
-
-    readable.on('end', function() {
-      resolve(Buffer.concat(buffers))
-    })
-
-    readable.on('error', function(e) {
-      reject(e)
-    })
-  })
-}
 
 export function genUrl(protocol: string, hostname: string, port: string, path: string) {
   let portPart = (!port || Number(port) === 80) ? '' : (':' + port)
@@ -64,8 +12,8 @@ export function parseQS(url: string) {
   let qs = url.replace(/.*\?/, '')
 
   return qs.split('&').reduce(function(obj, item) {
-    const kv = item.split('=')
-    obj[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || '')
+    const [key, value] = item.split('=')
+    obj[decodeURIComponent(key)] = decodeURIComponent(value || '')
     return obj
   }, {})
 }
@@ -75,7 +23,17 @@ export function addClass(className: string, condition: boolean) {
 }
 
 export function toString(value) {
-  return value == null ? '' : value
+  return value == null ? '' : (value + '')
+}
+
+export function trimIndent(string: string) {
+  const lines = string.split('\n')
+  if (lines.length < 3 || lines[0].trim() !== '') {
+    return string
+  }
+
+  const indent = lines[1].match(/^\s*/)[0].length
+  return lines.slice(1, lines.length - 1).map(line => line.slice(indent)).join('\n')
 }
 
 export let id

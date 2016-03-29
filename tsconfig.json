@@ -7,13 +7,13 @@
     "rootDir": "src",
     "noImplicitAny": false,
     "sourceMap": true,
-    "declaration": true,
     "experimentalDecorators": true
 
   },
   "exclude": [
     "node_modules",
     "build",
-    "static"
+    "static",
+    "src/utils/catro-utils/tests"
   ]
 }
