@@ -1,3 +1,5 @@
+'use strict'
+
 import * as React from 'react'
 import HTTPSList from './https-list'
 import Checkbox from '../../base/checkbox'

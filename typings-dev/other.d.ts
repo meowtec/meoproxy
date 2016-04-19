@@ -1,4 +1,4 @@
-declare module "ip" {
+declare module 'ip' {
   export function address(): string;
 }
 
@@ -9,6 +9,6 @@ interface QRCodeConstructor {
   new (element, text);
 }
 
-declare module "qrcode" {
+declare module 'qrcode' {
   export = QRCode;
 }

@@ -1,3 +1,5 @@
+'use strict'
+
 import * as React from 'react'
 import { Tab, TabItem } from '../../base/tabs'
 import { Page, PageItem } from '../../base/pages'

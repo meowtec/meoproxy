@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/bootstrap.js",
   "scripts": {
-    "i": "npm install && tsd install",
+    "i": "git submodule init && git submodule update && npm install && tsd install",
     "lint": "tslint ./src/*.ts* ./src/**/*.ts* ./src/**/**/*.ts*",
     "electron": "electron .",
     "build:back": "tsc -p . && babel build --out-dir build",

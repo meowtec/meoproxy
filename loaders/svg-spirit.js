@@ -10,7 +10,7 @@ module.exports = function (content) {
     el.innerHTML = ${JSON.stringify(xml)}
     var svg = el.children[0]
     svg.style.display = 'none'
-    document.body.insertBefore(svg, document.body.firstChild)
+    document.body.appendChild(svg)
     module.exports = "${prefix}"
   `
 }
