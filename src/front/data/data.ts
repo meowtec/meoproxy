@@ -1,7 +1,7 @@
 'use strict'
 
 import { ipcRenderer as ipc } from 'electron'
-import * as storage from '../../utils/storage'
+import { cacheBundle } from '../../utils/storage'
 import * as mine from '../../utils/content-type'
 import { EventEmitter } from 'events'
 import { Request, Response } from 'catro'
@@ -92,11 +92,11 @@ export class Data extends EventEmitter {
     const response = data.response
 
     if (request && request.storageId) {
-      bodies.requestBody = storage.readFile(request.storageId).toString()
+      bodies.requestBody = cacheBundle.read(request.storageId).toString()
     }
 
     if (response && response.storageId && mine.isText(response.headers['content-type'])) {
-      bodies.responseBody = storage.readFile(response.storageId).toString()
+      bodies.responseBody = cacheBundle.read(response.storageId).toString()
     }
 
     return Object.assign(bodies, data)
@@ -127,7 +127,7 @@ export class Data extends EventEmitter {
 
     if (data.body) {
       storageId = id + '_M'
-      storage.writeFile(storageId, data.body)
+      cacheBundle.write(storageId, data.body)
     }
 
     const ipcData = Object.assign({}, data, {

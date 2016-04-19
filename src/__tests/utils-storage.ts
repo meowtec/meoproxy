@@ -3,22 +3,18 @@
 import * as assert from 'assert'
 
 import * as _ from '../utils/utils'
-import * as storage from '../utils/storage'
+import { cacheBundle } from '../utils/storage'
 
 describe('storage', () => {
-
-  it('should storage generator correct file path', () => {
-    assert.equal(storage.filePath('filename', 'tag1', 'tag2'), 'filename.tag1.tag2')
-  })
 
   const uuid = _.id()
   const textData = uuid + 'test!'
 
   it('should writeStream and readStream work', (done) => {
-    const writeStream = storage.writeStream(uuid)
+    const writeStream = cacheBundle.writeStream(uuid)
 
     writeStream.end(textData, () => {
-      const readStream = storage.readStream(uuid)
+      const readStream = cacheBundle.readStream(uuid)
 
       readStream.on('data', data => {
         assert.equal(textData, data.toString(), 'write-data equals read-data')
@@ -28,6 +24,6 @@ describe('storage', () => {
   })
 
   it('should storage.readFileSync work', () => {
-    assert.equal(storage.readFile(uuid).toString(), textData)
+    assert.equal(cacheBundle.read(uuid).toString(), textData)
   })
 })

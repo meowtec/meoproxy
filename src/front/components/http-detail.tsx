@@ -6,7 +6,7 @@ import { Page, PageItem } from '../base/pages'
 import { DetailWithBody } from '../data/data'
 import Panel from '../base/panel'
 import * as _ from '../../utils/utils'
-import * as storage from '../../utils/storage'
+import { cacheBundle } from '../../utils/storage'
 import { autobind } from '../../utils/decorators'
 
 import './http-detail.less'
@@ -42,7 +42,7 @@ export default class HttpDetail extends React.Component<HttpDetailProps, any> {
     }
 
     if (/image/.test(response.headers['content-type'])) {
-      return <img src={'file://' + storage.getTempDir() + '/' + response.storageId}/>
+      return <img src={'file://' + cacheBundle.path(response.storageId)}/>
     }
 
     return (

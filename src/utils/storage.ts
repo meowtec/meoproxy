@@ -3,43 +3,48 @@
 import * as os from 'os'
 import * as fs from 'fs'
 import * as path from 'path'
+import { app } from 'electron'
 
-const tempDir = path.resolve(os.tmpdir(), 'meoproxy')
+class Bundle {
 
-// 获取文件相对路径
-function getPhysicPath(relativePath: string) {
-  return path.resolve(tempDir, relativePath)
-}
+  private _basePath: string
 
-export function initial() {
-  try {
-    fs.mkdirSync(tempDir)
+  constructor(basePath: string) {
+    try {
+      fs.mkdirSync(basePath)
+    } catch (e) {
+      if (!(e.code === 'EEXIST' && fs.statSync(basePath).isDirectory())) {
+        throw e
+      }
+    }
+    this._basePath = basePath
   }
-  catch (e) {
-    console.log(e)
+
+  basePath() {
+    return this._basePath
   }
+
+  path(id: string) {
+    return path.resolve(this.basePath(), id)
+  }
+
+  read(id: string) {
+    return fs.readFileSync(this.path(id))
+  }
+
+  write(id: string, data) {
+    return fs.writeFileSync(this.path(id), data)
+  }
+
+  readStream(id: string) {
+    return fs.createReadStream(this.path(id))
+  }
+
+  writeStream(id: string) {
+    return fs.createWriteStream(this.path(id))
+  }
+
 }
 
-export function filePath(...args) {
-  return args.join('.')
-}
-
-export function readStream(path: string) {
-  return fs.createReadStream(getPhysicPath(path))
-}
-
-export function writeStream(path: string) {
-  return fs.createWriteStream(getPhysicPath(path))
-}
-
-export function readFile(path: string) {
-  return fs.readFileSync(getPhysicPath(path))
-}
-
-export function writeFile(path: string, content) {
-  return fs.writeFileSync(getPhysicPath(path), content)
-}
-
-export function getTempDir() {
-  return tempDir
-}
+export const cacheBundle = new Bundle(path.resolve(os.tmpdir(), 'meoproxy'))
+export const config = app && new Bundle(path.resolve(app.getPath('userData'), 'config'))

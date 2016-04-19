@@ -7,15 +7,13 @@ import * as fs from 'fs'
 import * as os from 'os'
 import { RequestHandler } from 'catro'
 import * as _ from '../utils/utils'
-import * as storage from '../utils/storage'
+import { cacheBundle } from '../utils/storage'
 import { Readable } from 'stream'
 import { IpcData, ipcDataState, Type } from '../typed/typed'
 import { shouldBreak } from './options'
 import replace from './replace'
 import * as log4js from 'log4js'
 import * as mkdirp from 'mkdirp'
-
-storage.initial()
 
 const logger = log4js.getLogger('server/index')
 
@@ -55,8 +53,8 @@ export default function setup(options: {
       /** Storage request */
       let storageId
       if (handler.request.method.toUpperCase() !== 'GET') {
-        storageId = storage.filePath(id, 'request')
-        ; (<Readable>handler.request.body).pipe(storage.writeStream(storageId))
+        storageId = [id, 'request'].join('.')
+        ; (<Readable>handler.request.body).pipe(cacheBundle.writeStream(storageId))
       }
 
       send({
@@ -80,8 +78,8 @@ export default function setup(options: {
     })
 
     handler.on('response', () => {
-      const storageId = storage.filePath(id, 'response')
-      const writeable = storage.writeStream(storageId)
+      const storageId = [id, 'response'].join('.')
+      const writeable = cacheBundle.writeStream(storageId)
       ; (<Readable>handler.response.body).pipe(writeable)
 
       send({

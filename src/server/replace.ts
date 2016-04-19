@@ -3,7 +3,7 @@
 import { EventEmitter } from 'events'
 import { ipcMain } from 'electron'
 import { Request, Response, Type } from '../typed/typed'
-import * as storage from '../utils/storage'
+import { cacheBundle } from '../utils/storage'
 
 const event = new EventEmitter()
 
@@ -16,7 +16,7 @@ ipcMain.on('replaced', (sender, data: {
 }) => {
   const catroData = data.data
   if (catroData.storageId) {
-    catroData.body = storage.readStream(catroData.storageId)
+    catroData.body = cacheBundle.readStream(catroData.storageId)
   }
   event.emit(eventName(data.id, data.type), data.data)
 })
