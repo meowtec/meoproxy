@@ -13,7 +13,7 @@
     "start": "npm run build:back && MEOP_ENV=dev_watch npm run electron",
     "start:once": "npm run build:front && npm run build:back && MEOP_ENV=dev npm run electron",
     "watch": "webpack-dev-server --port 11200",
-    "test": "npm run build:back && mocha build/__tests"
+    "test": "npm run build:back && electron-mocha build/__tests"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,7 @@
     "babel-plugin-transform-es2015-destructuring": "^6.5.0",
     "babel-plugin-transform-es2015-parameters": "^6.5.0",
     "css-loader": "^0.23.1",
+    "electron-mocha": "^1.2.2",
     "less": "^2.6.0",
     "less-loader": "^2.2.2",
     "style-loader": "^0.13.0",
