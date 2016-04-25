@@ -3,7 +3,7 @@
 import * as os from 'os'
 import * as fs from 'fs'
 import * as path from 'path'
-import { app } from 'electron'
+import { app, remote } from 'electron'
 
 class Bundle {
 
@@ -46,5 +46,7 @@ class Bundle {
 
 }
 
+const appRef = app || remote && remote.app
+
 export const cacheBundle = new Bundle(path.resolve(os.tmpdir(), 'meoproxy'))
-export const config = app && new Bundle(path.resolve(app.getPath('userData'), 'config'))
+export const configBundle = new Bundle(path.resolve(appRef.getPath('userData'), 'config'))
