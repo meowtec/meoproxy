@@ -5,7 +5,8 @@ import caPage from './ca-page'
 import * as ip from 'ip'
 
 export default function initMenu() {
-  const template = [
+
+  const menu = Menu.buildFromTemplate([
     {
       label: 'Window',
       role: 'window',
@@ -37,12 +38,12 @@ export default function initMenu() {
         {
           label: 'Undo',
           accelerator: 'CmdOrCtrl+Z',
-          selector: 'undo:'
+          role: 'undo'
         },
         {
           label: 'Redo',
           accelerator: 'Shift+CmdOrCtrl+Z',
-          selector: 'redo:'
+          role: 'redo'
         },
         {
           'type': 'separator'
@@ -50,22 +51,22 @@ export default function initMenu() {
         {
           label: 'Cut',
           accelerator: 'CmdOrCtrl+X',
-          selector: 'cut:'
+          role: 'cut'
         },
         {
           label: 'Copy',
           accelerator: 'CmdOrCtrl+C',
-          selector: 'copy:'
+          role: 'copy'
         },
         {
           label: 'Paste',
           accelerator: 'CmdOrCtrl+V',
-          selector: 'paste:'
+          role: 'paste'
         },
         {
           label: 'Select All',
           accelerator: 'CmdOrCtrl+A',
-          selector: 'selectAll:'
+          role: 'selectall'
         }
       ]
     },
@@ -111,8 +112,6 @@ export default function initMenu() {
         }
       ]
     }
-  ]
-
-  const menu = Menu.buildFromTemplate(template)
+  ])
   Menu.setApplicationMenu(menu)
 }

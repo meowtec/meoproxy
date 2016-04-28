@@ -1,0 +1,23 @@
+{
+  "version": false,
+  "dependencies": {
+    "mkdirp": "registry:npm/mkdirp#0.5.0+20160222053049",
+    "react-redux": "registry:npm/react-redux#4.4.0+20160207114942"
+  },
+  "ambientDependencies": {
+    "codemirror": "registry:dt/codemirror#0.0.0+20160423074321",
+    "electron": "registry:env/electron#0.37.6+20160416165306",
+    "log4js": "registry:dt/log4js#0.0.0+20160316155526",
+    "node": "registry:env/node#4.0.0+20160410231109",
+    "react": "registry:dt/react#0.14.0+20160423065914",
+    "react-addons-pure-render-mixin": "registry:dt/react-addons-pure-render-mixin#0.14.0+20160316155526",
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040"
+  },
+  "ambientDevDependencies": {
+    "express": "registry:dt/express#4.0.0+20160317120654",
+    "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160322035842",
+    "mime": "registry:dt/mime#0.0.0+20160316155526",
+    "mocha": "registry:env/mocha#2.2.5+20160321223601",
+    "serve-static": "registry:dt/serve-static#0.0.0+20160317120654"
+  }
+}

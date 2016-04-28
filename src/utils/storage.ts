@@ -3,6 +3,7 @@
 import * as os from 'os'
 import * as fs from 'fs'
 import * as path from 'path'
+import * as mkdirp from 'mkdirp'
 import { app, remote } from 'electron'
 
 class Bundle {
@@ -11,7 +12,7 @@ class Bundle {
 
   constructor(basePath: string) {
     try {
-      fs.mkdirSync(basePath)
+      mkdirp.sync(basePath)
     } catch (e) {
       if (!(e.code === 'EEXIST' && fs.statSync(basePath).isDirectory())) {
         throw e
@@ -47,6 +48,5 @@ class Bundle {
 }
 
 const appRef = app || remote && remote.app
-
 export const cacheBundle = new Bundle(path.resolve(os.tmpdir(), 'meoproxy'))
 export const configBundle = new Bundle(path.resolve(appRef.getPath('userData'), 'config'))

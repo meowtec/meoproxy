@@ -14,7 +14,6 @@ const env = process.env['MEOP_ENV'] || ''
 
 logger.info('USERDATA dir:', app.getPath('userData'))
 logger.info('TEMP dir:', app.getPath('temp'))
-logger.info('CACHE dir:', app.getPath('cache'))
 // Report crashes to our server.
 // electron.crashReporter.start()
 

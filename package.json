@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/bootstrap.js",
   "scripts": {
-    "i": "git submodule init && git submodule update && npm install && tsd install",
+    "i": "git submodule init && git submodule update && npm install && typings install",
     "lint": "tslint ./src/*.ts* ./src/**/*.ts* ./src/**/**/*.ts*",
     "electron": "electron .",
     "build:back": "tsc -p . && babel build --out-dir build",
@@ -23,15 +23,14 @@
   "private": true,
   "dependencies": {
     "babel-plugin-transform-es2015-spread": "^6.6.5",
-    "catro": "next",
+    "catro": "^1.1.0",
     "electron-prebuilt": "^0.37.2",
     "ip": "^1.0.1",
-    "lodash": "^3.10.1",
     "log4js": "^0.6.32",
     "mkdirp": "0.5.1",
-    "react": "^0.14.7",
-    "react-addons-pure-render-mixin": "^0.14.7",
-    "react-dom": "^0.14.3",
+    "react": "^15.0.1",
+    "react-addons-pure-render-mixin": "^15.0.1",
+    "react-dom": "^15.0.1",
     "redux": "^3.3.1"
   },
   "devDependencies": {
@@ -47,9 +46,9 @@
     "less-loader": "^2.2.2",
     "style-loader": "^0.13.0",
     "ts-loader": "^0.8.1",
-    "tsd": "^0.6.5",
     "tslint": "^3.6.0",
     "typescript": "^1.8.0",
+    "typings": "^0.8.1",
     "webpack": "^1.12.13",
     "webpack-dev-server": "^1.14.1"
   }
