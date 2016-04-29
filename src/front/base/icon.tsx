@@ -17,13 +17,11 @@ export interface IconProps {
 @pureRender
 export default class Icon extends React.Component<IconProps, any> {
 
-  createUseElement() {
-    return `<use xlink:href="#${iconPrefix}${this.props.glyph}"></use>`
-  }
-
   render() {
     return (
-      <svg className={`icon ${toString(this.props.className)}`} dangerouslySetInnerHTML={{__html: this.createUseElement()}}></svg>
+      <svg className={`icon ${toString(this.props.className)}`}>
+        <use xlinkHref={`#${iconPrefix}${this.props.glyph}`}></use>
+      </svg>
     )
   }
 
