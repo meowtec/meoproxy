@@ -5,15 +5,16 @@ import { IncomingMessage, ServerResponse } from 'http'
 import * as url from 'url'
 import * as fs from 'fs'
 import * as os from 'os'
-import { RequestHandler } from 'catro'
+import { RequestHandler, HttpsConnect } from 'catro'
 import * as _ from '../utils/utils'
 import { cacheBundle } from '../utils/storage'
 import { Readable } from 'stream'
-import { IpcData, ipcDataState, Type } from '../typed/typed'
-import { shouldBreak } from './options'
+import { IpcHTTPData, ipcDataState, MessageType } from '../typed/typed'
+import userOptions from './options'
 import replace from './replace'
 import * as log4js from 'log4js'
 import * as mkdirp from 'mkdirp'
+import * as ipc from '../utils/ipc'
 
 const logger = log4js.getLogger('server/index')
 
@@ -21,11 +22,9 @@ const certDir = os.homedir() + '/.meoproxy/cert'
 
 mkdirp.sync(certDir)
 
-export default function setup(options: {
-  send(data: IpcData): void
-}) {
+const sendHttpIpc = (data: IpcHTTPData) => ipc.send('http-data', data)
 
-  const send = options.send
+export default function setup() {
 
   const proxy = new Proxy({
     port: 8899,
@@ -42,11 +41,11 @@ export default function setup(options: {
     /** generate an uid */
     const id = _.id()
     const url = handler.url
-    const hasBreak = shouldBreak(url)
+    const hasBreak = userOptions.shouldBreak(url)
     if (hasBreak) {
       logger.info('Will replace:', url)
-      handler.replaceRequest = replace(id, Type.request)
-      handler.replaceResponse = replace(id, Type.response)
+      handler.replaceRequest = replace(id, MessageType.request)
+      handler.replaceResponse = replace(id, MessageType.response)
     }
 
     {
@@ -57,11 +56,11 @@ export default function setup(options: {
         ; (<Readable>handler.request.body).pipe(cacheBundle.writeStream(storageId))
       }
 
-      send({
+      sendHttpIpc({
         id,
         state: ipcDataState.open,
         protocol: handler.protocol,
-        breakpoint: hasBreak ? Type.request : null,
+        breakpoint: hasBreak ? MessageType.request : null,
         request: Object.assign({}, handler.request, {
           storageId,
           body: null
@@ -71,7 +70,7 @@ export default function setup(options: {
     }
 
     handler.on('requestFinish', () => {
-      send({
+      sendHttpIpc({
         id,
         state: ipcDataState.requestFinish,
       })
@@ -82,7 +81,7 @@ export default function setup(options: {
       const writeable = cacheBundle.writeStream(storageId)
       ; (<Readable>handler.response.body).pipe(writeable)
 
-      send({
+      sendHttpIpc({
         id,
         state: ipcDataState.response,
         response: Object.assign({}, handler.response, {
@@ -92,20 +91,26 @@ export default function setup(options: {
       })
 
       writeable.on('finish', () => {
-        send({
+        sendHttpIpc({
           id,
           state: ipcDataState.responseFinish,
-          breakpoint: hasBreak ? Type.response : null
+          breakpoint: hasBreak ? MessageType.response : null
         })
       })
     })
 
     handler.on('finish', () => {
-      send({
+      sendHttpIpc({
         id,
         state: ipcDataState.finish
       })
     })
+  })
+
+  proxy.on('connect', (connect: HttpsConnect) => {
+    ipc.send('https-connect', Object.assign({
+      id: _.id()
+    }, connect))
   })
 
   proxy.on('direct', (req: IncomingMessage, res: ServerResponse, prevent: Function) => {

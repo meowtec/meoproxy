@@ -4,7 +4,7 @@ import * as React from 'react'
 import * as url from 'url'
 import EditorCore from '../base/editor-core'
 import { DetailWithBody } from '../data/data'
-import { Type } from '../../typed/typed'
+import { MessageType } from '../../typed/typed'
 import { autobind } from '../../utils/decorators'
 import Select from '../base/select'
 import {
@@ -66,7 +66,7 @@ export default class Editor extends React.Component<EditorProps, any> {
   }
 
   updateDomFromProps(props: EditorProps) {
-    if (this.getType(props) === Type.request) {
+    if (this.getType(props) === MessageType.request) {
       let data = this.beforehandRequest(props.data)
       this.refs.method.value = data.method
       this.refs['url'].value = data.url
@@ -133,7 +133,7 @@ export default class Editor extends React.Component<EditorProps, any> {
   @autobind
   handleSubmitClick() {
     let data
-    if (this.getType() === Type.request) {
+    if (this.getType() === MessageType.request) {
       data = this.afterhandleRequest({
         url: this.refs['url'].value,
         method: this.refs.method.value,
@@ -206,7 +206,7 @@ export default class Editor extends React.Component<EditorProps, any> {
   render() {
     return (
       <div className="break-edit">
-        {this.getType() === Type.request ? this.renderRequestEditor() : this.renderResponseEditor()}
+        {this.getType() === MessageType.request ? this.renderRequestEditor() : this.renderResponseEditor()}
         <div className="form-footer">
           <button onClick={this.handleSubmitClick}>Submit</button>
         </div>

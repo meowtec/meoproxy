@@ -3,8 +3,8 @@
 import * as React from 'react'
 import { Timeline } from './timeline'
 import HttpDetail from './http-detail'
-import data from '../data/data'
-import { DetailWithBody, Detail } from '../data/data'
+import { IpcHTTPData } from '../../typed/typed'
+import data, { DetailWithBody } from '../data/data'
 import { autobind } from '../../utils/decorators'
 import { throttle } from '../../utils/catro-utils/'
 
@@ -36,9 +36,9 @@ export default class Network extends React.Component<any, NetworkState> {
     })
 
     // 监听 timeline 数据的更新
-    data.on('update', (item: Detail) => {
+    data.on('update', (item: IpcHTTPData) => {
       // 如果发生更新的数据和当前详情的数据一致，则更新详情
-      if (item.id === this.state.detailId) {
+      if (item && item.id === this.state.detailId) {
         this.updateDetail()
       }
       else {

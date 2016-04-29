@@ -2,8 +2,8 @@
 
 import * as React from 'react'
 import { BreakPointTimeLine, TimelineRole } from './timeline'
-import data from '../data/data'
-import { Detail, DetailWithBody } from '../data/data'
+import data, { DetailWithBody } from '../data/data'
+import { IpcHTTPData } from '../../typed/typed'
 import { autobind } from '../../utils/decorators'
 import Editor from './breakpoint-editor'
 import { Request, Response } from 'catro'
@@ -34,7 +34,7 @@ export default class Breakpoint extends React.Component<any, BreakpointState> {
   }
 
   @autobind
-  handleListClick(item: Detail) {
+  handleListClick(item: IpcHTTPData) {
     this.setState({
       detail: data.getBreakPoint(item.id, item.breakpoint)
     })

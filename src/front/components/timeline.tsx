@@ -3,9 +3,9 @@
 import * as React  from 'react'
 import { clipboard, remote } from 'electron'
 import Icon from '../base/icon'
-import { Detail } from '../data/data'
-import { autobind } from '../../utils/decorators'
-import { Request, Response } from '../../typed/typed'
+import { autobind, pureRender } from '../../utils/decorators'
+import { Request, Response, IpcHTTPData, HttpsConnect } from '../../typed/typed'
+import { timelineDataType, TimelineDataType } from '../data/data'
 
 import './timeline.less'
 
@@ -22,9 +22,9 @@ export interface TimelineItemProps extends React.Props<any> {
 export interface TimelineItemState {}
 
 export interface TimelineProps {
-  data: Detail[]
+  data: (IpcHTTPData | HttpsConnect)[]
   role?: TimelineRole
-  onClick(item: Detail): void
+  onClick(item: IpcHTTPData): void
 }
 
 export interface TimelineState {
@@ -36,6 +36,7 @@ export enum TimelineRole {
   breakpoint
 }
 
+@pureRender
 class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState> {
 
   baseUrl: string
@@ -105,6 +106,34 @@ class TimelineItem extends React.Component<TimelineItemProps, TimelineItemState>
   }
 }
 
+export interface TimelineSecureItemProps extends React.Props<any> {
+  hostname: string
+  port: number
+}
+
+@pureRender
+class TimelineSecureItem extends React.Component<TimelineSecureItemProps, any> {
+  render() {
+    const props = this.props
+    const port = props.port
+    return (
+      <li>
+        <span className="secure"><Icon glyph="lock"/></span>
+        <div className="url">
+          <span className="host">
+            {
+              props.hostname
+            }
+            {
+              port && port !== 443 ? CSSImportRule : null
+            }
+          </span>
+        </div>
+      </li>
+    )
+  }
+}
+
 export class Timeline extends React.Component<TimelineProps, TimelineState> {
   constructor(props: TimelineProps) {
     super(props)
@@ -114,7 +143,7 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
     }
   }
 
-  uid(item: Detail) {
+  uid(item: IpcHTTPData | HttpsConnect) {
     return item.id
   }
 
@@ -136,15 +165,32 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
     }
   }
 
+  renderTimelineItem(item: IpcHTTPData) {
+    const uid = this.uid(item)
+    return (
+      <TimelineItem key={uid} {...item} active={uid === this.state.activeId} onClick={this.handleItemClick}/>
+    )
+  }
+
+  renderTimelineSecureItem(item: HttpsConnect) {
+    const uid = this.uid(item)
+    return (
+      <TimelineSecureItem key={uid} {...item}/>
+    )
+  }
+
   renderList() {
     return (
       <ul className="timeline">
         {
           this.props.data.map(item => {
-            const uid = this.uid(item)
-            return (
-              <TimelineItem key={uid} {...item} active={uid === this.state.activeId} onClick={this.handleItemClick}/>
-            )
+            if (item[timelineDataType] === TimelineDataType.http) {
+              return this.renderTimelineItem(item as IpcHTTPData)
+            }
+            else {
+              return this.renderTimelineSecureItem(item as HttpsConnect)
+            }
+
           })
         }
       </ul>
@@ -176,7 +222,7 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
 
 export class BreakPointTimeLine extends Timeline {
 
-  uid(item: Detail) {
+  uid(item: IpcHTTPData) {
     return item.id + '_' + item.breakpoint
   }
 

@@ -3,16 +3,18 @@
 import {
   Request as CatroRequest,
   Response as CatroResponse,
-  Headers
+  Headers,
+  HttpsConnect as CatroHttpsConnect
 } from 'catro'
 
 export { Headers }
 
-export enum Type {
-  request, response
+export const enum MessageType {
+  request,
+  response
 }
 
-export enum ipcDataState {
+export const enum ipcDataState {
   /** 代理收到下游请求 */
   open,
 
@@ -37,11 +39,21 @@ export interface Response extends CatroResponse {
   storageId: string
 }
 
-export interface IpcData {
+export interface IpcHTTPData {
   id: string
   state: ipcDataState
   protocol?: string
-  breakpoint?: Type
+  breakpoint?: MessageType
   request?: Request
   response?: Response
 }
+
+export interface HttpsConnect extends CatroHttpsConnect {
+  id: string
+}
+
+/** IPC from main to renderer */
+export type IpcChannelMain = 'http-data' | 'https-connect'
+
+/** IPC from renderer to main */
+export type IpcChannelRenderer = ''

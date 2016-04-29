@@ -5,6 +5,7 @@ import * as path from 'path'
 import appMenuSetup from './atom/menu'
 import serverSetup from './server/'
 import * as log4js from 'log4js'
+import * as ipc from './utils/ipc'
 
 const logger = log4js.getLogger('bootstrap')
 
@@ -60,9 +61,7 @@ app.on('ready', function() {
     app.quit()
   })
 
-  serverSetup({
-    send: (data) => {
-      window.webContents.send('http-data', data)
-    }
-  })
+  ipc.setRender(window)
+
+  serverSetup()
 })

@@ -5,7 +5,7 @@ import { cacheBundle } from '../../utils/storage'
 import * as mine from '../../utils/content-type'
 import { EventEmitter } from 'events'
 import { Request, Response } from 'catro'
-import { ipcDataState, IpcData, Type } from '../../typed/typed'
+import { ipcDataState, IpcHTTPData, HttpsConnect, MessageType } from '../../typed/typed'
 
 
 export interface Bodies {
@@ -15,13 +15,18 @@ export interface Bodies {
   responseBody_?: string
 }
 
-export type DetailWithBody = IpcData & Bodies;
+export type DetailWithBody = IpcHTTPData & Bodies
 
-export { IpcData as Detail }
+export const timelineDataType = Symbol('timelineDataType')
+
+export const enum TimelineDataType {
+  http,
+  connect
+}
 
 export class Data extends EventEmitter {
-  private _timeline: IpcData[];
-  private _breakpoints: IpcData[];
+  private _timeline: (IpcHTTPData | HttpsConnect)[];
+  private _breakpoints: IpcHTTPData[];
 
   constructor() {
     super()
@@ -34,9 +39,9 @@ export class Data extends EventEmitter {
 
   private listenEvents() {
 
-    ipc.on('http-data', (event, data: IpcData) => {
+    ipc.on('http-data', (event, data: IpcHTTPData) => {
       // console.log('ipc.on \'http-data\' data => ', data)
-      let detail: IpcData
+      let detail: IpcHTTPData
 
       /**
        * create a new detail
@@ -44,6 +49,7 @@ export class Data extends EventEmitter {
       if (data.state === ipcDataState.open) {
         detail = data
         this.timeline.unshift(data)
+        data[timelineDataType] = TimelineDataType.http
       }
       /**
        * get exist detail
@@ -67,13 +73,23 @@ export class Data extends EventEmitter {
 
       this.emit('update', detail)
     })
+
+    ipc.on('https-connect', (devent, data: HttpsConnect) => {
+      console.debug('connect', data)
+      data[timelineDataType] = TimelineDataType.connect
+      this.timeline.unshift(data)
+
+      this.emit('update')
+    })
   }
 
   private findTimelineItem(id: string) {
-    return this.timeline.find(item => item.id === id)
+    return <IpcHTTPData>this.timeline.find((item: IpcHTTPData) => {
+      return item[timelineDataType] === TimelineDataType.http && item.id === id
+    })
   }
 
-  private findBreakPointItem(id: string, type: Type) {
+  private findBreakPointItem(id: string, type: MessageType) {
     return this.breakpoints.find(item => item.id === id && item.breakpoint === type)
   }
 
@@ -86,7 +102,7 @@ export class Data extends EventEmitter {
   }
 
   /** TODO 根据普通 item/breakpoint 区分下 */
-  getMixedData(data: IpcData) {
+  getMixedData(data: IpcHTTPData) {
     const bodies: Bodies = {}
     const request = data.request
     const response = data.response
@@ -108,18 +124,18 @@ export class Data extends EventEmitter {
     return this.getMixedData(item)
   }
 
-  getBreakPoint(id: string, type: Type): DetailWithBody {
+  getBreakPoint(id: string, type: MessageType): DetailWithBody {
     let breakpoint = this.findBreakPointItem(id, type)
     return this.getMixedData(breakpoint)
   }
 
-  removeBreakPoint(item: IpcData) {
+  removeBreakPoint(item: IpcHTTPData) {
     let breakpoints = this._breakpoints
     let index = breakpoints.indexOf(item)
     index > -1 && breakpoints.splice(index, 1)
   }
 
-  closeBreakPoint(id: string, type: Type, data: Request | Response) {
+  closeBreakPoint(id: string, type: MessageType, data: Request | Response) {
     const detail = this.findBreakPointItem(id, type)
     let storageId
 
