@@ -127,8 +127,8 @@ export default function setup() {
     logger.info.apply(logger, args)
   })
 
-  proxy.on('error', (e) => {
-    logger.error(e)
+  proxy.on('error', (...args) => {
+    logger.error.apply(logger, args)
   })
 
   proxy.start().catch((e) => {
