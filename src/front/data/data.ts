@@ -40,7 +40,7 @@ export class Data extends EventEmitter {
   private listenEvents() {
 
     ipc.on('http-data', (event, data: IpcHTTPData) => {
-      // console.log('ipc.on \'http-data\' data => ', data)
+      // console.debug('http-data', data)
       let detail: IpcHTTPData
 
       /**
@@ -76,8 +76,10 @@ export class Data extends EventEmitter {
 
     ipc.on('https-connect', (devent, data: HttpsConnect) => {
       console.debug('connect', data)
-      data[timelineDataType] = TimelineDataType.connect
-      this.timeline.unshift(data)
+      if (!data.interrupt) {
+        data[timelineDataType] = TimelineDataType.connect
+        this.timeline.unshift(data)
+      }
 
       this.emit('update')
     })
