@@ -5,7 +5,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import options from '../server/options'
 import { configBundle } from '../utils/storage'
-import { OptionsData, FilterMode, defaultOptionsData } from '../typed/options'
+import { FilterMode, defaultOptionsData } from '../typed/options'
 
 options.data = {
   port: 1089,

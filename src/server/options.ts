@@ -44,13 +44,13 @@ class Options {
     })
   }
 
-  private hostInList(host: string, list: Array<string>): boolean {
+  private hostInList(host: string, list: string[]): boolean {
     return list.some((item) => {
       return item === host || host.endsWith('.' + item)
     })
   }
 
-  private urlInList(url: string, list: Array<string>): boolean {
+  private urlInList(url: string, list: string[]): boolean {
     return false
   }
 

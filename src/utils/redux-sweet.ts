@@ -19,7 +19,7 @@ export function createAction(type, callback: (...args) => any = (x => x)) {
   )
 }
 
-export function handleActions<T>(map: HandlesMap<T>, defaultState: T) {
+export function handleActions<T>(map: HandlesMap<T>, defaultState?: T) {
   return (state: T, action: Action) => {
     let reducer = map[action.type]
     if (reducer) {

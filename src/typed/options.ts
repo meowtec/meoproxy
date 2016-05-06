@@ -9,9 +9,9 @@ export interface OptionsData {
   port: number
   httpsEnabled: boolean
   httpsFilterMode: FilterMode
-  httpsBlackList: Array<string>
-  httpsWhiteList: Array<string>
-  breakpointList: Array<string>
+  httpsBlackList: string[]
+  httpsWhiteList: string[]
+  breakpointList: string[]
 }
 
 export const defaultOptionsData: OptionsData = {

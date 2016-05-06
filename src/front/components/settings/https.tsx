@@ -1,52 +1,39 @@
 'use strict'
 
 import * as React from 'react'
-import HTTPSList from './https-list'
+import { connect } from 'react-redux'
+import HttpsList from './https-list'
 import Checkbox from '../../base/checkbox'
 import { autobind } from '../../../utils/decorators'
+import { switchHttps } from '../../actions/options'
 
-
-export interface HttpsSettingsState {
-  httpsEnabled?: boolean
-}
-
-export default class HttpsSettings extends React.Component<any, HttpsSettingsState> {
+class HttpsSettings extends React.Component<any, any> {
 
   constructor() {
     super()
-
-    this.state = {
-      httpsEnabled: false
-    }
   }
 
   @autobind
   handleCheckboxChange(e) {
-    this.setState({
-      httpsEnabled: e.target.checked
-    })
-  }
-
-  renderHttpsAdvanced() {
-    if (this.state.httpsEnabled) {
-      return (
-        <HTTPSList/>
-      )
-    }
-    return null
+    this.props.dispatch(switchHttps())
   }
 
   render() {
+    let httpsEnabled = this.props.httpsEnabled
     return (
       <fieldset className="options-form">
         <div className="item">
           <label>开启 HTTPS</label>
           <div className="content">
-            <Checkbox onChange={this.handleCheckboxChange}/>
+            <Checkbox onChange={this.handleCheckboxChange} checked={httpsEnabled}/>
           </div>
         </div>
-        {this.renderHttpsAdvanced()}
+        {httpsEnabled ? <HttpsList/> : null}
       </fieldset>
     )
   }
 }
+
+export default connect(state => ({
+  httpsEnabled: state.httpsEnabled
+}), dispatch => ({ dispatch }))(HttpsSettings)
