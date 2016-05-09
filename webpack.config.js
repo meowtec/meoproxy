@@ -1,4 +1,7 @@
+'use strict'
+
 const path = require('path')
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 function customLoader(name) {
   return path.resolve(__dirname, './loaders/' + name + '.js')
@@ -25,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        loader: 'style!css!less'
+        loader: ExtractTextPlugin.extract('style', 'css!less')
       },
       {
         test: /\.svg$/,
@@ -47,7 +50,7 @@ module.exports = {
     }
   ],
   plugins: [
-
+    new ExtractTextPlugin("./static/dist/[name].css")
   ],
   devtool: 'source-map'
 }

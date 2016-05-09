@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CA install</title>
+    <title>install CA</title>
     <meta charset="utf-8">
+    <script src="lib/static-load.js"></script>
+    <script>
+      staticLoad.css('dist/ca.css')
+    </script>
   </head>
   <body>
     <div class="content">
@@ -15,6 +19,8 @@
       </p>
     </div>
     <script type="text/javascript" src="./lib/qrcode.min.js"></script>
-    <script type="text/javascript" src="./dist/ca.js"></script>
+    <script>
+      staticLoad.js('dist/ca.js')
+    </script>
   </body>
 </html>

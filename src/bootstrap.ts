@@ -11,7 +11,6 @@ const logger = log4js.getLogger('bootstrap')
 
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
-const env = process.env['MEOP_ENV'] || ''
 
 logger.info('USERDATA dir:', app.getPath('userData'))
 logger.info('TEMP dir:', app.getPath('temp'))
@@ -47,7 +46,7 @@ app.on('ready', function() {
 
   // and load the index.html of the app.
   // window.loadURL()
-  window.loadURL(`file://${path.resolve()}/static/index.html?env=${env}`)
+  window.loadURL(`file://${path.resolve()}/static/index.html`)
 
   // Open the devtools.
   window.webContents.openDevTools()

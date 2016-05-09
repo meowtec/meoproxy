@@ -11,35 +11,18 @@
     <script src="lib/codemirror/mode/javascript/javascript.js"></script>
     <script src="lib/codemirror/mode/css/css.js"></script>
     <script src="lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-
-    <style type="text/css">
-      .right-top-corner {
-        position: fixed;
-        right: 0;
-        top: 0;
-        z-index: 10;
-        opacity: 0;
-      }
-
-      .right-top-corner:hover {
-        opacity: 1;
-      }
-    </style>
+    <script src="lib/static-load.js"></script>
+    <script>
+      staticLoad.css('dist/index.css')
+    </script>
   </head>
   <body>
-    <a href="" class="right-top-corner">reload</a>
-    <div id="target">
-      loading...
+    <div class="launcher-screen">
+      &#x2003;MEOPROXY
     </div>
+    <div id="target"></div>
     <script>
-    'use strict'
-    {
-      let env = (location.search.match(/env=([^&]+)/) || [])[1]
-      let scriptBase = env === 'dev_watch' ? 'http://localhost:11200/static/' : './'
-      let script = document.createElement('script')
-      script.src = scriptBase + 'dist/index.js'
-      document.body.appendChild(script)
-    }
+      staticLoad.js('dist/index.js')
     </script>
   </body>
 </html>
