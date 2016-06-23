@@ -7,7 +7,7 @@ function customLoader(name) {
   return path.resolve(__dirname, './loaders/' + name + '.js')
 }
 
-module.exports = {
+const config = {
   entry: {
     index: './src/front/index.tsx',
     ca: './src/front/ca.ts'
@@ -25,10 +25,6 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'babel!ts-loader'
-      },
-      {
-        test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style', 'css!less')
       },
       {
         test: /\.svg$/,
@@ -49,8 +45,22 @@ module.exports = {
       }
     }
   ],
-  plugins: [
-    new ExtractTextPlugin("./static/dist/[name].css")
-  ],
-  devtool: 'source-map'
+  plugins: []
 }
+
+if (process.env.MEOP_ENV === 'dev_watch') {
+  config.module.loaders.push({
+    test: /\.less$/,
+    loader: 'style!css!less'
+  })
+  config.devtool = 'source-map'
+}
+else {
+  config.plugins.push(new ExtractTextPlugin("./static/dist/[name].css"))
+  config.module.loaders.push({
+    test: /\.less$/,
+    loader: ExtractTextPlugin.extract('style', 'css!less')
+  })
+}
+
+module.exports = config

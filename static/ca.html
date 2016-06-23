@@ -3,10 +3,8 @@
   <head>
     <title>install CA</title>
     <meta charset="utf-8">
-    <script src="lib/static-load.js"></script>
-    <script>
-      staticLoad.css('dist/ca.css')
-    </script>
+    <script src="lib/load-asset.js"></script>
+    <link rel="stylesheet" type="text/css" href="./dist/ca.css">
   </head>
   <body>
     <div class="content">
@@ -20,7 +18,7 @@
     </div>
     <script type="text/javascript" src="./lib/qrcode.min.js"></script>
     <script>
-      staticLoad.js('dist/ca.js')
+      loadAsset('dist/ca.js')
     </script>
   </body>
 </html>

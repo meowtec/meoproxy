@@ -5,16 +5,14 @@
     <title>MeoProxy</title>
     <link rel="stylesheet" type="text/css" href="lib/codemirror/lib/codemirror.css">
     <link rel="stylesheet" type="text/css" href="lib/codemirror/theme/neo.css">
+    <link rel="stylesheet" type="text/css" href="dist/index.css" >
 
     <script src="lib/codemirror/lib/codemirror.js"></script>
     <script src="lib/codemirror/mode/xml/xml.js"></script>
     <script src="lib/codemirror/mode/javascript/javascript.js"></script>
     <script src="lib/codemirror/mode/css/css.js"></script>
     <script src="lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-    <script src="lib/static-load.js"></script>
-    <script>
-      staticLoad.css('dist/index.css')
-    </script>
+    <script src="lib/load-asset.js"></script>
   </head>
   <body>
     <div class="launcher-screen">
@@ -22,7 +20,7 @@
     </div>
     <div id="target"></div>
     <script>
-      staticLoad.js('dist/index.js')
+      loadAsset('dist/index')
     </script>
   </body>
 </html>

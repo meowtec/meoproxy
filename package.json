@@ -13,7 +13,6 @@
     "start": "npm run build:back && MEOP_ENV=dev_watch npm run electron & MEOP_ENV=dev_watch npm run watch",
     "start:prod": "npm run build:back && npm run build:front && npm run electron",
     "watch": "webpack-dev-server --port 11200",
-    "dev": "npm run electron & npm run watch",
     "test": "npm run build:back && electron-mocha build/__tests"
   },
   "repository": {
