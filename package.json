@@ -10,9 +10,10 @@
     "build:back": "tsc -p . && babel build --out-dir build",
     "build:front": "webpack",
     "build": "npm run build:back && npm run build:front",
-    "start": "npm run build:back && MEOP_ENV=dev_watch npm run electron",
-    "start:once": "npm run build:front && npm run build:back && MEOP_ENV=dev npm run electron",
+    "start": "npm run build:back && MEOP_ENV=dev_watch npm run electron & MEOP_ENV=dev_watch npm run watch",
+    "start:prod": "npm run build:back && npm run build:front && npm run electron",
     "watch": "webpack-dev-server --port 11200",
+    "dev": "npm run electron & npm run watch",
     "test": "npm run build:back && electron-mocha build/__tests"
   },
   "repository": {
@@ -24,7 +25,6 @@
   "dependencies": {
     "babel-plugin-transform-es2015-spread": "^6.6.5",
     "catro": "^1.1.0",
-    "electron-prebuilt": "^0.37.2",
     "ip": "^1.0.1",
     "log4js": "^0.6.32",
     "mkdirp": "0.5.1",
@@ -36,22 +36,26 @@
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",
-    "babel-core": "^6.5.2",
+    "babel-core": "^6.9.1",
     "babel-loader": "^6.2.2",
     "babel-plugin-transform-async-to-generator": "^6.7.4",
     "babel-plugin-transform-es2015-destructuring": "^6.5.0",
     "babel-plugin-transform-es2015-parameters": "^6.5.0",
     "css-loader": "^0.23.1",
-    "electron-mocha": "^1.2.2",
+    "electron-mocha": "^2.2.0",
+    "electron-prebuilt": "^1.2.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "less": "^2.6.0",
     "less-loader": "^2.2.2",
+    "react": "^15.1.0",
+    "react-addons-pure-render-mixin": "^15.1.0",
+    "react-dom": "^15.1.0",
     "style-loader": "^0.13.0",
     "ts-loader": "^0.8.1",
     "tslint": "^3.6.0",
     "typescript": "^1.8.0",
-    "typings": "^0.8.1",
-    "webpack": "^1.12.13",
+    "typings": "^1.0.4",
+    "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   }
 }
