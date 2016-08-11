@@ -125,7 +125,7 @@ class TimelineSecureItem extends React.Component<TimelineSecureItemProps, any> {
               props.hostname
             }
             {
-              port && port !== 443 ? CSSImportRule : null
+              port && port !== 443 ? (':' + port) : null
             }
           </span>
         </div>
@@ -190,7 +190,6 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
             else {
               return this.renderTimelineSecureItem(item as HttpsConnect)
             }
-
           })
         }
       </ul>

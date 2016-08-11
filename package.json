@@ -22,7 +22,6 @@
   "author": "Meowtec<bertonzh@gmail.com>",
   "private": true,
   "dependencies": {
-    "babel-plugin-transform-es2015-spread": "^6.6.5",
     "catro": "^1.1.0",
     "ip": "^1.0.1",
     "log4js": "^0.6.32",
@@ -40,6 +39,7 @@
     "babel-plugin-transform-async-to-generator": "^6.7.4",
     "babel-plugin-transform-es2015-destructuring": "^6.5.0",
     "babel-plugin-transform-es2015-parameters": "^6.5.0",
+    "babel-plugin-transform-es2015-spread": "^6.6.5",
     "css-loader": "^0.23.1",
     "electron-mocha": "^2.2.0",
     "electron-prebuilt": "^1.2.1",

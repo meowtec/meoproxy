@@ -29,13 +29,11 @@ export default function setup() {
   const proxy = new Proxy({
     port: 8899,
     certPath: certDir,
-    // TODO https options
-    // if https is false, not show https menu
-    https: true
+    https: userOptions.shouldHttpsInterrupt
   })
 
   proxy.on('open', (handler: RequestHandler) => {
-    if (handler.req.url.startsWith('/')) {
+    if (handler.req.url.startsWith('/') && handler.protocol === 'http') {
       return
     }
     /** generate an uid */

@@ -4,6 +4,7 @@ import * as fs from 'fs'
 import { ipcMain } from 'electron'
 import { configBundle } from '../utils/storage'
 import { OptionsData, FilterMode, defaultOptionsData } from '../typed/options'
+import { autobind } from '../utils/decorators'
 import * as log4js from 'log4js'
 
 const optionFileName = 'settings.json'
@@ -44,9 +45,17 @@ class Options {
     })
   }
 
+  private matchHost(a: string, b: string) {
+    if (b.indexOf(':') === -1) {
+      a = a.replace(/:\d+$/, '')
+    }
+    return a === b || a.endsWith('.' + b)
+  }
+
+  // host:port, list
   private hostInList(host: string, list: string[]): boolean {
     return list.some((item) => {
-      return item === host || host.endsWith('.' + item)
+      return this.matchHost(host, item)
     })
   }
 
@@ -54,17 +63,20 @@ class Options {
     return false
   }
 
-  public shouldHttpsInterrupt(hostname) {
+  @autobind
+  public shouldHttpsInterrupt(host) {
     const optionData = this.data
 
     if (!optionData.httpsEnabled) {
       return false
     }
 
-    return optionData.httpsFilterMode === FilterMode.black ?
-      !this.hostInList(hostname, optionData.httpsBlackList) : this.hostInList(hostname, optionData.httpsWhiteList)
+    return optionData.httpsFilterMode === FilterMode.black
+      ? !this.hostInList(host, optionData.httpsBlackList)
+      : this.hostInList(host, optionData.httpsWhiteList)
   }
 
+  @autobind
   public shouldBreak(uri: string): boolean {
     return this.urlInList(uri, this.data.breakpointList)
   }
